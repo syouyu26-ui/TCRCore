@@ -23,7 +23,7 @@ import com.p1nero.entityrespawner.entity.SoulEntity;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.client.sound.CorneliaMusicPlayer;
 import com.p1nero.tcrcore.client.sound.WraithonMusicPlayer;
 import com.p1nero.tcrcore.gameassets.TCRSkills;
@@ -37,7 +37,6 @@ import com.yesman.epicskills.registry.entry.EpicSkillsItems;
 import net.kenddie.fantasyarmor.item.FAItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -59,7 +58,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Pillager;
@@ -287,7 +285,7 @@ public class LivingEntityEventListeners {
                     PlayerDataManager.voidEyeKilled.put(player, true);
                 }
                 if (PlayerDataManager.canGetInviteTip(player) && !PlayerDataManager.letterGet.get(player)) {
-                    TCRTaskManager.FIND_ARTERIUS.start(player);
+                    TCRQuestManager.FIND_ARTERIUS.start(player);
                 }
             }
 
@@ -297,7 +295,7 @@ public class LivingEntityEventListeners {
                     PlayerDataManager.monstEyeKilled.put(player, true);
                 }
                 if (PlayerDataManager.canGetInviteTip(player) && !PlayerDataManager.letterGet.get(player)) {
-                    TCRTaskManager.FIND_ARTERIUS.start(player);
+                    TCRQuestManager.FIND_ARTERIUS.start(player);
                 }
             }
 
@@ -307,7 +305,7 @@ public class LivingEntityEventListeners {
                     PlayerDataManager.mechEyeKilled.put(player, true);
                 }
                 if (PlayerDataManager.canGetInviteTip(player) && !PlayerDataManager.letterGet.get(player)) {
-                    TCRTaskManager.FIND_ARTERIUS.start(player);
+                    TCRQuestManager.FIND_ARTERIUS.start(player);
                 }
             }
 
@@ -319,12 +317,9 @@ public class LivingEntityEventListeners {
                 ItemUtil.addItemEntity(player, ModItems.MECH_EYE.get(), 1, ChatFormatting.DARK_RED.getColor().intValue());
             }
 
-            if (event.getSource().getEntity() instanceof Player && livingEntity.getType().is(EntityTypeTags.RAIDERS) && !PlayerDataManager.pillagerKilled.get(player)) {
-//                ItemStack itemStack = TCRItems.ANCIENT_ORACLE_FRAGMENT.get().getDefaultInstance();
-//                itemStack.getOrCreateTag().putString(TCRPlayer.PLAYER_NAME, player.getGameProfile().getName());
-//                ItemUtil.addItemEntity(player, itemStack, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
-                TCRTaskManager.KILL_PILLAGER.finish(player);
-                TCRTaskManager.BACK_TO_KEEPER.start(player);
+            if (event.getSource().getEntity() instanceof Player && livingEntity.getType().is(EntityTypeTags.RAIDERS) && !TCRQuestManager.KILL_PILLAGER.isFinished(player)) {
+                TCRQuestManager.KILL_PILLAGER.finish(player);
+                TCRQuestManager.BACK_TO_KEEPER.start(player);
                 PlayerDataManager.pillagerKilled.put(player, true);
             }
 
@@ -405,7 +400,7 @@ public class LivingEntityEventListeners {
             if (livingEntity instanceof WraithonEntity wraithonEntity && !wraithonEntity.isDead()) {
                 serverLevel.players().forEach(serverPlayer -> {
 //                    serverPlayer.displayClientMessage(TCRCoreMod.getInfo("wraithon_end_tip"), false);
-                    TCRCapabilityProvider.getTCRPlayer(serverPlayer).setTickAfterBossDieLeft(200);
+                    TCRCapabilityProvider.getTCRPlayer(serverPlayer).setTickAfterBossDieLeft(600);
                 });
             }
 

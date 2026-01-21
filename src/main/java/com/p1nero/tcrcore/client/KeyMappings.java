@@ -2,6 +2,7 @@ package com.p1nero.tcrcore.client;
 
 import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcrcore.TCRCoreMod;
+import com.p1nero.tcrcore.client.gui.screen.TCRQuestScreen;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.serverbound.ExecuteRiptidePacket;
 import net.minecraft.client.KeyMapping;
@@ -38,6 +39,9 @@ public class KeyMappings {
                     if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.isUnderWater()) {
                         PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new ExecuteRiptidePacket());
                     }
+                }
+                while (SHOW_TASK.consumeClick()) {
+                    Minecraft.getInstance().setScreen(new TCRQuestScreen());
                 }
 			}
 		}

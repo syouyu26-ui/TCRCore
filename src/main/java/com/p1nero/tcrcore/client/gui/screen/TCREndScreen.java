@@ -1,4 +1,4 @@
-package com.p1nero.tcrcore.client.gui;
+package com.p1nero.tcrcore.client.gui.screen;
 
 import com.github.L_Ender.cataclysm.Cataclysm;
 import com.google.common.collect.Lists;

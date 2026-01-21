@@ -4,7 +4,7 @@ import com.github.L_Ender.cataclysm.init.ModItems;
 import com.hm.efn.registries.EFNItem;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.block.TCRBlocks;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.client.KeyMappings;
 import com.p1nero.tcrcore.client.gui.BanPortalScreenHandler;
 import com.p1nero.tcrcore.effect.TCREffects;
@@ -29,6 +29,10 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
     @Override
     protected void addTranslations() {
 
+        this.addQuest(TCRQuestManager.KILL_PILLAGER, "杀死掠夺者", "杀死掠夺者", "前往主世界杀死掠夺者");
+        this.addQuest(TCRQuestManager.FIND_GODNESS_STATUE, "寻找女神像", "寻找女神像", "寻找女神像啊吧啊吧");
+        this.addQuest(TCRQuestManager.BACK_TO_KEEPER, "测试111", "测试111", "测试111222222完整的超绝超长描述");
+
         this.addEffect(TCREffects.INVULNERABLE, "无敌");
         this.addEffect(TCREffects.SOUL_INCINERATOR, "灵魂火");
 
@@ -36,14 +40,6 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
         this.add("epicfight.skill_slot.passive5", "被动5");
         this.add("travelerstitles.tcrcore.sanctum", "梦之领域");
         this.addBiome(TCRBiomes.AIR, "虚无之地");
-
-        this.addTask(TCRTaskManager.KILL_PILLAGER, "击杀掠夺者");
-        this.addTask(TCRTaskManager.GIVE_ORACLE_TO_KEEPER, "将§6[神谕残卷]§r交给守望者");
-        this.addTask(TCRTaskManager.BACK_TO_KEEPER, "回去找守望者");
-        this.addTask(TCRTaskManager.FIND_GODNESS_STATUE, "将§6[神之眼]§r供奉于女神像");
-        this.addTask(TCRTaskManager.FIND_ARTERIUS, "回去找阿尔特留斯");
-        this.addTask(TCRTaskManager.LIGHT_ALL_ALTAR, "将§6[神之眼]§r置于祭坛上");
-        this.addTask(TCRTaskManager.GO_TO_OVERWORLD, "前往主世界");
 
         this.addTCRItemInfo(net.blay09.mods.waystones.item.ModItems.warpStone, "点击物品栏中的传送卷轴按钮以进行传送。");
         this.addTCRItemInfo("§c警告！此物品可能导致重要道具被吸入背包而失效！", net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.PICKUP_UPGRADE.get());
@@ -87,6 +83,9 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "上面写着古老的神谕，暗示了火种散落的地方。回主城给守望者看看吧，说不定对冒险有帮助！");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§c多人模式请勿占据他人任务道具！每人都需各自提交！", 2);
 
+        this.addInfo("exit_quest_screen", "确定");
+        this.addInfo("no_quest", "暂无任务");
+        this.addInfo("tracking_quest", " [☆追踪中]");
         this.addInfo("require_item_to_wake", "需要[%s]以唤醒...");
         this.addInfo("weapon_no_interact", "武器禁止交互！请使用其他物品或按[%s]切换非战斗模式");
         this.addInfo("tudigong_gift", "[见面礼]");

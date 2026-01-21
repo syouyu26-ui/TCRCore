@@ -2,14 +2,13 @@ package com.p1nero.tcrcore.datagen.lang;
 
 import com.p1nero.dialog_lib.api.datagen.DialogueLanguageProvider;
 import com.p1nero.tcrcore.TCRCoreMod;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.datagen.TCRAdvancementData;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -19,7 +18,6 @@ import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.text.WordUtils;
 
-import java.util.Locale;
 import java.util.function.Supplier;
 
 public abstract class TCRLangProvider extends LanguageProvider implements DialogueLanguageProvider {
@@ -35,8 +33,10 @@ public abstract class TCRLangProvider extends LanguageProvider implements Dialog
         this.add("info.tcr." + key, content);
     }
 
-    public void addTask(TCRTaskManager.Task task, String desc) {
-        this.add(task.getDesc(), desc);
+    public void addQuest(TCRQuestManager.Quest quest, String title, String shortDesc, String desc) {
+        this.add(quest.getKey() + ".desc", desc);
+        this.add(quest.getKey() + ".title", title);
+        this.add(quest.getKey() + ".short_desc", shortDesc);
     }
 
     public void addBiome(ResourceKey<Biome> biome, String name) {

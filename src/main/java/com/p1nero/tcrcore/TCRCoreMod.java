@@ -7,7 +7,7 @@ import com.mojang.logging.LogUtils;
 import com.obscuria.aquamirae.registry.AquamiraeItems;
 import com.p1nero.tcrcore.block.TCRBlocks;
 import com.p1nero.tcrcore.block.entity.TCRBlockEntities;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.client.sound.TCRSounds;
 import com.p1nero.tcrcore.effect.TCREffects;
 import com.p1nero.tcrcore.entity.TCREntities;
@@ -69,7 +69,7 @@ public class TCRCoreMod {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         TCRPacketHandler.register();
-        TCRTaskManager.init();
+        TCRQuestManager.init();
 //        List<String> cheatModList = List.of("tacz", "projecte", "enchantmentlevelbreak");
 //        cheatModList.forEach(s -> {
 //            if(ModList.get().isLoaded(s)){

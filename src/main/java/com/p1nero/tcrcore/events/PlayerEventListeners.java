@@ -9,7 +9,7 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
 import com.p1nero.tcrcore.capability.TCRPlayer;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.datagen.TCRAdvancementData;
 import com.p1nero.tcrcore.effect.TCREffects;
 import com.p1nero.tcrcore.item.TCRItems;
@@ -108,12 +108,9 @@ public class PlayerEventListeners {
                     player.displayClientMessage(TCRCoreMod.getInfo("unlock_new_skill", SwordControllerSkills.KILL_AURA_2.getDisplayName()), false);
                 }
                 if(path.equals("kill_pillager")) {
-                    if(!PlayerDataManager.pillagerKilled.get(player)) {
-//                        ItemStack itemStack = TCRItems.ANCIENT_ORACLE_FRAGMENT.get().getDefaultInstance();
-//                        itemStack.getOrCreateTag().putString(TCRPlayer.PLAYER_NAME, player.getGameProfile().getName());
-//                        ItemUtil.addItemEntity(player, itemStack, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
-                        TCRTaskManager.KILL_PILLAGER.finish(player);
-                        TCRTaskManager.BACK_TO_KEEPER.start(player);
+                    if(!TCRQuestManager.KILL_PILLAGER.isFinished(player)) {
+                        TCRQuestManager.KILL_PILLAGER.finish(player);
+                        TCRQuestManager.BACK_TO_KEEPER.start(player);
                         PlayerDataManager.pillagerKilled.put(player, true);
                     }
                 }
@@ -215,7 +212,7 @@ public class PlayerEventListeners {
                 serverLevel.playSound(null, blessPos, SoundEvents.BEACON_AMBIENT,
                         SoundSource.AMBIENT, 0.7F, 0.5F + serverLevel.random.nextFloat() * 0.3F);
 
-                TCRTaskManager.FIND_GODNESS_STATUE.finish(serverPlayer);
+                TCRQuestManager.FIND_GODNESS_STATUE.finish(serverPlayer);
                 if(!tcrPlayer.inBlessing()) {
                     tcrPlayer.setTickAfterBless(100);
                     tcrPlayer.setBlessPos(event.getPos());
@@ -498,7 +495,7 @@ public class PlayerEventListeners {
         ItemStack itemStack = event.getStack();
         if (event.getEntity() instanceof ServerPlayer player) {
             if(itemStack.is(TCRItems.ANCIENT_ORACLE_FRAGMENT.get()) && itemStack.getOrCreateTag().getString(TCRPlayer.PLAYER_NAME).equals(player.getGameProfile().getName())) {
-                TCRTaskManager.GIVE_ORACLE_TO_KEEPER.start(player);
+                TCRQuestManager.GIVE_ORACLE_TO_KEEPER.start(player);
                 if(!PlayerDataManager.mapMarked.get(player)) {
                     giveOracleEffect(player, TCRItems.ANCIENT_ORACLE_FRAGMENT.get());
                 }
@@ -563,7 +560,7 @@ public class PlayerEventListeners {
 
     public static void giveOracleEffect(ServerPlayer player, Item toDisplay) {
         if(ItemEvents.eyes.contains(toDisplay)) {
-            TCRTaskManager.FIND_GODNESS_STATUE.start(player);
+            TCRQuestManager.FIND_GODNESS_STATUE.start(player);
         }
         //改和女神兑换
 //        ItemUtil.addItemEntity(player, TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());

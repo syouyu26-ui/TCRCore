@@ -6,7 +6,7 @@ import com.p1nero.dialog_lib.DialogueLib;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +58,7 @@ public abstract class ArteriusMixin extends PathfinderMob {
                 return;
             }
             if(!this.inBattle && serverPlayer.isAlive()) {
-                TCRTaskManager.FIND_ARTERIUS.finish(serverPlayer);
+                TCRQuestManager.FIND_ARTERIUS.finish(serverPlayer);
                 TCRCapabilityProvider.getTCRPlayer(serverPlayer).setCurrentTalkingEntity(this);
                 CompoundTag tag = new CompoundTag();
                 tag.putBoolean("can_get_invite", PlayerDataManager.canGetInvite(serverPlayer));

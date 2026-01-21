@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.p1nero.tcrcore.TCRClientConfig;
 import com.p1nero.tcrcore.TCRCoreMod;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
@@ -14,13 +14,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CustomGuiderRenderer {
+public class CustomQuestRenderer {
     private static long fadeStartTime = 0;
     private static boolean hasTask = false;
     private static boolean lastHasTask = false;
     private static float alpha = 0.0f;
     private static final int FADE_DURATION = 30; // 30 ticks = 1.5 seconds
-    private static Component lastTaskDesc = Component.empty();
+    private static Component lastQuestShortDesc = Component.empty();
     private static int x;
     private static int y;
     private static int textX;
@@ -34,14 +34,14 @@ public class CustomGuiderRenderer {
         long currentTime = localPlayer.level().getGameTime();
         // Calculate alpha based on game time with partialTick interpolation
         timeSinceStateChange = currentTime - fadeStartTime;
-        hasTask = TCRTaskManager.hasTask(localPlayer);
+        hasTask = TCRQuestManager.hasQuest(localPlayer);
         // Handle state changes
         if (hasTask != lastHasTask) {
             fadeStartTime = currentTime;
         }
         if (hasTask) {
             // Update task description when task appears
-            lastTaskDesc = TCRTaskManager.getCurrentTaskDesc(localPlayer);
+            lastQuestShortDesc = TCRQuestManager.getCurrentQuestShortDesc(localPlayer);
         }
 
         lastHasTask = hasTask;
@@ -77,7 +77,7 @@ public class CustomGuiderRenderer {
         }
 
         // Only render if there's something to show and alpha > 0
-        if (alpha <= 0.0f || lastTaskDesc == null || lastTaskDesc.getString().isEmpty()) {
+        if (alpha <= 0.0f || lastQuestShortDesc == null || lastQuestShortDesc.getString().isEmpty()) {
             return;
         }
         guiGraphics.pose().pushPose();
@@ -93,7 +93,7 @@ public class CustomGuiderRenderer {
         int textColor = (int) (alpha * 255) << 24 | 0xFFFFFF; // White text with alpha
 
         // Draw main text
-        guiGraphics.drawString(minecraft.font, lastTaskDesc, textX, textY, textColor, true);
+        guiGraphics.drawString(minecraft.font, lastQuestShortDesc, textX, textY, textColor, true);
 
         // Reset color
         guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -107,6 +107,6 @@ public class CustomGuiderRenderer {
         alpha = 0.0f;
         hasTask = false;
         lastHasTask = false;
-        lastTaskDesc = Component.empty();
+        lastQuestShortDesc = Component.empty();
     }
 }

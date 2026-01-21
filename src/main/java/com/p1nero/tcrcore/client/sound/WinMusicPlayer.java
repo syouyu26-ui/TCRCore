@@ -1,6 +1,6 @@
 package com.p1nero.tcrcore.client.sound;
 
-import com.p1nero.tcrcore.client.gui.TCREndScreen;
+import com.p1nero.tcrcore.client.gui.screen.TCREndScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;

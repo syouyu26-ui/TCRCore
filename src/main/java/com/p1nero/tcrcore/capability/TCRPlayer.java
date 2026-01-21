@@ -46,6 +46,7 @@ import xaero.hud.minimap.waypoint.WaypointColor;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -67,7 +68,28 @@ public class TCRPlayer {
     private Vec3 from = Vec3.ZERO;
     private Vec3 dir = Vec3.ZERO;
     //===================
+    private List<TCRQuestManager.Quest> currentQuests = new ArrayList<>();
+    private List<Integer> finishedQuests = new ArrayList<>();
 
+    public void addQuest(TCRQuestManager.Quest quest) {
+        if (currentQuests.contains(quest)) {
+            return;
+        }
+        currentQuests.add(quest);
+    }
+
+    public void finishQuest(TCRQuestManager.Quest quest) {
+        currentQuests.remove(quest);
+        finishedQuests.add(quest.getId());
+    }
+
+    public boolean hasFinished(TCRQuestManager.Quest quest) {
+        return finishedQuests.contains(quest.getId());
+    }
+
+    public List<TCRQuestManager.Quest> getCurrentQuests() {
+        return currentQuests;
+    }
 
     public void setTickAfterTpToOverworld(int tickAfterTpToOverworld) {
         this.tickAfterTpToOverworld = tickAfterTpToOverworld;
@@ -115,10 +137,6 @@ public class TCRPlayer {
         this.currentTalkingEntity = currentTalkingEntity;
     }
 
-    public @Nullable PathfinderMob getCurrentTalkingEntity() {
-        return currentTalkingEntity;
-    }
-
     public boolean getBoolean(String key) {
         return data.getBoolean(key);
     }
@@ -146,6 +164,7 @@ public class TCRPlayer {
     public CompoundTag getData() {
         return data;
     }
+
     public CompoundTag saveNBTData(CompoundTag tag) {
         tag.put("customDataManager", data);
         tag.putDouble("healthAdder", healthAdder);
@@ -153,6 +172,14 @@ public class TCRPlayer {
         tag.putInt("tickAfterTpToOverworld", tickAfterTpToOverworld);
         tag.putInt("tickAfterBless", tickAfterBless);
         tag.putBoolean("needToMarkMapInOverworld", needToMarkMapInOverworld);
+        tag.putInt("questSize", currentQuests.size());
+        for (int i = 0; i < currentQuests.size(); i++) {
+            tag.putInt("quest_" + i, currentQuests.get(i).getId());
+        }
+        tag.putInt("finishedQuestSize", finishedQuests.size());
+        for (int i = 0; i < finishedQuests.size(); i++) {
+            tag.putInt("finished_quest_" + i, finishedQuests.get(i));
+        }
         return tag;
     }
 
@@ -163,6 +190,20 @@ public class TCRPlayer {
         tickAfterBless = tag.getInt("tickAfterBless");
         tickAfterTpToOverworld = tag.getInt("tickAfterTpToOverworld");
         needToMarkMapInOverworld = tag.getBoolean("needToMarkMapInOverworld");
+        currentQuests.clear();
+        int questSize = tag.getInt("questSize");
+        for (int i = 0; i < questSize; i++) {
+            String key = "quest_" + i;
+            int id = tag.getInt(key);
+            currentQuests.add(TCRQuestManager.getQuestById(id));
+        }
+        finishedQuests.clear();
+        int finishedQuestSize = tag.getInt("finishedQuestSize");
+        for (int i = 0; i < finishedQuestSize; i++) {
+            String key = "finished_quest_" + i;
+            int id = tag.getInt(key);
+            finishedQuests.add(id);
+        }
     }
 
     public void copyFrom(TCRPlayer old) {
@@ -172,6 +213,8 @@ public class TCRPlayer {
         this.tickAfterBless = old.tickAfterBless;
         this.needToMarkMapInOverworld = old.needToMarkMapInOverworld;
         this.tickAfterTpToOverworld = old.tickAfterTpToOverworld;
+        this.currentQuests = old.currentQuests;
+        this.finishedQuests = old.finishedQuests;
     }
 
     /**
@@ -179,8 +222,7 @@ public class TCRPlayer {
      */
     public void tryMarkMapInOverworld(ServerPlayer serverPlayer) {
         if (!PlayerDataManager.pillagerKilled.get(serverPlayer)) {
-            TCRTaskManager.clearTask(serverPlayer);
-            TCRTaskManager.KILL_PILLAGER.start(serverPlayer);
+            TCRQuestManager.KILL_PILLAGER.start(serverPlayer);
         }
 
         if (needToMarkMapInOverworld && serverPlayer.serverLevel().dimension() == Level.OVERWORLD) {
@@ -255,10 +297,10 @@ public class TCRPlayer {
                                 SoundEvents.END_PORTAL_SPAWN, serverPlayer.getSoundSource(), 1.0F, 1.0F);
                         spawnParticleTimer = particleCount;
                         needToMarkMapInOverworld = false;
-                        if(stage <= 3) {
+                        if (stage <= 3) {
                             serverPlayer.displayClientMessage(TCRCoreMod.getInfo("unlock_new_ftb_page"), false);
                         }
-                        TCRTaskManager.GO_TO_OVERWORLD.finish(serverPlayer);
+                        TCRQuestManager.GO_TO_OVERWORLD.finish(serverPlayer);
                     });
         }
     }
@@ -268,9 +310,10 @@ public class TCRPlayer {
     }
 
     public void tick(Player player) {
-        if(player.isLocalPlayer()) {
+//        System.out.println((player.isLocalPlayer() ? "Local: " : "Server: ") + PlayerDataManager.currentQuestId.get(player));
+        if (player.isLocalPlayer()) {
 
-        } else if(player instanceof ServerPlayer serverPlayer){
+        } else if (player instanceof ServerPlayer serverPlayer) {
             ServerLevel serverLevel = serverPlayer.serverLevel();
             handleTalking(serverPlayer);
             handleAfterBossFight(serverPlayer);
@@ -282,9 +325,9 @@ public class TCRPlayer {
     }
 
     private void handleMarkMap(ServerPlayer serverPlayer) {
-        if(tickAfterTpToOverworld > 0) {
+        if (tickAfterTpToOverworld > 0) {
             tickAfterTpToOverworld--;
-            if(tickAfterTpToOverworld == 0) {
+            if (tickAfterTpToOverworld == 0) {
                 tryMarkMapInOverworld(serverPlayer);
             }
         }
@@ -292,7 +335,7 @@ public class TCRPlayer {
 
     private void handleParticle(ServerPlayer serverPlayer) {
         double step = 5.0 / particleCount;
-        if(spawnParticleTimer > 0) {
+        if (spawnParticleTimer > 0) {
             spawnParticleTimer--;
             for (int i = particleCount - spawnParticleTimer; i <= particleCount; i++) {
                 ParticleOptions particle = ParticleTypes.END_ROD;
@@ -312,15 +355,15 @@ public class TCRPlayer {
     }
 
     private void handleArtelus(ServerPlayer player) {
-        if(tickAfterStartArterius > 0) {
+        if (tickAfterStartArterius > 0) {
             tickAfterStartArterius--;
-            if(arterius != null) {
+            if (arterius != null) {
                 arterius.getLookControl().setLookAt(player);
             } else {
                 return;
             }
-            if(tickAfterStartArterius % 20 == 0) {
-                if(tickAfterStartArterius / 20 == 0) {
+            if (tickAfterStartArterius % 20 == 0) {
+                if (tickAfterStartArterius / 20 == 0) {
                     player.connection.send(new ClientboundSetTitleTextPacket(Component.literal("Go!").withStyle(ChatFormatting.RED)));
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ANVIL_LAND), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
                 } else {
@@ -329,7 +372,7 @@ public class TCRPlayer {
                 }
             }
 
-            if(tickAfterStartArterius == 0) {
+            if (tickAfterStartArterius == 0) {
                 arterius.setInBattle(true);
                 arterius.setTarget(player);
             }
@@ -367,9 +410,9 @@ public class TCRPlayer {
 
     private void handleBless(ServerLevel serverLevel, ServerPlayer serverPlayer) {
         //女神像祈福
-        if(tickAfterBless > 0) {
+        if (tickAfterBless > 0) {
             tickAfterBless--;
-            if(tickAfterBless % 10 == 0) {
+            if (tickAfterBless % 10 == 0) {
                 // 计算进度比例 (从100到1，所以进度是1.0到0.01)
                 float progress = 1.0f - (tickAfterBless / 100.0f);
 
@@ -379,7 +422,7 @@ public class TCRPlayer {
                         SoundSource.AMBIENT, 3.0F, pitch);
 
                 // 如果进度较高，额外播放一个音效增加史诗感
-                if(progress > 0.7f) {
+                if (progress > 0.7f) {
                     serverLevel.playSound(null, blessPos, SoundEvents.BEACON_AMBIENT,
                             SoundSource.AMBIENT, 3.0F, 0.8f + progress * 0.4f);
                 }
@@ -395,10 +438,10 @@ public class TCRPlayer {
 
                 int baseParticleCount = 8;
                 int maxParticleCount = 32;
-                int currentParticleCount = baseParticleCount + (int)((maxParticleCount - baseParticleCount) * progress);
+                int currentParticleCount = baseParticleCount + (int) ((maxParticleCount - baseParticleCount) * progress);
 
                 // 在水平面上创建圆形粒子效果
-                for(int i = 0; i < currentParticleCount; i++) {
+                for (int i = 0; i < currentParticleCount; i++) {
                     double angle = 2 * Math.PI * i / currentParticleCount;
 
                     double x = centerX + currentRadius * Math.cos(angle);
@@ -420,11 +463,11 @@ public class TCRPlayer {
                 // 在垂直方向上也创建粒子效果，数量也随进度增加
                 int baseVerticalCount = 4;
                 int maxVerticalCount = 12;
-                int currentVerticalCount = baseVerticalCount + (int)((maxVerticalCount - baseVerticalCount) * progress);
+                int currentVerticalCount = baseVerticalCount + (int) ((maxVerticalCount - baseVerticalCount) * progress);
 
                 double verticalRadius = 1.5 + progress * 2.5; // 垂直粒子半径也从1.5到4.0
 
-                for(int i = 0; i < currentVerticalCount; i++) {
+                for (int i = 0; i < currentVerticalCount; i++) {
                     double angle = 2 * Math.PI * i / currentVerticalCount;
 
                     double x = centerX + verticalRadius * Math.cos(angle);
@@ -441,9 +484,9 @@ public class TCRPlayer {
                 // 在中心位置添加一些随机粒子，数量也随进度增加
                 int baseRandomCount = 3;
                 int maxRandomCount = 10;
-                int currentRandomCount = baseRandomCount + (int)((maxRandomCount - baseRandomCount) * progress);
+                int currentRandomCount = baseRandomCount + (int) ((maxRandomCount - baseRandomCount) * progress);
 
-                for(int i = 0; i < currentRandomCount; i++) {
+                for (int i = 0; i < currentRandomCount; i++) {
                     double offsetX = (serverLevel.random.nextDouble() - 0.5) * 2.0;
                     double offsetY = serverLevel.random.nextDouble() * 2.0;
                     double offsetZ = (serverLevel.random.nextDouble() - 0.5) * 2.0;
@@ -456,22 +499,22 @@ public class TCRPlayer {
                 }
             }
             //给神谕，加血加耐
-            if(tickAfterBless == 0) {
+            if (tickAfterBless == 0) {
                 final double oldAdder = healthAdder;
                 ItemStack oracle = TCRItems.ANCIENT_ORACLE_FRAGMENT.get().getDefaultInstance();
                 oracle.getOrCreateTag().putString(PLAYER_NAME, serverPlayer.getGameProfile().getName());
                 ItemStack item = blessItem == null ? serverPlayer.getMainHandItem() : blessItem.getDefaultInstance();
-                if(item.is(ModItems.STORM_EYE.get()) && PlayerDataManager.stormEyeTraded.get(serverPlayer) && !PlayerDataManager.stormEyeBlessed.get(serverPlayer)) {
+                if (item.is(ModItems.STORM_EYE.get()) && PlayerDataManager.stormEyeTraded.get(serverPlayer) && !PlayerDataManager.stormEyeBlessed.get(serverPlayer)) {
                     ItemUtil.addItemEntity(serverPlayer, oracle, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
                     healthAdder += 2.0;
                     ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 1, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.stormEyeBlessed.put(serverPlayer, true);
-                } else if(item.is(ModItems.ABYSS_EYE.get()) && PlayerDataManager.abyssEyeTraded.get(serverPlayer) && !PlayerDataManager.abyssEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.ABYSS_EYE.get()) && PlayerDataManager.abyssEyeTraded.get(serverPlayer) && !PlayerDataManager.abyssEyeBlessed.get(serverPlayer)) {
                     ItemUtil.addItemEntity(serverPlayer, oracle, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
                     healthAdder += 2.0;
                     ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 1, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.abyssEyeBlessed.put(serverPlayer, true);
-                } else if(item.is(ModItems.DESERT_EYE.get()) && PlayerDataManager.desertEyeTraded.get(serverPlayer) && !PlayerDataManager.desertEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.DESERT_EYE.get()) && PlayerDataManager.desertEyeTraded.get(serverPlayer) && !PlayerDataManager.desertEyeBlessed.get(serverPlayer)) {
                     ItemUtil.addItemEntity(serverPlayer, oracle, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
                     healthAdder += 2.0;
                     ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
@@ -479,7 +522,7 @@ public class TCRPlayer {
                     PlayerDataManager.canEnterNether.put(serverPlayer, true);
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     serverPlayer.connection.send(new ClientboundSetTitleTextPacket(TCRCoreMod.getInfo("nether_unlock").withStyle(ChatFormatting.RED)));
-                } else if(item.is(ModItems.CURSED_EYE.get()) && PlayerDataManager.cursedEyeTraded.get(serverPlayer) && !PlayerDataManager.cursedEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.CURSED_EYE.get()) && PlayerDataManager.cursedEyeTraded.get(serverPlayer) && !PlayerDataManager.cursedEyeBlessed.get(serverPlayer)) {
                     ItemUtil.addItemEntity(serverPlayer, oracle, 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
                     healthAdder += 2.0;
                     ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
@@ -487,28 +530,28 @@ public class TCRPlayer {
                     PlayerDataManager.canEnterEnd.put(serverPlayer, true);
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     serverPlayer.connection.send(new ClientboundSetTitleTextPacket(TCRCoreMod.getInfo("end_unlock").withStyle(ChatFormatting.LIGHT_PURPLE)));
-                } else if(item.is(ModItems.FLAME_EYE.get()) && PlayerDataManager.flameEyeTraded.get(serverPlayer) && !PlayerDataManager.flameEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.FLAME_EYE.get()) && PlayerDataManager.flameEyeTraded.get(serverPlayer) && !PlayerDataManager.flameEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
                     ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 6, ChatFormatting.GOLD.getColor());
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.flameEyeBlessed.put(serverPlayer, true);
-                } else if(item.is(ModItems.MONSTROUS_EYE.get()) && !PlayerDataManager.monstEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.MONSTROUS_EYE.get()) && !PlayerDataManager.monstEyeBlessed.get(serverPlayer)) {
                     healthAdder += 4.0;
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.monstEyeBlessed.put(serverPlayer, true);
-                } else if(item.is(ModItems.MECH_EYE.get()) && !PlayerDataManager.mechEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.MECH_EYE.get()) && !PlayerDataManager.mechEyeBlessed.get(serverPlayer)) {
                     healthAdder += 4.0;
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.mechEyeBlessed.put(serverPlayer, true);
-                } else if(item.is(ModItems.VOID_EYE.get()) && !PlayerDataManager.voidEyeBlessed.get(serverPlayer)) {
+                } else if (item.is(ModItems.VOID_EYE.get()) && !PlayerDataManager.voidEyeBlessed.get(serverPlayer)) {
                     healthAdder += 4.0;
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.voidEyeBlessed.put(serverPlayer, true);
                 }
-                if(oldAdder < healthAdder) {
+                if (oldAdder < healthAdder) {
                     updateHealth(serverPlayer, true, oldAdder);
-                    if(PlayerDataManager.isAllEyeGet(serverPlayer) && !TCRMainLevelSaveData.get(serverLevel).isAllFinish()) {
-                        TCRTaskManager.LIGHT_ALL_ALTAR.start(serverPlayer);
+                    if (PlayerDataManager.isAllEyeGet(serverPlayer) && !TCRMainLevelSaveData.get(serverLevel).isAllFinish()) {
+                        TCRQuestManager.LIGHT_ALL_ALTAR.start(serverPlayer);
                     }
                 } else {
                     serverPlayer.displayClientMessage(TCRCoreMod.getInfo("nothing_happen_after_bless"), false);
@@ -532,7 +575,7 @@ public class TCRPlayer {
             );
             maxHealthAttr.addPermanentModifier(healthModifier);
             serverPlayer.setHealth(preHealth * serverPlayer.getMaxHealth() / preMaxHealth);
-            if(showTip) {
+            if (showTip) {
                 serverPlayer.displayClientMessage(Component.translatable(Attributes.MAX_HEALTH.getDescriptionId()).withStyle(ChatFormatting.RED).append(" + " + (healthAdder - originalAdder)), false);
             }
         }
@@ -546,10 +589,9 @@ public class TCRPlayer {
                     AttributeModifier.Operation.ADDITION
             );
             staminaAttr.addPermanentModifier(staminaModifier);
-            if(showTip) {
+            if (showTip) {
                 serverPlayer.displayClientMessage(Component.translatable(EpicFightAttributes.MAX_STAMINA.get().getDescriptionId()).withStyle(ChatFormatting.GOLD).append(String.format(" + %.1f", ((healthAdder - originalAdder) / 2.5F))), false);
             }
         }
     }
-
 }

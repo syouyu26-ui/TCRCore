@@ -12,7 +12,7 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
 import com.p1nero.tcrcore.capability.TCRPlayer;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.datagen.TCRAdvancementData;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.save_data.TCRDimSaveData;
@@ -157,8 +157,8 @@ public class GuiderEntity extends PathfinderMob implements IEntityNpc, GeoEntity
 
             WaypointUtil.sendWaypoint(serverPlayer, TCRCoreMod.getInfoKey("godness_statue_pos"), new BlockPos(WorldUtil.GODNESS_STATUE_POS), WaypointColor.AQUA);
 
-            TCRTaskManager.GIVE_ORACLE_TO_KEEPER.finish(serverPlayer);
-            TCRTaskManager.BACK_TO_KEEPER.finish(serverPlayer);
+            TCRQuestManager.GIVE_ORACLE_TO_KEEPER.finish(serverPlayer);
+            TCRQuestManager.BACK_TO_KEEPER.finish(serverPlayer);
             CompoundTag tag = new CompoundTag();
             tag.putInt("stage", PlayerDataManager.stage.getInt(player));
             tag.putBoolean("finished", TCRMainLevelSaveData.get(serverPlayer.serverLevel()).isAllFinish());
@@ -347,12 +347,16 @@ public class GuiderEntity extends PathfinderMob implements IEntityNpc, GeoEntity
             } else if (player.getOffhandItem().is(TCRItems.ANCIENT_ORACLE_FRAGMENT.get())){
                 player.getOffhandItem().shrink(1);
             }
-            TCRTaskManager.GO_TO_OVERWORLD.start(player);
+            TCRQuestManager.GO_TO_OVERWORLD.start(player);
             return;
         }
 
         if(!PlayerDataManager.pillagerKilled.get(player)) {
-            TCRTaskManager.KILL_PILLAGER.start(player);
+            TCRQuestManager.KILL_PILLAGER.start(player);
+            //======TODO 测试
+            TCRQuestManager.FIND_GODNESS_STATUE.start(player);
+            TCRQuestManager.GIVE_ORACLE_TO_KEEPER.start(player);
+            //======TODO 测试
             DialogueComponentBuilder dBuilder = new DialogueComponentBuilder(this, TCRCoreMod.MOD_ID);
             player.displayClientMessage(dBuilder.buildDialogue(this, dBuilder.ans(3)), false);
         }

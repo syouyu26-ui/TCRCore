@@ -17,7 +17,7 @@ import java.util.Set;
 public class PlayerDataManager {
     private final static Set<String> EXISTING_ID = new HashSet<>();
     public static DoubleData stage = new DoubleData("stage", 0);
-    public static DoubleData currentTaskId = new DoubleData("currentTaskId", TCRTaskManager.NO_TASK);
+    public static DoubleData currentQuestId = new DoubleData("currentTaskId", TCRQuestManager.NO_QUEST);
     public static BoolData wraithonKilled = new BoolData("wraithonKilled", false);
     public static BoolData boatGet = new BoolData("boat_get", false);
     public static BoolData letterGet = new BoolData("letterGet", false);
@@ -76,10 +76,10 @@ public class PlayerDataManager {
 
     public static boolean isAllEyeGet(Player player) {
         return stormEyeTraded.get(player)
-                &&flameEyeTraded.get(player)
-                &&abyssEyeTraded.get(player)
-                &&cursedEyeTraded.get(player)
-                &&desertEyeTraded.get(player);
+                && flameEyeTraded.get(player)
+                && abyssEyeTraded.get(player)
+                && cursedEyeTraded.get(player)
+                && desertEyeTraded.get(player);
     }
 
     public static boolean isAllAltarKilled(Player player) {
@@ -126,7 +126,7 @@ public class PlayerDataManager {
         protected int id;
 
         public Data(String key) {
-            if(EXISTING_ID.contains(key)) {
+            if (EXISTING_ID.contains(key)) {
                 throw new IllegalArgumentException(key + " is already exist!");
             }
             this.key = key;
@@ -188,6 +188,8 @@ public class PlayerDataManager {
                 getTCRPlayer(player).putString(key, value);
                 if (player instanceof ServerPlayer serverPlayer) {
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked, value), serverPlayer);
+                } else {
+                    PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked, value));
                 }
             }
         }
@@ -227,6 +229,8 @@ public class PlayerDataManager {
                 getTCRPlayer(player).putDouble(key, value);
                 if (player instanceof ServerPlayer serverPlayer) {
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentDoubleDataSyncPacket(key, isLocked, value), serverPlayer);
+                } else {
+                    PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PersistentDoubleDataSyncPacket(key, isLocked, value));
                 }
             }
         }

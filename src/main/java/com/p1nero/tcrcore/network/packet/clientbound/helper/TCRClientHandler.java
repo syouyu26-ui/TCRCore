@@ -3,7 +3,7 @@ package com.p1nero.tcrcore.network.packet.clientbound.helper;
 import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
-import com.p1nero.tcrcore.client.gui.TCREndScreen;
+import com.p1nero.tcrcore.client.gui.screen.TCREndScreen;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.serverbound.EndScreenCallbackPacket;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package com.p1nero.tcrcore.datagen;
 
 import com.p1nero.tcrcore.TCRCoreMod;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.datagen.lang.TCRENLangGenerator;
 import com.p1nero.tcrcore.datagen.lang.TCRZHLangGenerator;
 import com.p1nero.tcrcore.datagen.loot.TCRLootTableProvider;
@@ -19,7 +19,6 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.merlin204.wraithon.worldgen.WraithonWorldGenProvider;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 public class TCRDataGenerators {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void gatherData(GatherDataEvent event) {
-        TCRTaskManager.init();
+        TCRQuestManager.init();
 
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();

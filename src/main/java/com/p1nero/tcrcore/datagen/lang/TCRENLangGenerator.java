@@ -4,7 +4,7 @@ import com.github.L_Ender.cataclysm.init.ModItems;
 import com.hm.efn.registries.EFNItem;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.block.TCRBlocks;
-import com.p1nero.tcrcore.capability.TCRTaskManager;
+import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.client.KeyMappings;
 import com.p1nero.tcrcore.client.gui.BanPortalScreenHandler;
 import com.p1nero.tcrcore.effect.TCREffects;
@@ -37,13 +37,6 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.add("travelerstitles.tcrcore.sanctum", "Realm of Dreams");
         this.addBiome(TCRBiomes.AIR, "Void Region");
 
-        this.addTask(TCRTaskManager.KILL_PILLAGER, "Kill an illager");
-        this.addTask(TCRTaskManager.GIVE_ORACLE_TO_KEEPER, "Give the §6[Oracle]§r to The Keeper");
-        this.addTask(TCRTaskManager.BACK_TO_KEEPER, "Go back to The Keeper");
-        this.addTask(TCRTaskManager.FIND_GODNESS_STATUE, "Offer §6[Eye]§r to Goddess Statue");
-        this.addTask(TCRTaskManager.FIND_ARTERIUS, "Go back to Arterius");
-        this.addTask(TCRTaskManager.LIGHT_ALL_ALTAR, "Light all the altars.");
-        this.addTask(TCRTaskManager.GO_TO_OVERWORLD, "Go to the Overworld");
 
         this.addTCRItemInfo(net.blay09.mods.waystones.item.ModItems.warpStone, "Click the §6[Scroll]§r button in the inventory to teleport to activated waystones!");
         this.addTCRItemInfo("§cWarning! This item may cause important items to be sucked into the backpack and become invalid!", net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.PICKUP_UPGRADE.get());
@@ -87,6 +80,9 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "It bears an ancient oracle hinting at the locations of scattered embers. Show it to the The Sanctuary Keeper in the The Sanctuary; it might aid your adventure!");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§cIn multiplayer mode, do not occupy other players'! Everyone must submit their own!", 2);
 
+        this.addInfo("exit_quest_screen", "OK");
+        this.addInfo("no_quest", "No Quest");
+        this.addInfo("tracking_quest", " [☆Tracking]");
         this.addInfo("require_item_to_wake", "Require [%s]...");
         this.addInfo("weapon_no_interact", "Cannot interact! Please press [%s] vanilla mode or other item.");
         this.addInfo("tudigong_gift", "[Gift]");
