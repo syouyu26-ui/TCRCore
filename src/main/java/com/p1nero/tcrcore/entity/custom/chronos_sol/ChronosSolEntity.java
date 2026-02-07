@@ -7,12 +7,15 @@ import com.p1nero.dialog_lib.api.entity.goal.LookAtConservingPlayerGoal;
 import com.p1nero.dialog_lib.client.screen.DialogueScreen;
 import com.p1nero.dialog_lib.client.screen.builder.StreamDialogueScreenBuilder;
 import com.p1nero.tcrcore.TCRCoreMod;
+import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRCapabilityProvider;
 import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.capability.TCRQuests;
 import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -130,6 +133,7 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
     @Override
     @OnlyIn(Dist.CLIENT)
     public DialogueScreen getDialogueScreen(CompoundTag compoundTag) {
+        LocalPlayer localPlayer = Minecraft.getInstance().player;
         int currentQuestId = compoundTag.getInt("current_quest_id");
         TCRQuestManager.Quest currentQuest = TCRQuestManager.getQuestById(currentQuestId);
         StreamDialogueScreenBuilder treeBuilder = new StreamDialogueScreenBuilder(this, TCRCoreMod.MOD_ID);
@@ -143,16 +147,16 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
                 .addChild(new DialogNode(dBuilder.ans(2), dBuilder.opt(-1))
                         .addLeaf(dBuilder.opt(-2)));
 
-        DialogNode aboutAine = new DialogNode(dBuilder.ans(3), dBuilder.opt(1))
+        DialogNode aboutAine = new DialogNode(dBuilder.ans(3), dBuilder.opt(1, TCREntities.AINE_IRIS.get().getDescription()))
                 .addLeaf(dBuilder.opt(-2));
 
-        DialogNode aboutFerryGirl = new DialogNode(dBuilder.ans(4), dBuilder.opt(2))
+        DialogNode aboutFerryGirl = new DialogNode(dBuilder.ans(4), dBuilder.opt(2, TCREntities.FERRY_GIRL.get().getDescription()))
                 .addLeaf(dBuilder.opt(-2));
 
-        DialogNode aboutOrnn = new DialogNode(dBuilder.ans(5), dBuilder.opt(3))
+        DialogNode aboutOrnn = new DialogNode(dBuilder.ans(5), dBuilder.opt(3, TCREntities.ORNN.get().getDescription()))
                 .addLeaf(dBuilder.opt(-2));
 
-        if(currentQuest == TCRQuests.TALK_TO_CHRONOS_1) {
+        if(TCRQuests.TALK_TO_CHRONOS_1.equals(currentQuest)) {
             //初次对话
             root = new DialogNode(dBuilder.ans(6));
             //你是何人
@@ -171,13 +175,13 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
         } else {
             //默认的情况
 
-            if(true) {
+            if(PlayerDataManager.aineTalked.get(localPlayer)) {
                 root.addChild(aboutAine);
             }
-            if(true) {
+            if(PlayerDataManager.ferryGirlTalked.get(localPlayer)) {
                 root.addChild(aboutFerryGirl);
             }
-            if(true) {
+            if(PlayerDataManager.ornnTalked.get(localPlayer)) {
                 root.addChild(aboutOrnn);
             }
 
@@ -190,8 +194,13 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
 
     @Override
     public void handleNpcInteraction(ServerPlayer player, int code) {
+        //初次对话，准备启程
         if(code == 1) {
+            TCRQuests.TALK_TO_CHRONOS_1.finish(player);
 
+            TCRQuests.TALK_TO_FERRY_GIRL_1.start(player);
+            TCRQuests.TALK_TO_ORNN_1.start(player);
+            PlayerDataManager.chonosTalked.put(player, true);
         }
         this.setConversingPlayer(null);
     }

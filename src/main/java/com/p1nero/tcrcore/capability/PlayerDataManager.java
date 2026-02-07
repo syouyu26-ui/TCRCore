@@ -18,6 +18,11 @@ public class PlayerDataManager {
     private final static Set<String> EXISTING_ID = new HashSet<>();
     public static DoubleData stage = new DoubleData("stage", 0);
     public static DoubleData currentQuestId = new DoubleData("currentTaskId", TCRQuestManager.NO_QUEST);
+
+    public static BoolData aineTalked = new BoolData("aineTalked", false);
+    public static BoolData ornnTalked = new BoolData("ornnTalked", false);
+    public static BoolData chonosTalked = new BoolData("chonosTalked", false);
+    public static BoolData ferryGirlTalked = new BoolData("ferryGirlTalked", false);
     public static BoolData wraithonKilled = new BoolData("wraithonKilled", false);
     public static BoolData boatGet = new BoolData("boat_get", false);
     public static BoolData letterGet = new BoolData("letterGet", false);
@@ -30,7 +35,7 @@ public class PlayerDataManager {
     public static BoolData swordSoaringUnlocked = new BoolData("sword_soaring_avoid_unlocked", false);
     public static BoolData fireAvoidUnlocked = new BoolData("fire_avoid_unlocked", false);
     public static BoolData waterAvoidUnlocked = new BoolData("water_avoid_unlocked", false);
-    public static BoolData bllSummoned = new BoolData("bll_summoned", false);
+
     public static BoolData firstJoint = new BoolData("first_joint", false);
     public static BoolData wayStoneInteracted = new BoolData("way_stone_interacted", false);
     public static BoolData dodged = new BoolData("dodged", false);
@@ -40,6 +45,7 @@ public class PlayerDataManager {
     public static BoolData weapon_innate_used = new BoolData("weapon_innate_used", false);
     public static BoolData mapMarked = new BoolData("map_marked", false);//是否标记过地图了，省的二次搜索地图浪费
 
+    //是否获取过
     public static BoolData stormEyeTraded = new BoolData("storm_eye_traded", false);
     public static BoolData flameEyeTraded = new BoolData("flame_eye_traded", false);
     public static BoolData abyssEyeTraded = new BoolData("abyss_eye_traded", false);
@@ -49,6 +55,7 @@ public class PlayerDataManager {
     public static BoolData voidEyeTraded = new BoolData("void_eye_traded", false);
     public static BoolData monstEyeTraded = new BoolData("monst_eye_traded", false);
 
+    //是否击败过里面的boss
     public static BoolData stormEyeKilled = new BoolData("storm_eye_killed", false);
     public static BoolData flameEyeKilled = new BoolData("flame_eye_killed", false);
     public static BoolData abyssEyeKilled = new BoolData("abyss_eye_killed", false);
@@ -58,6 +65,7 @@ public class PlayerDataManager {
     public static BoolData voidEyeKilled = new BoolData("void_eye_killed", false);
     public static BoolData monstEyeKilled = new BoolData("monst_eye_killed", false);
 
+    //是否祈福过
     public static BoolData stormEyeBlessed = new BoolData("stormEyeBlessed", false);
     public static BoolData abyssEyeBlessed = new BoolData("abyssEyeBlessed", false);
     public static BoolData desertEyeBlessed = new BoolData("desertEyeBlessed", false);
@@ -67,6 +75,7 @@ public class PlayerDataManager {
     public static BoolData monstEyeBlessed = new BoolData("monstEyeBlessed", false);
     public static BoolData voidEyeBlessed = new BoolData("voidEyeBlessed", false);
 
+    //是否点亮过祭坛
     public static BoolData stormEyeActivated = new BoolData("stormEyeActivated", false);
     public static BoolData abyssEyeActivated = new BoolData("abyssEyeActivated", false);
     public static BoolData desertEyeActivated = new BoolData("desertEyeActivated", false);

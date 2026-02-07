@@ -1,13 +1,23 @@
 package com.p1nero.tcrcore.entity.custom.aine_iris;
 
+import com.p1nero.dialog_lib.api.component.DialogNode;
+import com.p1nero.dialog_lib.api.component.DialogueComponentBuilder;
 import com.p1nero.dialog_lib.api.entity.custom.IEntityNpc;
 import com.p1nero.dialog_lib.client.screen.DialogueScreen;
+import com.p1nero.dialog_lib.client.screen.builder.StreamDialogueScreenBuilder;
+import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRPlayer;
 import com.p1nero.tcrcore.capability.TCRQuestManager;
+import com.p1nero.tcrcore.capability.TCRQuests;
+import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.save_data.TCRMainLevelSaveData;
+import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
+import moe.plushie.armourers_workshop.init.ModItems;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -53,7 +63,9 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (player instanceof ServerPlayer serverPlayer) {
             CompoundTag tag = new CompoundTag();
-
+            if(!PlayerDataManager.aineTalked.get(player)) {
+                PlayerDataManager.aineTalked.put(player, true);
+            }
             this.sendDialogTo(serverPlayer, tag);
         }
         return InteractionResult.sidedSuccess(level().isClientSide);
@@ -62,26 +74,71 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
     @Override
     @OnlyIn(Dist.CLIENT)
     public DialogueScreen getDialogueScreen(CompoundTag serverData) {
+        LocalPlayer localPlayer = Minecraft.getInstance().player;
+        if(localPlayer == null) {
+            return null;
+        }
+        int currentQuestId = serverData.getInt("current_quest_id");
+        TCRQuestManager.Quest currentQuest = TCRQuestManager.getQuestById(currentQuestId);
+        StreamDialogueScreenBuilder treeBuilder = new StreamDialogueScreenBuilder(this, TCRCoreMod.MOD_ID);
+        DialogueComponentBuilder dBuilder = treeBuilder.getComponentBuildr();
 
+        //-1继续
+        //-2结束对话
+        DialogNode root = new DialogNode(dBuilder.ans(0, localPlayer.getDisplayName()));//你来了！我正在阅读这个世界的智库？
 
-        return null;
+        DialogNode aboutChronos = new DialogNode(dBuilder.ans(1), dBuilder.opt(0, TCREntities.CHRONOS_SOL.get().getDescription()))
+                .addLeaf(dBuilder.opt(-2));
+
+        DialogNode aboutThisWorld = new DialogNode(dBuilder.ans(2), dBuilder.opt(1))
+                .addLeaf(dBuilder.opt(-2));
+
+        DialogNode enterDim;//TODO 进入轮回绝境
+
+        DialogNode enchantment;//TODO 法术淬灵
+
+        if(currentQuest.equals(TCRQuests.TALK_TO_AINE_1)) {
+            if(PlayerDataManager.chonosTalked.get(localPlayer)) {
+                root.addChild(aboutChronos);
+                root.addChild(aboutThisWorld);
+            }
+            DialogNode aboutSkin = new DialogNode(dBuilder.ans(3), dBuilder.opt(2))
+                    .addLeaf(dBuilder.opt(3), 1);
+            root.addChild(aboutSkin);
+        } else {
+            if(PlayerDataManager.chonosTalked.get(localPlayer)) {
+                root.addChild(aboutChronos);
+            }
+        }
+
+        return treeBuilder.buildWith(root);
     }
 
     @Override
     public void handleNpcInteraction(ServerPlayer serverPlayer, int i) {
-
+        //初次对话&领取时装
+        if(i == 1) {
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_TEMPLATE.get(), 20);
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY_GLOBAL.get().getDefaultInstance());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY.get().getDefaultInstance());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKINNING_TABLE.get().getDefaultInstance());
+            TCRQuests.TALK_TO_AINE_1.finish(serverPlayer);
+        }
+        this.setConversingPlayer(null);
     }
 
     @Override
     public void tick() {
         super.tick();
         if(!level().isClientSide) {
-//            if(tickCount % 100 == 0) {
-//                BlockPos myPos = this.getOnPos();
-//                if(myPos.getX() != WorldUtil.AINE_IRIS_POS.getX() || myPos.getZ() != WorldUtil.AINE_IRIS_POS.getZ()) {
-//                    this.setPos(new BlockPos(WorldUtil.AINE_IRIS_POS).getCenter());
-//                }
-//            }
+
+            //位置矫正保险
+            if(tickCount % 100 == 0) {
+                BlockPos myPos = this.getOnPos();
+                if(myPos.getX() != WorldUtil.AINE_POS.getX() || myPos.getZ() != WorldUtil.AINE_POS.getZ()) {
+                    this.setPos(new BlockPos(WorldUtil.AINE_POS).getCenter());
+                }
+            }
             if(getConversingPlayer() != null && (getConversingPlayer().isRemoved() || getConversingPlayer().isDeadOrDying() || getConversingPlayer().distanceTo(this) > 5)) {
                 setConversingPlayer(null);
             }

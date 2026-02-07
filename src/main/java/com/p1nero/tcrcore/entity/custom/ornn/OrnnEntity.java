@@ -2,6 +2,9 @@ package com.p1nero.tcrcore.entity.custom.ornn;
 
 import com.p1nero.dialog_lib.api.entity.custom.IEntityNpc;
 import com.p1nero.dialog_lib.client.screen.DialogueScreen;
+import com.p1nero.tcrcore.capability.PlayerDataManager;
+import com.p1nero.tcrcore.utils.WorldUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,6 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +36,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, Merchant {
     protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+    protected static final RawAnimation FORGE = RawAnimation.begin().thenPlay("forge");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    private final int yRot = 0;
 
     @Nullable
     private Player tradingPlayer;
@@ -43,8 +50,16 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
     }
 
     @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        return source.isCreativePlayer();
+    }
+
+    @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (player instanceof ServerPlayer serverPlayer) {
+            if(!PlayerDataManager.ornnTalked.get(player)) {
+                PlayerDataManager.ornnTalked.put(player, true);
+            }
             CompoundTag tag = new CompoundTag();
 
             this.sendDialogTo(serverPlayer, tag);
@@ -69,21 +84,39 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
     public void tick() {
         super.tick();
         if(!level().isClientSide) {
-//            if(tickCount % 100 == 0) {
-//                BlockPos myPos = this.getOnPos();
-//                if(myPos.getX() != WorldUtil.AINE_IRIS_POS.getX() || myPos.getZ() != WorldUtil.AINE_IRIS_POS.getZ()) {
-//                    this.setPos(new BlockPos(WorldUtil.AINE_IRIS_POS).getCenter());
-//                }
-//            }
+            //2s播放一次
+            if(tickCount % 40 == 0) {
+                playForgeAnimation();
+            }
+            //播放后0.75s敲到
+            if((tickCount - 15) % 40 == 0) {
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, getSoundSource(), 1.0F, 1.0F);
+            }
             if(getConversingPlayer() != null && (getConversingPlayer().isRemoved() || getConversingPlayer().isDeadOrDying() || getConversingPlayer().distanceTo(this) > 5)) {
                 setConversingPlayer(null);
             }
+
+            if(tickCount % 100 == 0) {
+                BlockPos myPos = this.getOnPos();
+                if(myPos.getX() != WorldUtil.ORNN_POS.getX() || myPos.getZ() != WorldUtil.ORNN_POS.getZ()) {
+                    this.setPos(new BlockPos(WorldUtil.ORNN_POS).getCenter());
+                }
+            }
         }
+        //转头就好了
+        setYBodyRot(yRot);
+        setYRot(yRot);
+    }
+
+    public void playForgeAnimation() {
+        this.triggerAnim("Controller", "forge");
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, this::deployAnimController));
+        controllers.add(new AnimationController<>(this, "Controller", 0, state -> PlayState.CONTINUE)
+                .triggerableAnim("forge", FORGE));
     }
 
     protected <E extends OrnnEntity> PlayState deployAnimController(final AnimationState<E> state) {

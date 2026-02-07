@@ -224,7 +224,7 @@ public class TCRPlayer {
      */
     public void tryMarkMapInOverworld(ServerPlayer serverPlayer) {
 
-        //TODO 添加各个获取任务
+        //TODO 添加各个获取任务，根据任务来给路标，移除使用共鸣石，添加寻找xx眼
         if (needToMarkMapInOverworld && serverPlayer.serverLevel().dimension() == Level.OVERWORLD) {
             // 揭示预言，即解锁新玩法。根据记录的id解锁，初始阶段0，1解锁时装和武器 2解锁盔甲和boss图鉴，3解锁附魔地狱末地，具体在FTB看
             // 同时按阶段来解锁boss提示

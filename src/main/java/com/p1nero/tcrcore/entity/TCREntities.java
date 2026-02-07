@@ -39,7 +39,7 @@ public class TCREntities {
             EntityType.Builder.of(AineIrisEntity::new, MobCategory.CREATURE).sized(0.6f, 1.9f).fireImmune());
 
     public static final RegistryObject<EntityType<OrnnEntity>> ORNN = register("ornn",
-            EntityType.Builder.of(OrnnEntity::new, MobCategory.CREATURE).sized(0.6f, 1.9f).fireImmune());
+            EntityType.Builder.of(OrnnEntity::new, MobCategory.CREATURE).sized(4f, 4f).fireImmune());
 
     public static final RegistryObject<EntityType<TutorialGolem>> TUTORIAL_GOLEM = register("tutorial_golem",
             EntityType.Builder.of(TutorialGolem::new, MobCategory.CREATURE).sized(1.4F, 2.7f).fireImmune());
@@ -52,6 +52,7 @@ public class TCREntities {
     public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
         event.put(CHRONOS_SOL.get(), ChronosSolEntity.setAttributes());
         event.put(FERRY_GIRL.get(), ChronosSolEntity.setAttributes());
+        event.put(ORNN.get(), ChronosSolEntity.setAttributes());
         event.put(AINE_IRIS.get(), ChronosSolEntity.setAttributes());
         event.put(TUTORIAL_GOLEM.get(), TutorialGolem.setAttributes());
 

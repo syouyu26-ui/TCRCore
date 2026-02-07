@@ -22,7 +22,7 @@ import net.shelmarow.nightfall_invade.entity.NFIEntities;
 import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
 import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 
-public class    TCRZHLangGenerator extends TCRLangProvider {
+public class TCRZHLangGenerator extends TCRLangProvider {
     public TCRZHLangGenerator(PackOutput output) {
         super(output, "zh_cn");
     }
@@ -30,8 +30,10 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
     @Override
     protected void addTranslations() {
 
-        this.addQuest(TCRQuests.TALK_TO_AINE_1, "序章", "和安对话", "和安说好了一起来到这个世界，但是当你回过神来后安已经找不着人影了，快去圣殿里找找她吧！");
-        this.addQuest(TCRQuests.TALK_TO_CHRONOS_1, "序章", "和？？？对话", "和安说好了一起来到这个世界，但是当你回过神来后安已经找不着人影了。这里到底是什么地方？和圣殿长廊中那位端庄的女人交流看看吧！");
+        this.addQuest(TCRQuests.TALK_TO_AINE_1, "序章", "和%s对话", "和%s说好了一起来到这个世界，但是当你回过神来后%s已经找不着人影了，快去圣殿里找找她吧！");
+        this.addQuest(TCRQuests.TALK_TO_CHRONOS_1, "序章", "和？对话", "和%s说好了一起来到这个世界，但是当你回过神来后%s已经找不着人影了。这里到底是什么地方？和圣殿长廊中那位端庄的女人交流看看吧！");
+        this.addQuest(TCRQuests.TALK_TO_FERRY_GIRL_1, "序章", "和%s对话", "你已经听说了这个世界的故事，准备好了就前往码头寻找 %s 吧！她将为我们打开前往Overworld的路！");
+        this.addQuest(TCRQuests.TALK_TO_ORNN_1, "序章", "和%s对话", "在%s的建议下，先去武库找%s武装一下我们自己吧！充分的武装才能保证我们顺利的冒险！");
 
         this.addEffect(TCREffects.INVULNERABLE, "无敌");
         this.addEffect(TCREffects.SOUL_INCINERATOR, "灵魂火");
@@ -226,6 +228,7 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
 
         this.add(TCREntities.CHRONOS_SOL.get(), "羲轮｜Chronos Sol");
         this.add(TCREntities.FERRY_GIRL.get(), "摆渡人");
+        this.add(TCREntities.AINE_IRIS.get(), "安");
         this.add(TCREntities.ORNN.get(), "老奥恩");
         this.add(TCREntities.TUTORIAL_GOLEM.get(), "训练傀儡");
 
@@ -267,11 +270,11 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 0, "关于这个世界");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 1, "千年以前，“我们”的世界受到未知的天外冲击，黑潮降临世间。面对无穷无尽的黑潮，“我们”无能为力。受黑潮影响，“我们”的记忆逐渐缺失...祂们一个接一个地被黑潮所吞噬，祂们的灵魂被封印在世界各地之中。当“我们”意识到“我们”的记忆正在如潮水般逐渐消退之时，“我们”用魔力写下了死海文书，用以提醒吾等，终有一位救世主自天外归来，将“我们”的力量统合，实现再创世，将黑潮击溃！");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 2, "吾受黑潮的侵蚀程度最轻，祂们用尽最后的力气，将吾与脚下这座主城封入原始之海，以减缓黑潮之侵蚀，等待救世主归来。至于救世主是何人，为何有救世的力量，“我们”已无从得知。但在黑潮面前，“我们”只能相信这份古老的记忆，相信再创世的到来...");
-        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 1, "关于安");
+        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 1, "关于%s");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 3, "阁下说的可是在此处落脚的魔女阁下？她看起来和阁下一样掌握着不属于这个世界的力量，吾相信预言，吾相信阁下与魔女阁下能拯救圣殿，这里的一切都将为二位敞开！");
-        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 2, "关于摆渡人");
+        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 2, "关于%s");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 4, "自黑潮入侵以来，她在港口驻守千年，是此间与世界唯一的联系。她是“我们”所铸造的人偶，随着“我们”记忆的消退，她的力量也所剩无几了。");
-        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 3, "关于老奥恩");
+        this.addDialogOption(TCREntities.CHRONOS_SOL.get(), 3, "关于%s");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 5, "祂是来自主世界的半神，掌管锻造与工艺。使徒们所用之神兵百胄皆出自祂之手。");
 
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 6, "预言中的救世主啊，吾已在此恭候多时！唯有阁下可寻回众神之眼，恢复世界昔日之荣光！");
@@ -283,6 +286,17 @@ public class    TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 9, "阁下需寻回祂们的锚定之物——神之眼，将众使徒的灵魂归位到祭坛之上，届时，吾再献上自己的灵魂，便可实现死海文书所记载的再创世！");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 10, "原始之海屏蔽了外界的气息，吾在此处无从得知祂们的位置。但借此§6共鸣石§f可再外界寻得神之眼散落的位置。我将这枚共鸣石给予阁下，待阁下到了主世界，共鸣石将引领你寻找使徒所在之处。切记，每个阶段仅能使用一次共鸣石！待阁下寻回神之眼后，吾方可利用神之眼铸造新的共鸣石。");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 11, "阁下可以先去§6[武库]§f找 %s 取一样趁手的武器。准备好了就去港口寻找 %s 吧，她将带你前往旅程的起点。");
+
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), -2, "结束对话");
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), -1, "继续");
+        this.addDialogAnswer(TCREntities.AINE_IRIS.get(), 0, "%s, 你来了！我正在阅读这个世界的智库");
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), 0, "关于%s");
+        this.addDialogAnswer(TCREntities.AINE_IRIS.get(), 1, "你已经和那个女人打过招呼啦？她应该就是这里的老大了，看来要解决这里的问题，我们暂时只能按她的话做了。");
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), 1, "关于这个世界");
+        this.addDialogAnswer(TCREntities.AINE_IRIS.get(), 2, "你已经听过那女人讲的故事了吧？但是真是假，还得真正的踏上旅程才知道。来之前可说好了，要靠你自己的力量找回失去的记忆！加油，我会一直在你身边，做你坚强的后盾！");
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), 2, "§a关于时装");
+        this.addDialogAnswer(TCREntities.AINE_IRIS.get(), 3, "看！我这身新衣服！漂亮吧？来到这个世界，也应该换一套新的行头才行！给，你也快换上吧！");
+        this.addDialogOption(TCREntities.AINE_IRIS.get(), 3, "§a领取");
 
         this.addDialogAnswer(TCREntities.FERRY_GIRL.get(), 0, "阁下，好久不见！");
         this.addDialogAnswer(TCREntities.FERRY_GIRL.get(), 1, "阁下忘了我么？我是圣殿摆渡人，为众人指点迷津。阁下如有奇珍异宝，可与我瞧瞧，小女子可提取忆质，将其化为宝具！当你踏足过§c地狱§f或§d末地§f后，我也可以送你一程。");

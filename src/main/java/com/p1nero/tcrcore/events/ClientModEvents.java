@@ -13,6 +13,7 @@ import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.entity.custom.aine_iris.AineIrisRenderer;
 import com.p1nero.tcrcore.entity.custom.ferry_girl.FerryGirlGeoRenderer;
 import com.p1nero.tcrcore.entity.custom.chronos_sol.ChronosSolGeoRenderer;
+import com.p1nero.tcrcore.entity.custom.ornn.OrnnlGeoRenderer;
 import com.p1nero.tcrcore.entity.custom.tutorial_golem.TutorialGolemRenderer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -36,6 +37,7 @@ public class ClientModEvents {
         EntityRenderers.register(TCREntities.CUSTOM_COLOR_ITEM.get(), ItemEntityRenderer::new);
         EntityRenderers.register(TCREntities.CHRONOS_SOL.get(), ChronosSolGeoRenderer::new);
         EntityRenderers.register(TCREntities.FERRY_GIRL.get(), FerryGirlGeoRenderer::new);
+        EntityRenderers.register(TCREntities.ORNN.get(), OrnnlGeoRenderer::new);
         EntityRenderers.register(TCREntities.AINE_IRIS.get(), AineIrisRenderer::new);
         EntityRenderers.register(TCREntities.TUTORIAL_GOLEM.get(), TutorialGolemRenderer::new);
 
