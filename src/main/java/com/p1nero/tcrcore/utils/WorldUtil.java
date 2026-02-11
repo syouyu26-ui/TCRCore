@@ -86,39 +86,7 @@ public class WorldUtil {
      */
     @Nullable
     public static BlockPos getNearbyStructurePos(ServerPlayer serverPlayer, String structureId, int y) {
-        ServerLevel serverLevel = serverPlayer.serverLevel();
-        ResourceLocation structureResourceLocation = ResourceLocation.tryParse(structureId);
-        if (structureResourceLocation == null) {
-            return null;
-        }
-
-        ResourceKey<Structure> structureKey = ResourceKey.create(Registries.STRUCTURE, structureResourceLocation);
-        Registry<Structure> structureRegistry = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE);
-
-        var structureHolderOpt = structureRegistry.getHolder(structureKey);
-        if (structureHolderOpt.isEmpty()) {
-            return null;
-        }
-
-        HolderSet<Structure> structureSet = HolderSet.direct(structureHolderOpt.get());
-
-        ChunkGenerator chunkGenerator = serverLevel.getChunkSource().getGenerator();
-        BlockPos playerPos = serverPlayer.blockPosition();
-
-        Pair<BlockPos, Holder<Structure>> result = chunkGenerator.findNearestMapStructure(
-                serverLevel,
-                structureSet,
-                playerPos,
-                20000,
-                true//跳过已找？
-        );
-
-        if (result != null) {
-            BlockPos structurePos = result.getFirst();
-            return new BlockPos(structurePos.getX(), y, structurePos.getZ());
-        }
-
-        return null;
+        return getNearbyStructurePos(serverPlayer.serverLevel(), serverPlayer.getOnPos(), structureId, y);
     }
 
 
@@ -146,7 +114,7 @@ public class WorldUtil {
                 structureSet,
                 playerPos,
                 20000,
-                false
+                true//跳过已找？
         );
 
         if (result != null) {

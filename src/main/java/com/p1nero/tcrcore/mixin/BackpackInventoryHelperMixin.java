@@ -26,17 +26,13 @@ public abstract class BackpackInventoryHelperMixin {
 
     @Inject(method = "runPickupOnPickupResponseUpgrades(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/p3pp3rf1y/sophisticatedcore/upgrades/UpgradeHandler;Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/item/ItemStack;", at = @At(value = "HEAD"), remap = false, cancellable = true)
     private static void tcr$runPickupOnPickupResponseUpgrades(Level world, Player player, UpgradeHandler upgradeHandler, ItemStack remainingStack, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
-        ItemEntity temp = new ItemEntity(world, 0, 0, 0, remainingStack.copy());
-        int hook = net.minecraftforge.event.ForgeEventFactory.onItemPickup(temp, player);
-        if (hook < 0) {
-            cir.setReturnValue(remainingStack);
-            return;
-        }
+        ItemStack copy = remainingStack.copy();
+        ItemEntity temp = new ItemEntity(world, 0, 0, 0, copy);
         for(IPickupResponseUpgrade pickupUpgrade : upgradeHandler.getWrappersThatImplement(IPickupResponseUpgrade.class)) {
             int countBeforePickup = remainingStack.getCount();
             remainingStack = pickupUpgrade.pickup(world, remainingStack, simulate);
             if (!simulate && player != null && remainingStack.getCount() != countBeforePickup) {
-                net.minecraftforge.event.ForgeEventFactory.firePlayerItemPickupEvent(player, temp, remainingStack.copy());
+                net.minecraftforge.event.ForgeEventFactory.firePlayerItemPickupEvent(player, temp, copy);
                 playPickupSound(world, player);
             }
 

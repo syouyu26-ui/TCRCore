@@ -58,6 +58,7 @@ public abstract class MagnetUpgradeWrapperMixin extends UpgradeWrapperBase<Magne
         List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(upgradeItem.getRadius()), e -> true);
         if (itemEntities.isEmpty()) {
             cir.setReturnValue(COOLDOWN_TICKS);
+            return;
         }
 
         Player player = entity instanceof Player ? (Player) entity : null;
@@ -71,9 +72,11 @@ public abstract class MagnetUpgradeWrapperMixin extends UpgradeWrapperBase<Magne
             if (!itemEntity.isAlive() || itemEntity.pickupDelay == ItemEntity.INFINITE_PICKUP_DELAY || !filterLogic.matchesFilter(itemEntity.getItem()) || canNotPickup(itemEntity, entity)) {
                 continue;
             }
+            //防止被消耗
+            ItemStack itemStack = itemEntity.getItem().copy();
             if (tryToInsertItem(itemEntity)) {
                 if (player != null) {
-                    net.minecraftforge.event.ForgeEventFactory.firePlayerItemPickupEvent(player, itemEntity, itemEntity.getItem().copy());
+                    net.minecraftforge.event.ForgeEventFactory.firePlayerItemPickupEvent(player, itemEntity, itemStack);
                     playItemPickupSound(world, player);
                 }
                 cooldown = COOLDOWN_TICKS;

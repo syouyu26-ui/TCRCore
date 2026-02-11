@@ -8,6 +8,7 @@ import com.p1nero.tcrcore.capability.TCRQuests;
 import com.p1nero.tcrcore.utils.WaypointUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import com.yesman.epicskills.registry.entry.EpicSkillsSounds;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,31 +37,54 @@ public class LandResonanceStoneItem extends ResonanceStoneItem{
     }
 
     /**
-     * 额外搜索奇美拉地牢
+     * 额外搜索奇美拉地牢，用super怕丢了一个。。
      */
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
         if(player instanceof ServerPlayer serverPlayer) {
             if(predicate.test(serverPlayer) && level.dimension().equals(Level.OVERWORLD)) {
                 CompletableFuture.supplyAsync(() -> {
                     serverPlayer.displayClientMessage(TCRCoreMod.getInfo("resonance_stone_working", this.getDescription()), true);
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EpicSkillsSounds.GAIN_ABILITY_POINTS.get()), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
+
                     BlockPos pos = null;
                     try {
-                        pos = WorldUtil.getNearbyStructurePos(serverPlayer, WorldUtil.BONE_CHIMERA_STRUCTURE, 63);
+                        pos = WorldUtil.getNearbyStructurePos(serverPlayer, targetStructure.toString(), y);
+                    } catch (Exception e) {
+                        TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", targetStructure, e.getMessage());
+                    }
+
+                    BlockPos pos1 = null;
+                    try {
+                        //以大地高塔为中心搜奇美拉的位置
+                        pos1 = WorldUtil.getNearbyStructurePos(serverPlayer.serverLevel(), pos, WorldUtil.BONE_CHIMERA_STRUCTURE, 63);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", WorldUtil.BONE_CHIMERA_STRUCTURE, e.getMessage());
                     }
-                    return pos;
+                    return Pair.of(pos, pos1);
                 })
-                .thenAccept(pos -> {
+                .thenAccept(posPair -> {
                     TCRPlayer tcrPlayer = TCRCapabilityProvider.getTCRPlayer(player);
-                    tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos.getX(), player.getEyeY(), pos.getZ()));
-                    WaypointUtil.sendWaypoint(serverPlayer, "bone_chimera_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.BONE_CHIMERA_STRUCTURE))), pos, WaypointColor.YELLOW);
-                    TCRQuests.BONE_CHIMERA_QUEST.start(serverPlayer, false);
+                    BlockPos pos = posPair.first();
+                    if(pos != null) {
+                        tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos.getX(), player.getEyeY(), pos.getZ()));
+                        serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EpicSkillsSounds.GAIN_ABILITY_POINTS.get()), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
+                        callback.accept(pos, serverPlayer);
+                    }
+                    BlockPos pos1 = posPair.second();
+                    if(pos1 != null) {
+                        tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos1.getX(), player.getEyeY(), pos1.getZ()));
+                        WaypointUtil.sendWaypoint(serverPlayer, "bone_chimera_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.BONE_CHIMERA_STRUCTURE))), pos1, WaypointColor.YELLOW);
+                        TCRQuests.BONE_CHIMERA_QUEST.start(serverPlayer, false);
+                    }
+                    //保险，俩都找到再消耗
+                    if(pos != null && pos1 != null) {
+                        itemStack.shrink(1);
+                    }
                 });
             }
         }
-        return super.use(level, player, hand);
+        return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide);
     }
 }
