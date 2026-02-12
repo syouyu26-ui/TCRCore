@@ -1,5 +1,6 @@
 package com.p1nero.tcrcore.capability;
 
+import com.github.dodo.dodosmobs.init.ModEntities;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.TCRQuestManager.Quest;
 import com.p1nero.tcrcore.entity.TCREntities;
@@ -44,6 +45,8 @@ public class TCRQuests {
     public static Quest TALK_TO_CHRONOS_1;
     //奇美拉支线
     public static Quest BONE_CHIMERA_QUEST;
+    //百兵图给ornn
+    public static Quest TALK_TO_ORNN_1;
 
     //获取海洋眼
 
@@ -93,10 +96,17 @@ public class TCRQuests {
                 .descParam(TCRItems.LAND_RESONANCE_STONE.get().getDescription())
                 .shortDescParam(Component.translatable("structure.dodosmobs.jungle_prison"));
 
+        TALK_TO_ORNN_1 = TCRQuestManager.create("talk_to_ornn_1")
+                .withIcon(SIDE_QUEST_1)
+                .shortDescParam(TCREntities.ORNN.get().getDescription())
+                .descParam(ModEntities.BONE_CHIMERA.get().getDescription(), TCRItems.MYSTERIOUS_WEAPONS.get().getDescription(),TCREntities.ORNN.get().getDescription())
+                .withTrackingPos(new BlockPos(WorldUtil.ORNN_POS.above(3)), TCRDimensions.SANCTUM_LEVEL_KEY);
+
         //找回眼睛后
         TALK_TO_CHRONOS_1 = TCRQuestManager.create("talk_to_chronos_1")
                 .shortDescParam(TCREntities.CHRONOS_SOL.get().getDescription())
-                .descParam(com.github.L_Ender.cataclysm.init.ModItems.DESERT_EYE.get().getDescription(), TCREntities.CHRONOS_SOL.get().getDescription());
+                .descParam(com.github.L_Ender.cataclysm.init.ModItems.DESERT_EYE.get().getDescription(), TCREntities.CHRONOS_SOL.get().getDescription())
+                .withTrackingPos(new BlockPos(WorldUtil.CHRONOS_SOL_BLOCK_POS.above(4)), TCRDimensions.SANCTUM_LEVEL_KEY);
 
     }
 }

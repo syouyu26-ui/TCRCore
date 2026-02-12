@@ -9,6 +9,7 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.*;
 import com.p1nero.tcrcore.datagen.TCRAdvancementData;
 import com.p1nero.tcrcore.effect.TCREffects;
+import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.CSTipPacket;
 import com.p1nero.tcrcore.network.packet.clientbound.OpenStartScreenPacket;
@@ -498,6 +499,11 @@ public class PlayerEventListeners {
 
             if (itemStack.is(AquamiraeItems.SHELL_HORN.get()) && !PlayerDataManager.abyssEyeGotten.get(player)) {
                 giveOracleEffect(player, AquamiraeItems.SHELL_HORN.get());
+            }
+
+            if(itemStack.is(TCRItems.MYSTERIOUS_WEAPONS.get()) && !TCRQuestManager.hasFinished(player, TCRQuests.TALK_TO_ORNN_1)) {
+                giveOracleEffect(player, TCRItems.MYSTERIOUS_WEAPONS.get());
+                TCRQuests.TALK_TO_ORNN_1.start(player, true);
             }
 
         }

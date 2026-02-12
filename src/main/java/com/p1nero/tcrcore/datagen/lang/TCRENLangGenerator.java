@@ -67,6 +67,8 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addSkill("fire_avoid", "Fire Avoidance Charm", "Immunity to fire damage!");
         this.addSkill("perfect_dodge", "Dodge Effect", "Play a cool animation when perfect dodge!");
 
+        this.add(TCRItems.MYSTERIOUS_WEAPONS.get(), "Mysterious Weapons Scroll");
+        this.addItemUsageInfo(TCRItems.MYSTERIOUS_WEAPONS.get(), "It seems to record all manner of weapons from around the world. You should show it to someone who knows about such things.");
         this.add(TCRItems.DRAGON_FLUTE.get(), "Dragon Flute");
         this.addItemUsageInfo(TCRItems.DRAGON_FLUTE.get(), "Right-click to capture a dragon; right-click again to release it.");
         this.add(TCRItems.LAND_RESONANCE_STONE.get(), "Land Resonance Stone");
@@ -89,6 +91,8 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "It bears an ancient oracle hinting at the locations of scattered embers. Show it to the The Sanctuary Keeper in the The Sanctuary; it might aid your adventure!");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§cIn multiplayer mode, do not occupy other players'! Everyone must submit their own!", 2);
 
+        this.addInfo("unlock_new_ftb_page_title", "§6New Chapter Unlocked!");
+        this.addInfo("unlock_new_ftb_page_subtitle", "§aPress [%s§a] to view");
         this.addInfo("resonance_stone_working", "[%s] Resonating... Please wait patiently...");
         this.addInfo("containing_dragon", "Type: [%s]");
         this.addInfo("dragon_owner", "Owner: [%s]");

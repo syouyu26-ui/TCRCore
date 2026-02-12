@@ -150,7 +150,7 @@ public class TCRQuestManager {
         return quest == null || quest.equals(TCRQuestManager.EMPTY);
     }
 
-    public static boolean hasFinished(ServerPlayer player, Quest quest) {
+    public static boolean hasFinished(Player player, Quest quest) {
         TCRPlayer tcrPlayer = TCRCapabilityProvider.getTCRPlayer(player);
         return tcrPlayer.hasFinished(quest);
     }

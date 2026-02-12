@@ -42,7 +42,7 @@
 			size: 2.5d
 			subtitle: "{ftbquests.chapter.chaptertcr2.quest3431479692052966900.subtitle}"
 			tasks: [{
-				advancement: "tcrcore:stage2"
+				advancement: "tcrcore:unlock_weapon_armor_book"
 				criterion: ""
 				id: "79001546914C8E0B"
 				title: "{ftbquests.chapter.chaptertcr2.quest3431479692052966900.task.8718992271418887691.title}"

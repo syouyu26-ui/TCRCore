@@ -181,6 +181,9 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
             root.addChild(aboutMe)
                     .addChild(aboutThisWorld)
                     .addChild(aboutNext);
+        } else if(TCRQuests.TALK_TO_CHRONOS_1.equals(currentQuest)) {
+            //提交沙漠眼
+//            root = new DialogNode(dBuilder.ans());
         } else {
             //默认的情况
 

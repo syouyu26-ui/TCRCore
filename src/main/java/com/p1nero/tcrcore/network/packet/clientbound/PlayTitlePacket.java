@@ -3,6 +3,7 @@ package com.p1nero.tcrcore.network.packet.clientbound;
 import com.p1nero.dialog_lib.network.packet.BasePacket;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.client.TCRKeyMappings;
+import dev.ftb.mods.ftbquests.client.FTBQuestsClient;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,6 +16,7 @@ public record PlayTitlePacket(int id) implements BasePacket {
     public static final int PARRY_TUTORIAL = 2;
     public static final int LOCK_TUTORIAL = 3;
     public static final int RIPTIDE_TUTORIAL = 4;
+    public static final int UNLOCK_NEW_CHAPTER = 5;
 
     @Override
     public void encode(FriendlyByteBuf buf) {
@@ -43,6 +45,10 @@ public record PlayTitlePacket(int id) implements BasePacket {
                 }
                 case RIPTIDE_TUTORIAL -> {
                     Minecraft.getInstance().gui.setTitle(TCRCoreMod.getInfo("riptide_tutorial", TCRKeyMappings.RIPTIDE.getTranslatedKeyMessage().copy().withStyle(ChatFormatting.GOLD)));
+                }
+                case UNLOCK_NEW_CHAPTER -> {
+                    Minecraft.getInstance().gui.setTitle(TCRCoreMod.getInfo("unlock_new_ftb_page_title"));
+                    Minecraft.getInstance().gui.setSubtitle(TCRCoreMod.getInfo("unlock_new_ftb_page_subtitle", FTBQuestsClient.KEY_QUESTS.getTranslatedKeyMessage().copy().withStyle(ChatFormatting.GOLD)));
                 }
             }
         }

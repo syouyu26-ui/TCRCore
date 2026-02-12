@@ -5,21 +5,29 @@ import com.p1nero.dialog_lib.api.component.DialogueComponentBuilder;
 import com.p1nero.dialog_lib.api.entity.custom.IEntityNpc;
 import com.p1nero.dialog_lib.client.screen.DialogueScreen;
 import com.p1nero.dialog_lib.client.screen.builder.StreamDialogueScreenBuilder;
+import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.capability.TCRQuests;
+import com.p1nero.tcrcore.datagen.TCRAdvancementData;
 import com.p1nero.tcrcore.entity.TCREntities;
+import com.p1nero.tcrcore.item.TCRItems;
+import com.p1nero.tcrcore.network.TCRPacketHandler;
+import com.p1nero.tcrcore.network.packet.clientbound.PlayTitlePacket;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -119,6 +127,11 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
 
             root.addChild(smithHelp)
                     .addChild(firstMeetGift);
+        } else if(currentQuest.equals(TCRQuests.TALK_TO_ORNN_1)){
+            root.addChild(new DialogNode(dBuilder.ans(5), dBuilder.opt(5, TCRItems.MYSTERIOUS_WEAPONS.get().getDescription()))
+                    .addChild(new DialogNode(dBuilder.ans(6), dBuilder.opt(-1))
+                            .addChild(new DialogNode(dBuilder.ans(7), dBuilder.opt(-1))
+                                    .addLeaf(dBuilder.opt(6), 8))));
         } else {
             if(PlayerDataManager.chonosTalked.get(localPlayer)) {
                 root.addChild(aboutChronos);
@@ -133,36 +146,44 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
     }
 
     @Override
-    public void handleNpcInteraction(ServerPlayer serverPlayer, int i) {
+    public void handleNpcInteraction(ServerPlayer player, int i) {
         if(i == 1) {
-            BlockState blockState = serverPlayer.level().getBlockState(WorldUtil.SMITH_BLOCK_POS);
-            serverPlayer.openMenu(blockState.getMenuProvider(serverPlayer.level(), WorldUtil.SMITH_BLOCK_POS));
-            serverPlayer.awardStat(Stats.INTERACT_WITH_SMITHING_TABLE);
+            BlockState blockState = player.level().getBlockState(WorldUtil.SMITH_BLOCK_POS);
+            player.openMenu(blockState.getMenuProvider(player.level(), WorldUtil.SMITH_BLOCK_POS));
+            player.awardStat(Stats.INTERACT_WITH_SMITHING_TABLE);
         }
 
         if(i == 2) {
-            ItemUtil.addItemEntity(serverPlayer, EpicFightItems.IRON_DAGGER.get().getDefaultInstance());
+            ItemUtil.addItemEntity(player, EpicFightItems.IRON_DAGGER.get().getDefaultInstance());
         }
         if(i == 3) {
-            ItemUtil.addItemEntity(serverPlayer, Items.IRON_SWORD.getDefaultInstance());
+            ItemUtil.addItemEntity(player, Items.IRON_SWORD.getDefaultInstance());
         }
         if(i == 4) {
-            ItemUtil.addItemEntity(serverPlayer, EpicFightItems.GOLDEN_LONGSWORD.get().getDefaultInstance());
+            ItemUtil.addItemEntity(player, EpicFightItems.GOLDEN_LONGSWORD.get().getDefaultInstance());
         }
         if(i == 5) {
-            ItemUtil.addItemEntity(serverPlayer, EpicFightItems.GOLDEN_TACHI.get().getDefaultInstance());
+            ItemUtil.addItemEntity(player, EpicFightItems.GOLDEN_TACHI.get().getDefaultInstance());
         }
         if(i == 6) {
-            ItemUtil.addItemEntity(serverPlayer, EpicFightItems.GOLDEN_SPEAR.get().getDefaultInstance());
+            ItemUtil.addItemEntity(player, EpicFightItems.GOLDEN_SPEAR.get().getDefaultInstance());
         }
         if(i == 7) {
-            ItemUtil.addItemEntity(serverPlayer, EpicFightItems.WOODEN_GREATSWORD.get().getDefaultInstance());
+            ItemUtil.addItemEntity(player, EpicFightItems.WOODEN_GREATSWORD.get().getDefaultInstance());
         }
 
         //领了礼物才算结束
         if(i >= 2 && i <=7) {
-            TCRQuests.TALK_TO_ORNN_0.finish(serverPlayer);
+            TCRQuests.TALK_TO_ORNN_0.finish(player);
         }
+
+        if(i == 8) {
+            TCRQuests.TALK_TO_ORNN_1.finish(player);
+            TCRAdvancementData.finishAdvancement("unlock_weapon_armor_book", player);
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PlayTitlePacket(PlayTitlePacket.UNLOCK_NEW_CHAPTER), player);
+            player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
+        }
+
         this.setConversingPlayer(null);
     }
 

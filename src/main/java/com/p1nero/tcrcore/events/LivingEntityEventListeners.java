@@ -137,10 +137,10 @@ public class LivingEntityEventListeners {
         }
 
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            if (event.getSource().getEntity() instanceof UnderworldKnightEntity underworldKnight) {
-                if (!underworldKnight.getPersistentData().getBoolean("hurt_mark")) {
-                    event.setCanceled(true);
-                }
+
+            //被打死重置状态
+            if(event.getSource().getEntity() instanceof Bone_Chimera_Entity boneChimeraEntity) {
+                boneChimeraEntity.getPersistentData().putBoolean("fighting", false);
             }
 
             EpicFightCapabilities.getUnparameterizedEntityPatch(serverPlayer, ServerPlayerPatch.class).ifPresent(serverPlayerPatch -> {
@@ -309,6 +309,9 @@ public class LivingEntityEventListeners {
                     soulEntity.setPos(readSpawnPos(boneChimeraEntity));
                 }
                 livingEntity.getPersistentData().putBoolean("already_respawn", true);
+
+                //掉百兵图
+                ItemUtil.addItemEntity(livingEntity, TCRItems.MYSTERIOUS_WEAPONS.get(), 1, ChatFormatting.GOLD.getColor());
             }
 
             //彩蛋物品

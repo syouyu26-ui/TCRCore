@@ -1,6 +1,7 @@
 package com.p1nero.tcrcore.datagen.lang;
 
 import com.github.L_Ender.cataclysm.init.ModItems;
+import com.github.dodo.dodosmobs.init.ModEntities;
 import com.hm.efn.registries.EFNItem;
 import com.p1nero.tcr_bosses.entity.TCRBossEntities;
 import com.p1nero.tcrcore.TCRCoreMod;
@@ -18,7 +19,6 @@ import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
-import net.shelmarow.nightfall_invade.entity.NFIEntities;
 import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
 import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 
@@ -49,6 +49,7 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addQuest(TCRQuests.USE_RESONANCE_STONE_1, "大地之章", "使用[%s]", "你终于来到了传说中的Overworld。在这里将会遇到什么样的冒险呢？快使用[%s]吧！它将指引我们寻回第一颗眼睛。");
         this.addQuest(TCRQuests.GET_DESERT_EYE, "大地之章", "寻回[%s]", "[%s]为我们标记了[%s]所散落的位置，快出发去寻回[%s]吧！\n\n§4[注意]：若获取后无法完成任务，请尝试关闭可能自动拾取物品的插件，并重新拾取！");
         this.addQuest(TCRQuests.BONE_CHIMERA_QUEST, "大地之章", "前往[%s]", "[%s]似乎为我们标记了一个另一个地点，说不定有什么奇遇，快去看看吧！");
+        this.addQuest(TCRQuests.TALK_TO_ORNN_1, "大地之章", "和%s对话", "从[%s]身上获得了[%s]。上面到底记载了什么秘密？带回主城找%s看看吧！");
         this.addQuest(TCRQuests.TALK_TO_CHRONOS_1, "大地之章", "和%s对话", "[%s]已经寻回，快回主城找%s汇报吧！她将告诉我们下一步该做什么。");
 
         this.addEffect(TCREffects.INVULNERABLE, "无敌");
@@ -89,6 +90,8 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addSkill("fire_avoid", "避火咒", "免疫火焰伤害！");
         this.addSkill("perfect_dodge", "闪避特效", "完美闪避时将有帅气的动作！");
 
+        this.add(TCRItems.MYSTERIOUS_WEAPONS.get(), "百兵图");
+        this.addItemUsageInfo(TCRItems.MYSTERIOUS_WEAPONS.get(), "上面似乎记载了世间百般兵器，拿给了解的人看看吧。");
         this.add(TCRItems.DRAGON_FLUTE.get(), "龙之笛");
         this.addItemUsageInfo(TCRItems.DRAGON_FLUTE.get(), "右键可收服龙，再次右键可释放龙。");
         this.add(TCRItems.LAND_RESONANCE_STONE.get(), "大地共鸣石");
@@ -111,6 +114,8 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "上面写着古老的神谕，暗示了火种散落的地方。回主城给守望者看看吧，说不定对冒险有帮助！");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§c多人模式请勿占据他人任务道具！每人都需各自提交！", 2);
 
+        this.addInfo("unlock_new_ftb_page_title", "§6新图鉴解锁！");
+        this.addInfo("unlock_new_ftb_page_subtitle", "§a按[%s§a]查看");
         this.addInfo("resonance_stone_working", "[%s]共鸣中...请耐心等待...");
         this.addInfo("containing_dragon", "物种：[%s]");
         this.addInfo("dragon_owner", "主人：[%s]");
@@ -303,6 +308,8 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 10, "原始之海屏蔽了外界的气息，吾在此处无从得知祂们的位置。但借此§6共鸣石§f可再外界寻得神之眼散落的位置。我将这枚共鸣石给予阁下，待阁下到了主世界，共鸣石将引领你寻找使徒所在之处。切记，每个阶段仅能使用一次共鸣石！待阁下寻回神之眼后，吾方可利用神之眼铸造新的共鸣石。");
         this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 11, "阁下可以先去§6[武库]§f找 %s 取一样趁手的武器。准备好了就去港口寻找 %s 吧，她将带你前往旅程的起点。");
 
+        this.addDialogAnswer(TCREntities.CHRONOS_SOL.get(), 12, "");
+
         this.addDialogOption(TCREntities.AINE_IRIS.get(), -2, "结束对话");
         this.addDialogOption(TCREntities.AINE_IRIS.get(), -1, "继续");
         this.addDialogAnswer(TCREntities.AINE_IRIS.get(), 0, "%s, 你来了！我正在阅读这个世界的智库");
@@ -325,7 +332,13 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogOption(TCREntities.ORNN.get(), 2, "§6锻造委托");
         this.addDialogOption(TCREntities.ORNN.get(), 3, "§a见面礼");
         this.addDialogAnswer(TCREntities.ORNN.get(), 4, "这是一些边角碎料所铸成的，你暂且拿去防身吧。");
-        this.addDialogOption(TCREntities.ORNN.get(), 4, "%s");;
+        this.addDialogOption(TCREntities.ORNN.get(), 4, "%s");
+        //拿百兵图
+        this.addDialogOption(TCREntities.ORNN.get(), 5, "§6展示[%s§6]");
+        this.addDialogAnswer(TCREntities.ORNN.get(), 5, "锻造之神在上！这百兵图……记载了世界上所有高阶武器及其铸造之法！甚至还存在我未曾了解的武器！");
+        this.addDialogAnswer(TCREntities.ORNN.get(), 6, "想必此百兵图，乃是是黑潮降临前大地使徒Montis大人所铸。");
+        this.addDialogAnswer(TCREntities.ORNN.get(), 7, "交给我吧，我将为你展现这幅精美的画卷！");
+        this.addDialogOption(TCREntities.ORNN.get(), 6, "§6解锁图鉴");
 
         this.addDialogOption(TCREntities.FERRY_GIRL.get(), -3, "返回");
         this.addDialogOption(TCREntities.FERRY_GIRL.get(), -2, "结束对话");
@@ -345,22 +358,14 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogAnswer(TCREntities.FERRY_GIRL.get(), 5, "看来小家伙和阁下相处很愉快呢！这些礼物还请阁下收下！阁下可在图鉴中查看它们的用法。相信小家伙们可以给阁下的战斗带来更多的乐趣！");
         this.addDialogOption(TCREntities.FERRY_GIRL.get(), 7, "收下");
 
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 0, "异界之人，你为何来此？");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 1, "哈哈哈，守望者将烈焰之眼托付于我，为的是避免落入不义之人手中。即使是她老人家亲自来了，也得过我这关！我倒是要看看，你有没有这个能耐！");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 2, "异界之人，好久不见！");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 3, "准备好了吗？");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 4, "位于地狱的§6[猪灵一族]§f，在黑潮时期，曾造出[%s]来抵御黑潮。可惜他们败了，失去了神智。但他们仍然认得[%s§f§f]，使用[%s§f§f]与他们交易，便可揭开远古战争机器的面纱。");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 5, "[%s]和[%s]，则分别守护着[%s]和[%s]的回响。");
-        this.addDialogAnswer(NFIEntities.ARTERIUS.get(), 6, "待你寻回他们的回响后，再来找我吧，我将带你见识§4§l[遗忘之海]§f§f的力量！");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 0, "取回烈焰之眼");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 1, "取你性命");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 2, "发起挑战");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 3, "再等等");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 4, "切磋切磋");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 5, "打探消息");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 6, "继续");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 7, "告辞");
-        this.addDialogOption(NFIEntities.ARTERIUS.get(), 8, "§a我已寻回他们的回响了");
+        this.addDialogOption(ModEntities.BONE_CHIMERA, -1, "返回");
+        this.addDialogAnswer(ModEntities.BONE_CHIMERA, 0, "人类？竟能发现此地，可是共鸣石指引你前来此地？");
+        this.addDialogOption(ModEntities.BONE_CHIMERA, 0, "你为何囚禁于此？");
+        this.addDialogAnswer(ModEntities.BONE_CHIMERA, 1, "吾乃大地使徒之坐骑，高塔封印降临之时，大地使徒将吾传送至此，共鸣石得以寻吾之所在。");
+        this.addDialogOption(ModEntities.BONE_CHIMERA, 1, "释放灵魂");
+        this.addDialogAnswer(ModEntities.BONE_CHIMERA, 2, "此身携有不死诅咒，你若助我解脱，吾之尸骨可铸利器。准备好了吗？");
+        this.addDialogOption(ModEntities.BONE_CHIMERA, 2, "准备好了");
+        this.addDialogOption(ModEntities.BONE_CHIMERA, 3, "再等等");
 
         this.addDialogAnswer(EntityTypeModule.RIBBIT.get(), 0, "咕咕嘎嘎！");
         this.addDialogOption(EntityTypeModule.RIBBIT.get(), 0, "收下");
