@@ -18,7 +18,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 
 public class TCRENLangGenerator extends TCRLangProvider {
     public TCRENLangGenerator(PackOutput output) {
@@ -51,12 +50,9 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addTCRItemInfo("§cWarning! This item may cause important items to be sucked into the backpack and become invalid!", net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.PICKUP_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_PICKUP_UPGRADE.get());
         this.addTCRItemInfo(ItemRegistry.BOTTLE_OF_BLOOD.get(), "Brewed using §c[Crystallized Blood Marrow]§r, a drop from §d[Nehemoth]§r");
         this.addTCRItemInfo(EFNItem.DEEPDARK_HEART.get(), "Obtained by defeating the §2[Warden]§r or §2[Captain Cornelia]§r");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.DRAGON_SKULL.get(), "Obtained by defeating the §c[Underworld Knight]§r or §4[Infernal Dragon]§r");
         this.addTCRItemInfo(ModItems.CORAL_CHUNK.get(), "Obtained by defeating the §a[Coral Colossus]§r in the §dcloudland of The Leviathan§r");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.DRAGON_BONE.get(), "Obtained by defeating the §c[Underworld Knight]§r or §4[Infernal Dragon]§r");
         this.addTCRItemInfo(com.github.dodo.dodosmobs.init.ModItems.CHIERA_CLAW.get(), "Obtained by defeating the §e[Bone Chimera]§r");
         this.addTCRItemInfo(ModItems.CHITIN_CLAW.get(), "Obtained by defeating the §3[Giant Claw Guard]§r in the §3cloudland of Scylla§r");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.KNIGHT_SWORD.get(), "Obtained by defeating the §c[Underworld Knight]§r");
         this.addTCRItemInfo(Items.DRAGON_EGG, "Obtained by defeating the §d[Ender Dragon]§r in the §dEnd§r");
         this.addTCRItemInfo(EpicSkillsItems.ABILIITY_STONE.get(), "Right-click to use and gain skill points");
 

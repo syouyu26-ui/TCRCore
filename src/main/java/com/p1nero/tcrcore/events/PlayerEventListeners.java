@@ -110,12 +110,6 @@ public class PlayerEventListeners {
                 PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PlayTitlePacket(PlayTitlePacket.RIPTIDE_TUTORIAL), player);
             }
 
-            if(namespace.equals(IronsSpellbooks.MODID) && path.equals("irons_spellbooks/make_arcane_anvil")) {
-                PlayerDataManager.magicLearned.put(player, true);
-                TCRQuests.TRY_TO_LEARN_MAGIC.finish(player, true);
-                TCRQuests.TALK_TO_AINE_MAGIC_2.start(player);
-            }
-
         }
     }
 
@@ -485,9 +479,7 @@ public class PlayerEventListeners {
                 if(!PlayerDataManager.cursedEyeBlessed.get(player)) {
                     TCRQuests.BLESS_ON_THE_GODNESS_STATUE.start(player);
                 }
-                if(!PlayerDataManager.magicLearned.get(player)) {
-                    TCRQuests.TALK_TO_AINE_MAGIC.start(player);
-                }
+                TCRQuests.TALK_TO_AINE_MAGIC.start(player);
                 TCRQuests.TALK_TO_CHRONOS_5.start(player);
             }
 

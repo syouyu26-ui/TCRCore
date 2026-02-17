@@ -31,7 +31,7 @@ public abstract class PlayerAdvancementsMixin {
     @Shadow public abstract AdvancementProgress getOrStartProgress(Advancement p_135997_);
 
     @Inject(method = "updateTreeVisibility", at = @At("HEAD"))
-    private void smc$updateTreeVisibility(Advancement advancement, Set<Advancement> advancements, Set<ResourceLocation> resourceLocations, CallbackInfo ci){
+    private void tcr$updateTreeVisibility(Advancement advancement, Set<Advancement> advancements, Set<ResourceLocation> resourceLocations, CallbackInfo ci){
         String path = advancement.getId().getPath();
         if(advancement.getId().getNamespace().equals(TCRCoreMod.MOD_ID) && path.contains("_weapon")){
             tcr$setVisible(advancement, advancements);

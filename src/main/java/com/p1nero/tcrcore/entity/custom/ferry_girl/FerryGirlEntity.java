@@ -76,7 +76,7 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
 
     @Nullable
     private Player tradingPlayer;
-    private MerchantOffers offers = new MerchantOffers();
+    private final MerchantOffers offers = new MerchantOffers();
     private final MerchantOffers offersArtifact = new MerchantOffers();
     private final List<Item> rareItems;
 

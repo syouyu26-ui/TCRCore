@@ -17,16 +17,21 @@ import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.utils.EntityUtil;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
+import io.redspace.ironsspellbooks.player.KeyMappings;
 import moe.plushie.armourers_workshop.init.ModItems;
+import net.blay09.mods.waystones.block.ModBlocks;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,10 +39,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,6 +62,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEntity, Merchant {
     protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    private final ResourceLocation MP_DESC = ResourceLocation.fromNamespaceAndPath(TCRCoreMod.MOD_ID, "textures/gui/mp_point.png");
 
     @Nullable
     private Player tradingPlayer;
@@ -141,16 +150,38 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
                     .addFinalOption(-2, 5);
             return dialogueScreenBuilder.build();
         } else if(TCRQuests.TALK_TO_AINE_MAGIC_2.equals(currentQuest)) {
-            //TODO 送蓝瓶
+            //介绍施法
+            DialogNode learnt = new DialogNode(dBuilder.ans(22, TCRItems.MAGIC_BOTTLE.get().getDescription().copy().withStyle(ChatFormatting.AQUA), TCRItems.MAGIC_BOTTLE.get().getDescription().copy().withStyle(ChatFormatting.AQUA)), dBuilder.opt(9))
+                    .addExecutable(dialogueScreen -> {
+                        dialogueScreen.setPicture(null);
+                    })
+                    .addChild(new DialogNode(dBuilder.ans(23, TCRItems.MAGIC_BOTTLE.get().getDescription().copy().withStyle(ChatFormatting.AQUA)), dBuilder.opt(-1))
+                            .addLeaf(dBuilder.opt(-2), 6));
+
+            root = new DialogNode(dBuilder.ans(19, localPlayer.getDisplayName()), dBuilder.opt(10))
+                    .addExecutable(dialogueScreen -> {
+                        dialogueScreen.setPicture(null);
+                    });
+
+            DialogNode next = new DialogNode(dBuilder.ans(20, KeyMappings.SPELLBOOK_CAST_ACTIVE_KEYMAP.getTranslatedKeyMessage().copy().withStyle(ChatFormatting.GOLD)), dBuilder.opt(-1))
+                    .addChild(new DialogNode(dBuilder.ans(21), dBuilder.opt(-1))
+                            .addExecutable(dialogueScreen -> {
+                                dialogueScreen.setPicture(MP_DESC);
+                                //TODO 调整插图
+                            })
+                            .addChild(learnt)
+                            .addChild(root));
+            root.addChild(next);
+
         } else {
             if(PlayerDataManager.chonosTalked.get(localPlayer)) {
                 root.addChild(aboutChronos);
                 root.addChild(aboutThisWorld);
                 root.addLeaf(dBuilder.opt(-2));
             }
-            if(TCRQuests.TRY_TO_LEARN_MAGIC.isFinished(localPlayer)) {
-                root.addLeaf(dBuilder.opt(-3), 5);
-                root.addLeaf(dBuilder.opt(-4), 6);
+            if(TCRQuests.TALK_TO_AINE_MAGIC.isFinished(localPlayer)) {
+                root.addLeaf(dBuilder.opt(-3), 7);
+                root.addLeaf(dBuilder.opt(-4), 8);
             }
         }
 
@@ -161,10 +192,10 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
     public void handleNpcInteraction(ServerPlayer serverPlayer, int code) {
         //初次对话&领取时装
         if(code == 1) {
-            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_TEMPLATE.get(), 20);
-            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY_GLOBAL.get().getDefaultInstance());
-            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY.get().getDefaultInstance());
-            ItemUtil.addItemEntity(serverPlayer, ModItems.SKINNING_TABLE.get().getDefaultInstance());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_TEMPLATE.get(), 20, ChatFormatting.GOLD.getColor());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY_GLOBAL.get().getDefaultInstance(), ChatFormatting.GOLD.getColor());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKIN_LIBRARY.get().getDefaultInstance(), ChatFormatting.GOLD.getColor());
+            ItemUtil.addItemEntity(serverPlayer, ModItems.SKINNING_TABLE.get().getDefaultInstance(), ChatFormatting.GOLD.getColor());
             TCRQuests.TALK_TO_AINE_0.finish(serverPlayer);
         }
         //聊幻境
@@ -197,8 +228,21 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
             TCRQuests.TALK_TO_AINE_MAGIC.finish(serverPlayer);
             TCRQuests.TRY_TO_LEARN_MAGIC.start(serverPlayer);
         }
+
         if(code == 6) {
-            //TODO 法术淬灵（打开奥术铁砧）
+            TCRQuests.TALK_TO_AINE_MAGIC_2.finish(serverPlayer);
+            ItemUtil.addItemEntity(serverPlayer, TCRItems.MAGIC_BOTTLE.get(), 1, ChatFormatting.AQUA.getColor());
+        }
+
+        if(code == 7) {
+            //法术交易
+            this.startTrade(serverPlayer);
+        }
+
+        if(code == 8) {
+            BlockState blockState = serverPlayer.level().getBlockState(WorldUtil.ARCANE_ANVIL_BLOCK_POS);
+            serverPlayer.openMenu(blockState.getMenuProvider(serverPlayer.level(), WorldUtil.ARCANE_ANVIL_BLOCK_POS));
+            serverPlayer.awardStat(Stats.INTERACT_WITH_ANVIL);
         }
 
         this.setConversingPlayer(null);
@@ -258,7 +302,19 @@ public class AineIrisEntity extends PathfinderMob implements IEntityNpc, GeoEnti
 
     @Override
     public @NotNull MerchantOffers getOffers() {
-        return offers == null ? new MerchantOffers() : offers;
+        if(offers == null) {
+            initOffers();
+        }
+        return offers;
+    }
+
+    public void initOffers() {
+        offers = new MerchantOffers();
+        //TODO 添加法术交易
+        offers.add(new MerchantOffer(
+                new ItemStack(Items.ENDER_EYE, 1),
+                new ItemStack(ModBlocks.waystone, 1),
+                142857, 0, 0.02f));
     }
 
     @Override

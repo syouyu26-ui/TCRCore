@@ -20,7 +20,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 
 public class TCRZHLangGenerator extends TCRLangProvider {
     public TCRZHLangGenerator(PackOutput output) {
@@ -111,12 +110,9 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addTCRItemInfo("§c警告！此物品可能导致重要道具被吸入背包而失效！", net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.MAGNET_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.PICKUP_UPGRADE.get(), net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.ADVANCED_PICKUP_UPGRADE.get());
         this.addTCRItemInfo(ItemRegistry.BOTTLE_OF_BLOOD.get(), "使用§d[尼赫莫斯]§r掉落物§c[晶化血髓]§r酿造获取");
         this.addTCRItemInfo(EFNItem.DEEPDARK_HEART.get(), "击败§2[监守者]§r或§2[可妮莉亚船长]§r获取");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.DRAGON_SKULL.get(), "击败§c[冥界骑士]§r或§4[炼狱魔龙]§r获取");
         this.addTCRItemInfo(ModItems.CORAL_CHUNK.get(), "于§d利维坦幻境§r击败§a[珊瑚巨像]§r获取");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.DRAGON_BONE.get(), "击败§c[冥界骑士]§r或§4[炼狱魔龙]§r获取");
         this.addTCRItemInfo(com.github.dodo.dodosmobs.init.ModItems.CHIERA_CLAW.get(), "击败§e[骸骨奇美拉]§r获取");
         this.addTCRItemInfo(ModItems.CHITIN_CLAW.get(), "于§3斯库拉幻境§r击败§3巨钳守卫§r获取");
-        this.addTCRItemInfo(BlockFactorysBossesModItems.KNIGHT_SWORD.get(), "击败§c[冥界骑士]§r获取");
         this.addTCRItemInfo(Items.DRAGON_EGG, "于§d末地§r击败§d[末影龙]§r获取");
         this.addTCRItemInfo(EpicSkillsItems.ABILIITY_STONE.get(), "右键使用以获取技能点");
 
@@ -405,6 +401,15 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogAnswer(TCREntities.AINE.get(), 16, "§6其二是，它上面记载了这个世界上的魔法！哼哼，这里的魔法和我所学的魔法有异曲同工之妙呢！");
         this.addDialogAnswer(TCREntities.AINE.get(), 17, "卷轴描绘了法术源质及其对应的法术，§6将图鉴所描述的法术源质带给我，我将为你转化成对应的法术卷轴");
         this.addDialogAnswer(TCREntities.AINE.get(), 18, "§6将武器交给我，我将把卷轴所记载的法术附魔在武器上！§f快去试试吧！");
+        this.addDialogAnswer(TCREntities.AINE.get(), 19, "%s, 看来你已经学会如何为武器附魔啦！现在本姑娘就教教你如何释放法术！§6好好看，好好学，我只教一遍！");
+        this.addDialogAnswer(TCREntities.AINE.get(), 20, "持有附魔的武器时，按下[%s]即可释放对应的法术。怎么样，很简单吧？");
+        this.addDialogAnswer(TCREntities.AINE.get(), 21, "使用法术会消耗法力值，法力值耗尽则无法使用法术。§6注意，法力值只能在主城进行回复！ 离开了主城我便无法为你注入魔力。§f不过，还有一件事...");
+        this.addDialogAnswer(TCREntities.AINE.get(), 22, "还有一件事！以防你离开了主城无法回复魔力，本姑娘特意为你准备了[%s]！有了[%s]，你就可以随时随地补充魔力值啦！");
+        this.addDialogOption(TCREntities.AINE.get(), 9, "§6我已学会");
+        this.addDialogOption(TCREntities.AINE.get(), 10, "§a再说一遍");
+        this.addDialogAnswer(TCREntities.AINE.get(), 23, "不过，[%s]的使用次数是有限的！当你用尽后，只要在主城里使用，它就会自动回满！踏上魔法的道路吧！救——世——主！");
+        this.addDialogAnswer(TCREntities.AINE.get(), 24, "");
+        this.addDialogAnswer(TCREntities.AINE.get(), 25, "");
 
         this.addDialogOption(TCREntities.ORNN.get(), -2, "结束对话");
         this.addDialogOption(TCREntities.ORNN.get(), -1, "继续");

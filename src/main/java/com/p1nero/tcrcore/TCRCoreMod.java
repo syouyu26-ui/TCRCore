@@ -19,6 +19,7 @@ import com.p1nero.tcrcore.gameassets.TCRSkillSlots;
 import com.p1nero.tcrcore.item.TCRItemTabs;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
+import com.p1nero.tcrcore.worldgen.TCRStructures;
 import com.yesman.epicskills.registry.entry.EpicSkillsItems;
 import net.genzyuro.uniqueaccessories.registry.UAItems;
 import net.minecraft.network.chat.Component;
@@ -37,8 +38,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModEntities;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 import org.slf4j.Logger;
 import yesman.epicfight.skill.SkillSlot;
 
@@ -65,6 +64,8 @@ public class TCRCoreMod {
         TCRItems.REGISTRY.register(bus);
         TCRItemTabs.REGISTRY.register(bus);
         TCREffects.REGISTRY.register(bus);
+        TCRStructures.STRUCTURE_TYPES.register(bus);
+        TCRStructures.STRUCTURE_PIECE.register(bus);
         context.registerConfig(ModConfig.Type.CLIENT, TCRClientConfig.SPEC);
     }
 
@@ -96,20 +97,16 @@ public class TCRCoreMod {
                 ModEntities.DRAUGR.get(),
                 ModEntities.LIONFISH.get(),
                 ModEntities.DEEPLING_BRUTE.get(),
-                ModEntities.DEEPLING.get(),
-                BlockFactorysBossesModEntities.FLAMING_SKELETON_GUARD_FIREBALL.get()
+                ModEntities.DEEPLING.get()
         ));
         ItemEvents.additionalInfoItems.addAll(List.of(
                 DIItemRegistry.COLLAR_TAG.get(),
                 net.blay09.mods.waystones.item.ModItems.warpStone,
                 ItemRegistry.BOTTLE_OF_BLOOD.get(),
-                BlockFactorysBossesModItems.DRAGON_SKULL.get(),
-                BlockFactorysBossesModItems.DRAGON_BONE.get(),
                 com.github.dodo.dodosmobs.init.ModItems.CHIERA_CLAW.get(),
                 ModItems.CHITIN_CLAW.get(),
                 ModItems.CORAL_CHUNK.get(),
                 Items.DRAGON_EGG,
-                BlockFactorysBossesModItems.KNIGHT_SWORD.get(),
                 EFNItem.DEEPDARK_HEART.get(),
                 EpicSkillsItems.ABILIITY_STONE.get()
 //                net.p3pp3rf1y.sophisticatedbackpacks.init.ModItems.MAGNET_UPGRADE.get(),

@@ -57,7 +57,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -71,10 +70,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.p1nero.ss.item.SwordSoaringItems;
 import net.shelmarow.nightfall_invade.entity.spear_knight.Arterius;
 import net.sonmok14.fromtheshadows.server.entity.mob.BulldrogiothEntity;
-import net.unusual.blockfactorysbosses.entity.SwordWaveEntity;
-import net.unusual.blockfactorysbosses.entity.UnderworldKnightEntity;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModEntities;
-import net.unusual.blockfactorysbosses.init.BlockFactorysBossesModItems;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
 import yesman.epicfight.api.animation.AnimationPlayer;
@@ -114,19 +109,6 @@ public class LivingEntityEventListeners {
                     event.setCanceled(true);
                 }
             });
-            if (serverPlayer.getMainHandItem().is(BlockFactorysBossesModItems.KNIGHT_SWORD.get()) && !serverPlayer.getCooldowns().isOnCooldown(BlockFactorysBossesModItems.KNIGHT_SWORD.get())) {
-                ServerLevel serverLevel = serverPlayer.serverLevel();
-                AbstractArrow entityToSpawn = new SwordWaveEntity(BlockFactorysBossesModEntities.SWORD_WAVE.get(), serverLevel);
-                entityToSpawn.setOwner(serverPlayer);
-                entityToSpawn.setBaseDamage(5);
-                entityToSpawn.setKnockback(0);
-                entityToSpawn.setSilent(true);
-                entityToSpawn.setPierceLevel((byte) 8);
-                entityToSpawn.setPos(serverPlayer.getX(), serverPlayer.getEyeY() - 0.1, serverPlayer.getZ());
-                entityToSpawn.shoot(serverPlayer.getLookAngle().x, serverPlayer.getLookAngle().y, serverPlayer.getLookAngle().z, 2.0F, 0.0F);
-                serverLevel.addFreshEntity(entityToSpawn);
-                serverPlayer.getCooldowns().addCooldown(BlockFactorysBossesModItems.KNIGHT_SWORD.get(), 80);
-            }
 
         }
 

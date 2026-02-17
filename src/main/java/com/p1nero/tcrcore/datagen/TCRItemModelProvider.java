@@ -32,10 +32,12 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.VOID_CORE);
         simpleItem(TCRItems.PROOF_OF_ADVENTURE);
         simpleItem(TCRItems.DRAGON_FLUTE);
+        simpleItem(TCRItems.CORE_FLINT);
         simpleItem(TCRItems.MYSTERIOUS_WEAPONS);
         simpleItem(TCRItems.LAND_RESONANCE_STONE);
         simpleItem(TCRItems.OCEAN_RESONANCE_STONE);
         simpleItem(TCRItems.CURSED_RESONANCE_STONE);
+        simpleItem(TCRItems.MAGIC_BOTTLE);
         withExistingItemTexture(TCRItems.NECROMANCY_SCROLL, ItemRegistry.MAGIC_CLOTH);
     }
 

@@ -1,5 +1,9 @@
 {
   "structures": [
+    {
+      "structure": "nightfall_invade:gate_of_disaster",
+      "weight": 1
+    }
   ],
   "placement": {
     "type": "minecraft:random_spread",
