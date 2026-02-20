@@ -50,9 +50,9 @@ public abstract class BTMonolithMixin extends Entity {
             if (itemInHand.equals(this.correctMonolithKey)) {
                 int keysNeeded = this.monolithType.equals(BTEntityType.LAND_MONOLITH.get()) ? 3 : 2;
                 if (this.getKeyCountInEntity() < keysNeeded) {
+                    this.setEyeSlotDisplayed();
                     if(!this.monolithType.equals(BTEntityType.LAND_MONOLITH.get()) && this.getKeyCountInEntity() == 1) {
                         this.increaseKeyCount(player, hand);
-                        this.setEyeSlotDisplayed();
                     }
                     this.increaseKeyCount(player, hand);
                     this.increaseKeyCount(player, hand);//简化为用一个钥匙就好，以防漏钥匙= =

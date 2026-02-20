@@ -479,7 +479,7 @@ public class PlayerEventListeners {
                 player.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                 event.setCanceled(true);
             }
-            if((!TCRQuests.GET_WITHER_EYE.isFinished(player) || TCRQuestManager.hasQuest(player, TCRQuests.GET_WITHER_EYE)) && event.getItem().getItem().is(ModItems.MECH_EYE.get())) {
+            if(!(TCRQuests.GET_WITHER_EYE.isFinished(player) || TCRQuestManager.hasQuest(player, TCRQuests.GET_WITHER_EYE)) && event.getItem().getItem().is(ModItems.MECH_EYE.get())) {
                 player.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                 event.setCanceled(true);
             }
