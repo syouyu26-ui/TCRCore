@@ -76,8 +76,7 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
 
     @Nullable
     private Player tradingPlayer;
-    private final MerchantOffers offers = new MerchantOffers();
-    private final MerchantOffers offersArtifact = new MerchantOffers();
+    private MerchantOffers offersArtifact = new MerchantOffers();
     private final List<Item> rareItems;
 
     public FerryGirlEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -93,7 +92,6 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
                 UAItems.HERO_EMBLEM.get(),
                 UAItems.MASTER_NINJA_TABI.get(),
                 UAItems.SHINY_STONE.get());
-        initMerchant();
     }
 
     @Override
@@ -113,8 +111,7 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
     }
 
     private void initMerchant() {
-        offers.clear();
-        offersArtifact.clear();
+        offersArtifact = new MerchantOffers();
         offersArtifact.add(new MerchantOffer(
                 new ItemStack(Items.ENDER_EYE, 1),
                 new ItemStack(ModBlocks.waystone, 1),
@@ -255,7 +252,6 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
     public void handleNpcInteraction(ServerPlayer serverPlayer, int i) {
         TCRQuestManager.Quest currentQuest = TCRQuestManager.getCurrentQuest(serverPlayer);
         if (i == 1) {
-            offers.addAll(offersArtifact);
             startTrade(serverPlayer);
         }
 
@@ -378,7 +374,7 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
 
     @Override
     public @NotNull MerchantOffers getOffers() {
-        return offers == null ? new MerchantOffers() : offers;
+        return offersArtifact == null ? new MerchantOffers() : offersArtifact;
     }
 
     @Override
