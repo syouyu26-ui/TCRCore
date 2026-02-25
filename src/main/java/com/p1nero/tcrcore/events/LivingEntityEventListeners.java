@@ -482,7 +482,7 @@ public class LivingEntityEventListeners {
     @SubscribeEvent
     public static void onLivingSpawn(MobSpawnEvent.PositionCheck event) {
         //保险，incontrol也有一份？
-        if (WorldUtil.inMainLandRange(event.getEntity()) || WorldUtil.inReal(event.getEntity()) && event.getEntity() instanceof Enemy) {
+        if (WorldUtil.inMainLand(event.getEntity()) || WorldUtil.inReal(event.getEntity()) && event.getEntity() instanceof Enemy) {
             event.setResult(Event.Result.DENY);
         }
     }

@@ -6,7 +6,9 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.OpenEndScreenPacket;
 import com.p1nero.tcrcore.network.packet.clientbound.SyncTCRPlayerPacket;
+import com.p1nero.tcrcore.utils.EntityUtil;
 import com.p1nero.tcrcore.utils.ItemUtil;
+import com.p1nero.tcrcore.utils.WorldUtil;
 import com.yesman.epicskills.registry.entry.EpicSkillsItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -217,6 +219,36 @@ public class TCRPlayer {
             handleBless(serverLevel, serverPlayer);
             handleParticle(serverPlayer);
             handleResonanceStoneCooldown(serverPlayer);
+            handleUpdateNearestQuest(serverPlayer);
+        }
+    }
+
+    /**
+     * 处理任务靠近自动追踪
+     */
+    private void handleUpdateNearestQuest(ServerPlayer serverPlayer) {
+        if(serverPlayer.tickCount % 10 == 0) {
+            if(WorldUtil.inMainLand(serverPlayer)) {
+                trySearchNearestQuest(WorldUtil.AINE_BLOCK_POS, serverPlayer);
+                trySearchNearestQuest(WorldUtil.ORNN_BLOCK_POS, serverPlayer);
+                trySearchNearestQuest(WorldUtil.CHRONOS_SOL_BLOCK_POS, serverPlayer);
+                trySearchNearestQuest(WorldUtil.FERRY_GIRL_BLOCK_POS, serverPlayer);
+            }
+        }
+    }
+
+    private void trySearchNearestQuest(BlockPos targetPos, ServerPlayer serverPlayer) {
+        if(serverPlayer.position().closerThan(targetPos.getCenter(), 10)) {
+            BlockPos currentTrackingPos = TCRQuestManager.getCurrentQuest(serverPlayer).getTrackingPos();
+            if(currentTrackingPos == null || !currentTrackingPos.closerThan(targetPos, 5)) {
+                for (TCRQuestManager.Quest quest : TCRQuestManager.getQuests(serverPlayer)) {
+                    if(quest.getTrackingPos() != null && quest.getTrackingPos().closerThan(targetPos, 5)) {
+                        TCRQuestManager.setCurrentQuest(serverPlayer, quest);
+                        EntityUtil.playLocalSound(serverPlayer, SoundEvents.EXPERIENCE_ORB_PICKUP);
+                        break;
+                    }
+                }
+            }
         }
     }
 
