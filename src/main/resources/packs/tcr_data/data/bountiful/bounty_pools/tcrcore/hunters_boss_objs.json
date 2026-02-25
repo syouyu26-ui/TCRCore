@@ -13,54 +13,6 @@
 			"unitWorth": 4000
 		},
 
-		"hunters_boss_obj_infernal_dragon": {
-			"type": "entity",
-			"timeMult": 10.0,
-			"rarity": "EPIC",
-			"content": "block_factorys_bosses:infernal_dragon",
-			"amount": {
-				"min": 1,
-				"max": 1
-			},
-			"unitWorth": 4000
-		},
-
-		"hunters_boss_obj_sandworm": {
-			"type": "entity",
-			"timeMult": 10.0,
-			"rarity": "EPIC",
-			"content": "block_factorys_bosses:sandworm",
-			"amount": {
-				"min": 1,
-				"max": 1
-			},
-			"unitWorth": 4000
-		},
-
-		"hunters_boss_obj_yeti": {
-			"type": "entity",
-			"timeMult": 10.0,
-			"rarity": "RARE",
-			"content": "block_factorys_bosses:yeti",
-			"amount": {
-				"min": 1,
-				"max": 1
-			},
-			"unitWorth": 3000
-		},
-
-		"hunters_boss_obj_underworld_knight": {
-			"type": "entity",
-			"timeMult": 10.0,
-			"rarity": "EPIC",
-			"content": "block_factorys_bosses:underworld_knight",
-			"amount": {
-				"min": 1,
-				"max": 1
-			},
-			"unitWorth": 4000
-		},
-
 		"hunters_boss_obj_malkuth": {
 			"type": "entity",
 			"timeMult": 10.0,
@@ -78,6 +30,18 @@
 			"timeMult": 10.0,
 			"rarity": "LEGENDARY",
 			"content": "fdbosses:chesed",
+			"amount": {
+				"min": 1,
+				"max": 1
+			},
+			"unitWorth": 5000
+		},
+
+		"hunters_boss_obj_geburah": {
+			"type": "entity",
+			"timeMult": 10.0,
+			"rarity": "LEGENDARY",
+			"content": "fdbosses:geburah",
 			"amount": {
 				"min": 1,
 				"max": 1
