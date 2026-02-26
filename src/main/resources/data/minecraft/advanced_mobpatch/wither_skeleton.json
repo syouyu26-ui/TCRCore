@@ -18,7 +18,7 @@
          "stun_shield_regan_delay": 999999,   
 		 "guard_radius": 4,	
          "stamina_lose_multiply": 2,
-		 "attack_radius": 2
+		 "attack_radius": 3
     },
     "default_livingmotions": {
         "idle": "epicfight:biped/living/idle",
@@ -340,7 +340,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -518,7 +518,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -749,7 +749,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -971,7 +971,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -1148,7 +1148,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -1311,7 +1311,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -1506,7 +1506,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -1674,7 +1674,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -2402,7 +2402,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -2749,7 +2749,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}

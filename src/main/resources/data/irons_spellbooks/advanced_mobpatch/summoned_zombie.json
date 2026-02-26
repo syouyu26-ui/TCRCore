@@ -1,7 +1,7 @@
 {
-    "model": "epicfight:entity/skeleton",
-    "armature": "epicfight:entity/skeleton",
-    "renderer": "minecraft:skeleton",
+    "model": "epicfight:entity/biped_old_texture",
+    "armature": "epicfight:entity/biped",
+    "renderer": "minecraft:zombie",
     "isHumanoid": true,
     "faction": "undead",
     "attributes": {
@@ -18,7 +18,7 @@
          "stun_shield_regan_delay": 999999,   
 		 "guard_radius": 4,	
          "stamina_lose_multiply": 2,
-		 "attack_radius": 2
+		 "attack_radius": 3
     },
     "default_livingmotions": {
         "idle": "epicfight:biped/living/idle",
@@ -108,9 +108,9 @@
 		}
        ],
   "stun_animations": {
-		"short": "epicfightx:biped/combat/hit_short",
-		"long": "epicfightx:biped/combat/hit_long",
-		"knockdown": "epicfightx:biped/combat/knockdown",
+		"short": "epicfight:biped/combat/hit_short",
+		"long": "epicfight:biped/combat/hit_long",
+		"knockdown": "epicfight:biped/combat/knockdown",
 		"fall": "epicfight:biped/living/landing",
 		"neutralize": "epicfightx:biped/skill/guard_break1"
     },
@@ -129,7 +129,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -145,7 +145,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -153,7 +153,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
-							"animation": "efn:biped/exsiliumgladius_reborn/exsiliumgladius_abaa", 		 								
+							"animation": "epicfightx:biped/combat/longsword_dash", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -170,7 +170,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -186,8 +187,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -269,8 +319,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -287,7 +337,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -307,7 +442,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 20,		
 				         	"play_speed": 1.1
 						}
@@ -323,7 +458,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 20,		
 				         	"play_speed": 1.1
 						},
@@ -348,7 +483,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 20,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -364,8 +500,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 20,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -439,7 +624,7 @@
 							"animation": "epicfightx:biped/combat/greatsword_auto2", 	
 							"convert_time": 0.4,				
 							"stamina": 0,		
-				         	"play_speed": 0.9		
+				         	"play_speed": 0.8		
 						},
 						{
 							"conditions": [
@@ -447,8 +632,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -465,7 +650,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -485,7 +755,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -501,7 +771,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -526,7 +796,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -542,8 +813,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -625,8 +945,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -643,7 +963,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -663,7 +1068,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -679,7 +1084,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -704,7 +1109,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -720,8 +1126,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -803,8 +1258,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -821,7 +1276,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -841,7 +1381,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -857,7 +1397,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -865,7 +1405,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
-							"animation": "efn:biped/yamato/dmcyamato_rapidslash", 		 								
+							"animation": "epicfight:biped/skill/battojutsu_dash", 		 								
 							"stamina": 20,		
 				         	"play_speed": 1.1
 						}
@@ -882,7 +1422,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -898,8 +1439,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -980,8 +1570,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -998,7 +1588,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -1018,7 +1693,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -1035,7 +1710,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -1051,8 +1727,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -1124,7 +1849,7 @@
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
 							"animation": "epicfightx:biped/combat/dagger_auto2",  	
-							"convert_time": -0.1,				
+							"convert_time": 0.4,				
 							"stamina": 0,		
 				         	"play_speed": 1.5		
 						},
@@ -1133,7 +1858,7 @@
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
 							"animation": "epicfightx:biped/combat/dagger_auto3",  	
-							"convert_time": 0.2,				
+							"convert_time": 0.4,				
 							"stamina": 0,		
 				         	"play_speed": 1.1		
 						},
@@ -1143,8 +1868,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -1161,7 +1886,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -1181,7 +1991,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -1197,7 +2007,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -1233,8 +2043,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -1249,7 +2059,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -1265,8 +2076,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -1300,7 +2160,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 							],
-							"animation": "epicfightx:biped/combat/dagger_dual_dash", 	
+							"animation": "epicfight:biped/combat/dagger_dual_dash", 	
 							"convert_time": 0.5,		
 							"stamina": 0,
 				         	"play_speed": 1.5		
@@ -1310,27 +2170,27 @@
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
 							"animation": "epicfightx:biped/combat/dagger_dual_auto1", 	
-							"convert_time": 0.5,				
+							"convert_time": 0.6,				
 							"stamina": 0,		
-				         	"play_speed":1.2		
+				         	"play_speed":0.8		
 						},
 						{
 							"conditions": [
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
 							"animation": "epicfightx:biped/combat/dagger_dual_auto2", 	
-							"convert_time": 0.5,				
+							"convert_time": 0.6,				
 							"stamina": 0,		
-				         	"play_speed":1.2		
+				         	"play_speed":0.8		
 						},
 						{
 							"conditions": [
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
 							"animation": "epicfightx:biped/combat/dagger_dual_auto3", 	
-							"convert_time": 0.5,				
+							"convert_time": 0.6,				
 							"stamina": 0,		
-				         	"play_speed":1.2		
+				         	"play_speed":0.8		
 						},
 						{
 							"conditions": [
@@ -1338,8 +2198,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -1356,7 +2216,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -1376,7 +2321,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -1392,7 +2337,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -1400,7 +2345,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
-							"animation": "efn:biped/nf_dual/nf_dual_skill_hit",  		 								
+							"animation": "epicfightx:biped/combat/sword_dual_dash",  		 								
 							"stamina": 20,		
 				         	"play_speed": 1.1
 						}
@@ -1417,7 +2362,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -1433,8 +2379,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -1495,7 +2490,7 @@
 							"conditions": [
 								{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
 							],
-							"animation": "epicfightx:biped/skill/dancing_edge", 	
+							"animation": "epicfight:biped/skill/dancing_edge", 	
 							"convert_time": 0.5,				
 							"stamina": 0,		
 				         	"play_speed":1.2		
@@ -1506,8 +2501,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -1524,7 +2519,92 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+								{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": false},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": -1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:using_item", "edible": true},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 1,		   
+							"z_axis": -0.3    	  
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [				
+						{
+							"conditions": [
+								{"predicate":"indestructible:attack_level", "min": 2, "max": 2},{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate":"epicfight:within_distance", "min": 6.0, "max": 32.0}
+							],
+							"wander": 80,             
+							"inaction_time": 30,	   
+							"x_axis": 0,		   
+							"z_axis": 0.5   	  
 						}
                     ]                 
 				}
@@ -1535,509 +2615,488 @@
 			"style": "common",
 			"behavior_series": [
 				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:glove", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with epicfight:glove", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with minecraft:stone_sword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with minecraft:iron_sword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_longsword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_longsword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_greatsword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_greatsword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_spear", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_spear", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_tachi", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_tachi", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:uchigatana", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_dagger", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_dagger", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with epicfight:iron_dagger", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
-				{
-					"weight": 1.5,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown":50,
-					"behaviors": [					
-						{
-							"conditions": [
-								{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
-							"convert_time": -0.7,			
-				         	"play_speed": 1.1,		
-							 "command_list": [									
-								 {"time":0.8, "command":"item replace entity @s weapon.mainhand with iron_sword", "execute_at_target":false},
-								 {"time":0.8, "command":"item replace entity @s weapon.offhand with iron_sword", "execute_at_target":false}
-							 ],																												
-							 "set_phase": 1
-						}
-                    ]                 
-				},
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with air", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:glove", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with epicfight:glove", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with minecraft:stone_sword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with minecraft:iron_sword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_longsword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_longsword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_greatsword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_spear", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_spear", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:stone_tachi", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_tachi", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:uchigatana", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_dagger", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with air", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with epicfight:iron_dagger", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with epicfight:iron_dagger", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
+			{
+				"weight": 1.5,
+				"canBeInterrupted": true,
+				"looping": false,
+				"cooldown":50,
+				"behaviors": [					
+					{
+						"conditions": [
+							{"predicate":"indestructible:phase", "min": 0, "max": 0}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
+						],
+						"animation": "efn:biped/yamato/biped_hit_ground_l0", 	
+						"convert_time": -0.7,			
+						 "play_speed": 1.1,		
+						 "command_list": [									
+							 {"time":0.8, "command":"item replace entity @s weapon.mainhand with iron_sword", "execute_at_target":false},
+							 {"time":0.8, "command":"item replace entity @s weapon.offhand with iron_sword", "execute_at_target":false}
+						 ],																												
+						 "set_phase": 1
+					}
+				]                 
+			},
 				{
 					"weight": 1.5,
 					"canBeInterrupted": true,
@@ -2048,7 +3107,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -2065,7 +3124,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -2081,8 +3141,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -2096,7 +3205,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -2190,8 +3299,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -2208,7 +3317,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
@@ -2228,7 +3337,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -2244,7 +3353,7 @@
 							"conditions": [
 								{"predicate":"indestructible:phase", "min": 0, "max": 2}, {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						},
@@ -2269,7 +3378,8 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_l", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
 						}
                     ]                 
@@ -2285,8 +3395,57 @@
 								{"predicate":"indestructible:phase", "min": 0, "max": 2},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
 							"animation": "efn:biped/dodge/step_r", 
-							"stamina": 10,			
+							"stamina": 20,	
+							"set_phase": 10,		
 				         	"play_speed": 1		
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_left", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "epicfight:biped/skill/knockdown_wakeup_right", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
+						}
+                    ]                 
+				},
+				{
+					"weight": 1.5,
+					"canBeInterrupted": true,
+					"looping": false,
+					"cooldown":50,
+					"behaviors": [	
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 10, "max": 10},{"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},   {"predicate":"epicfight:within_distance", "min": 0.0, "max": 32.0}
+							],
+							"animation": "efn:biped/perfect_dodge", 
+							"set_phase": 1,
+				         	"play_speed": 1.1
 						}
                     ]                 
 				},
@@ -2386,8 +3545,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -2424,7 +3583,7 @@
 							"conditions": [
 							 {"predicate": "indestructible:stamina", "stamina": 0.11, "comparator": "greater_ratio"},{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_eye_height"},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 6.0}
 							],
-							"animation": "efn:biped/dodge/step_b", 		 								
+							"animation": "efn:biped/dodge/dodge_b", 		 								
 							"stamina": 10,		
 				         	"play_speed": 1.1
 						}
@@ -2522,8 +3681,8 @@
 							],
 							"wander": 60,             
 							"inaction_time": 30,	   
-							"x_axis": -1,		   
-							"z_axis": 0    	  
+							"x_axis": 0,		   
+							"z_axis": -0.1    	  
 						}
                     ]                 
 				},
@@ -2555,7 +3714,7 @@
 							"wander": 80,             
 							"inaction_time": 30,	   
 							"x_axis": 1,		   
-							"z_axis": 270    	  
+							"z_axis": -1    	  
 						}
                     ]                 
 				}
