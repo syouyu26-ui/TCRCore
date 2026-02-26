@@ -1,0 +1,21 @@
+{
+  "type": "tcrcore:real_type",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "tcrcore:real",
+      "features": false,
+      "lakes": false,
+      "layers": [
+        {
+          "block": "minecraft:water",
+          "height": 63
+        },
+        {
+          "block": "minecraft:barrier",
+          "height": 1
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "tcrcore:tcrcore",
+  "criteria": {
+    "unlock_weapon_armor_book": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.tcrcore.unlock_weapon_armor_book.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "tcrcore:mysterious_weapons"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.tcrcore.unlock_weapon_armor_book"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_weapon_armor_book"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

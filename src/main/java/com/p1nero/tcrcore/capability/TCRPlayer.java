@@ -429,11 +429,11 @@ public class TCRPlayer {
                 ItemStack item = blessItem == null ? serverPlayer.getMainHandItem() : blessItem.getDefaultInstance();
                 if (item.is(ModItems.STORM_EYE.get()) && PlayerDataManager.stormEyeGotten.get(serverPlayer) && !PlayerDataManager.stormEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 1, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.stormEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.ABYSS_EYE.get()) && PlayerDataManager.abyssEyeGotten.get(serverPlayer) && !PlayerDataManager.abyssEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 1, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.abyssEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.DESERT_EYE.get()) && PlayerDataManager.desertEyeGotten.get(serverPlayer) && !PlayerDataManager.desertEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
@@ -441,26 +441,26 @@ public class TCRPlayer {
                     PlayerDataManager.desertEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.CURSED_EYE.get()) && PlayerDataManager.cursedEyeGotten.get(serverPlayer) && !PlayerDataManager.cursedEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.cursedEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.FLAME_EYE.get()) && PlayerDataManager.flameEyeGotten.get(serverPlayer) && !PlayerDataManager.flameEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.flameEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.MONSTROUS_EYE.get()) && !PlayerDataManager.monstEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.monstEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.MECH_EYE.get()) && !PlayerDataManager.mechEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.mechEyeBlessed.put(serverPlayer, true);
                 } else if (item.is(ModItems.VOID_EYE.get()) && !PlayerDataManager.voidEyeBlessed.get(serverPlayer)) {
                     healthAdder += 2.0;
-                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 3, ChatFormatting.GOLD.getColor());
+                    ItemUtil.addItemEntity(serverPlayer, EpicSkillsItems.ABILIITY_STONE.get(), 2, ChatFormatting.GOLD.getColor());
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.END_PORTAL_SPAWN), SoundSource.PLAYERS, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 1.0F, 1.0F, serverPlayer.getRandom().nextInt()));
                     PlayerDataManager.voidEyeBlessed.put(serverPlayer, true);
                 }

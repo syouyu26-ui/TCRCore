@@ -1,0 +1,29 @@
+{
+  "parent": "tcrcore:tcrcore",
+  "criteria": {
+    "unlock_magic_and_boss": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.tcrcore.unlock_magic_and_boss.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "tcrcore:necromancy_scroll"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.tcrcore.unlock_magic_and_boss"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_magic_and_boss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -211,6 +211,7 @@ public class LivingEntityEventListeners {
             //击败祭坛内的boss
             if (livingEntity instanceof Scylla_Entity) {
                 if (!PlayerDataManager.stormEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.stormEyeKilled.put(player, true);
                 }
@@ -218,6 +219,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof Ignis_Entity) {
                 if (!PlayerDataManager.flameEyeKilled.get(player)) {
+                    givePlayerAward(player, 5);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.flameEyeKilled.put(player, true);
                 }
@@ -225,6 +227,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof The_Leviathan_Entity) {
                 if (!PlayerDataManager.abyssEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.abyssEyeKilled.put(player, true);
                 }
@@ -232,6 +235,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof Maledictus_Entity) {
                 if (!PlayerDataManager.cursedEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.cursedEyeKilled.put(player, true);
                 }
@@ -239,6 +243,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof Ancient_Remnant_Entity) {
                 if (!PlayerDataManager.desertEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.desertEyeKilled.put(player, true);
                 }
@@ -246,6 +251,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof Ender_Guardian_Entity) {
                 if (!PlayerDataManager.voidEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.voidEyeKilled.put(player, true);
                 }
@@ -253,6 +259,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof Netherite_Monstrosity_Entity) {
                 if (!PlayerDataManager.monstEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.monstEyeKilled.put(player, true);
                 }
@@ -260,6 +267,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof The_Harbinger_Entity) {
                 if (!PlayerDataManager.mechEyeKilled.get(player)) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), 5, ChatFormatting.GOLD.getColor());
                     PlayerDataManager.mechEyeKilled.put(player, true);
                 }
@@ -269,6 +277,7 @@ public class LivingEntityEventListeners {
             if (livingEntity instanceof LandGolem) {
                 //有任务才会掉
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_DESERT_EYE)) {
+                    givePlayerAward(player, 1);
                     ItemUtil.addItemEntity(player, ModItems.DESERT_EYE.get(), 1, ChatFormatting.YELLOW.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
                 }
@@ -276,6 +285,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof OceanGolem) {
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_OCEAN_EYE)) {
+                    givePlayerAward(player, 1);
                     ItemUtil.addItemEntity(player, ModItems.ABYSS_EYE.get(), 1, ChatFormatting.BLUE.getColor().intValue());
                     ItemUtil.addItemEntity(player, AquamiraeItems.SHIP_GRAVEYARD_ECHO.get(), 1, ChatFormatting.BLUE.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
@@ -283,6 +293,7 @@ public class LivingEntityEventListeners {
             }
 
             if (livingEntity instanceof CaptainCornelia) {
+                givePlayerAward(player, 1);
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_CURSED_EYE)) {
                     ItemUtil.addItemEntity(player, ModItems.CURSED_EYE.get(), 1, ChatFormatting.DARK_GREEN.getColor().intValue());
                     ItemUtil.addItemEntity(player, TCRItems.NECROMANCY_SCROLL.get(), 1, ChatFormatting.DARK_GREEN.getColor().intValue());
@@ -291,6 +302,7 @@ public class LivingEntityEventListeners {
             }
 
             if (livingEntity instanceof CoreGolem) {
+                givePlayerAward(player, 1);
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_FLAME_EYE)) {
                     ItemUtil.addItemEntity(player, ModItems.FLAME_EYE.get(), 1, ChatFormatting.RED.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
@@ -298,6 +310,7 @@ public class LivingEntityEventListeners {
             }
 
             if (livingEntity instanceof NetherGolem) {
+                givePlayerAward(player, 1);
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_MONST_EYE)) {
                     ItemUtil.addItemEntity(player, ModItems.MONSTROUS_EYE.get(), 1, ChatFormatting.DARK_RED.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
@@ -306,6 +319,7 @@ public class LivingEntityEventListeners {
 
             if (livingEntity instanceof WitherBoss) {
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_WITHER_EYE)) {
+                    givePlayerAward(player, 1);
                     ItemUtil.addItemEntity(player, ModItems.MECH_EYE.get(), 1, ChatFormatting.GOLD.getColor().intValue());
                     ItemUtil.addItemEntity(player, TCRItems.WITHER_SOUL_STONE.get(), 1, ChatFormatting.GOLD.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
@@ -323,6 +337,7 @@ public class LivingEntityEventListeners {
 
             if(livingEntity instanceof FakeSkyGolem) {
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_STORM_EYE) &&(TCRQuests.TALK_TO_SKY_GOLEM.isFinished(player) || TCRQuestManager.hasQuest(player, TCRQuests.TALK_TO_SKY_GOLEM))) {
+                    givePlayerAward(player, 1);
                     ItemUtil.addItemEntity(player, ModItems.STORM_EYE.get(), 1, ChatFormatting.AQUA.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
                 }
@@ -338,38 +353,46 @@ public class LivingEntityEventListeners {
 
             if(livingEntity instanceof FakeEndGolem) {
                 if (TCRQuestManager.hasQuest(player, TCRQuests.GET_VOID_EYE) && (TCRQuests.GO_TO_THE_END.isFinished(player) || TCRQuestManager.hasQuest(player, TCRQuests.GO_TO_THE_END))) {
+                    givePlayerAward(player, 2);
                     ItemUtil.addItemEntity(player, ModItems.VOID_EYE.get(), 1, ChatFormatting.LIGHT_PURPLE.getColor().intValue());
                     player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
                 }
             }
 
             if(livingEntity instanceof ScyllaHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.ASTRAPE_LOCK.put(player, false);
                 PECDataManager.CERAUNUS_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof IgnisHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.THE_INCINERATOR_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof NetheriteHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.INFERNAL_FORGE_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof MaledictusHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.DUAL_ANNIHILATOR_LOCK.put(player, false);
                 PECDataManager.SOUL_RENDER_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof LeviathanHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.TIDAL_CLAW_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof EnderGuardianHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.GAUNTLET_OF_GUARD_LOCK.put(player, false);
             }
 
             if(livingEntity instanceof AncientRemnantHumanoid) {
+                givePlayerAward(player, 3);
                 PECDataManager.WRATH_OF_THE_DESERT_LOCK.put(player, false);
             }
 
@@ -492,6 +515,15 @@ public class LivingEntityEventListeners {
             }
         }
 
+    }
+
+    public static void givePlayerAward(ServerPlayer player, int count) {
+        ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), count, ChatFormatting.YELLOW.getColor().intValue());
+        if(count > 2) {
+            ItemUtil.addItemEntity(player, TCRItems.RARE_ARTIFACT_TICKET.get(), count, ChatFormatting.YELLOW.getColor().intValue());
+        } else {
+            ItemUtil.addItemEntity(player, TCRItems.ARTIFACT_TICKET.get(), count, ChatFormatting.YELLOW.getColor().intValue());
+        }
     }
 
     @SubscribeEvent

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tcrcore:wither_soul_stone"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "result": {
+    "item": "tcrcore:wither_soul_stone_activated"
+  }
+}

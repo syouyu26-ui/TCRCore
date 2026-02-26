@@ -1,0 +1,29 @@
+{
+  "parent": "tcrcore:tcrcore",
+  "criteria": {
+    "unlock_epic_boss": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.tcrcore.unlock_epic_boss.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "tcrcore:wither_soul_stone"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.tcrcore.unlock_epic_boss"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_epic_boss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

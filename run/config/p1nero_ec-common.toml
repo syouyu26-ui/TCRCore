@@ -8,4 +8,6 @@ ui_y = 0
 global_charge = false
 #是否自定义充能
 custom_charge = false
+#是否禁用利维坦激光破坏方块
+disable_abyss_blast_break = true
 
