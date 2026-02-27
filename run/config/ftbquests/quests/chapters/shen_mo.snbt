@@ -6,7 +6,7 @@
 	hide_quest_until_deps_visible: true
 	icon: "cataclysm:altar_of_fire"
 	id: "0CE9782910610D72"
-	order_index: 4
+	order_index: 3
 	quest_links: [ ]
 	quests: [
 		{
@@ -59,7 +59,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest8058086817761900554.title}"
 			x: -16.0d
-			y: -5.0d
+			y: -8.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -80,7 +80,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest5047085965933135713.title}"
 			x: -22.0d
-			y: -3.0d
+			y: -6.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -101,7 +101,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest6378650516386893855.title}"
 			x: 22.0d
-			y: -3.0d
+			y: -6.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -122,7 +122,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest4272713576519895019.title}"
 			x: 16.0d
-			y: -5.0d
+			y: -8.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -143,7 +143,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest867631697875350248.title}"
 			x: 4.0d
-			y: -9.0d
+			y: -12.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -164,7 +164,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest4384074260055690428.title}"
 			x: -4.0d
-			y: -9.0d
+			y: -12.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -191,7 +191,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest5978165804115493060.title}"
 			x: 10.0d
-			y: -7.0d
+			y: -10.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -212,7 +212,7 @@
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest7353088665843595306.title}"
 			x: -10.0d
-			y: -7.0d
+			y: -10.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -263,7 +263,6 @@
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
-			icon_scale: 1.5d
 			id: "5509B6D7C1DF4BB6"
 			rewards: [{
 				count: 3
@@ -287,7 +286,6 @@
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
-			icon_scale: 1.5d
 			id: "29FCA2144193E4B7"
 			rewards: [{
 				count: 3
@@ -318,7 +316,6 @@
 		{
 			dependencies: ["68EDC89BB022788B"]
 			hide_until_deps_complete: false
-			icon_scale: 1.5d
 			id: "236A628B78740D00"
 			rewards: [{
 				count: 3
@@ -342,7 +339,6 @@
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
-			icon_scale: 1.5d
 			id: "75FC56E08479B2AD"
 			rewards: [
 				{
@@ -368,8 +364,8 @@
 				value: 1L
 			}]
 			title: "{ftbquests.chapter.shen_mo.quest8501765718863884973.title}"
-			x: 0.0d
-			y: 12.0d
+			x: 2.25d
+			y: 18.0d
 		}
 		{
 			dependencies: ["68EDC89BB022788B"]
@@ -393,6 +389,181 @@
 			title: "虚空之花"
 			x: -2.0d
 			y: 4.5d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "1B626D8CAC2DC5F6"
+			rewards: [{
+				count: 3
+				id: "3BD07A4731B5C533"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "bosses_of_mass_destruction:gauntlet"
+				icon: "bosses_of_mass_destruction:blazing_eye"
+				id: "4EC4982DACA280B0"
+				type: "kill"
+				value: 1L
+			}]
+			title: "下界铁掌"
+			x: 0.0d
+			y: 13.0d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "6A0D7B0C41B137EC"
+			rewards: [{
+				count: 3
+				id: "0B0FDCB2C8529DBF"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "bosses_of_mass_destruction:obsidilith"
+				icon: "bosses_of_mass_destruction:obsidian_heart"
+				id: "0AEA090AF6A2BBA3"
+				type: "kill"
+				value: 1L
+			}]
+			title: "黑曜石柱"
+			x: -2.25d
+			y: 18.0d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "67D08F9D3A135152"
+			rewards: [{
+				count: 5
+				id: "0CFCBAA4C6F17F7F"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "nightfall_invade:arterius"
+				icon: "efn:duskfire_helmet"
+				id: "6242471AD0228534"
+				type: "kill"
+				value: 1L
+			}]
+			title: "亚尔特留斯"
+			x: 0.0d
+			y: -2.25d
+		}
+		{
+			id: "1C6CF37F43D11ED9"
+			rewards: [{
+				count: 5
+				id: "688238FA42AB8CB4"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "fdbosses:chesed"
+				icon: "fdbosses:chesed_trophy"
+				id: "6014D7CAB3E73A2E"
+				type: "kill"
+				value: 1L
+			}]
+			title: "Chesed"
+			x: 4.5d
+			y: -3.75d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "4391005A02DF9BA2"
+			rewards: [{
+				count: 5
+				id: "6C5D2912EB871671"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "fdbosses:malkuth"
+				icon: "fdbosses:malkuth_trophy"
+				id: "4F28257A1085C301"
+				type: "kill"
+				value: 1L
+			}]
+			title: "Malkuth"
+			x: 0.0d
+			y: -5.25d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "570C81A5E3AB8E08"
+			rewards: [{
+				count: 5
+				id: "08E8DE35A6B10C03"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "fdbosses:geburah"
+				icon: "fdbosses:geburah_trophy"
+				id: "19CD0EF5AAD663EC"
+				type: "kill"
+				value: 1L
+			}]
+			title: "严厉"
+			x: -4.5d
+			y: -3.75d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "3507A660CAD8962F"
+			rewards: [{
+				count: 5
+				id: "6E8BFD4D5DA65A57"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "epicfight_arachne:arachne"
+				icon: "epicfight_arachne:arachne_harp"
+				id: "03F91847BA93D935"
+				type: "kill"
+				value: 1L
+			}]
+			title: "阿拉克涅"
+			x: -7.5d
+			y: -1.5d
+		}
+		{
+			dependencies: ["68EDC89BB022788B"]
+			id: "48244C835D24AF3B"
+			rewards: [{
+				count: 5
+				id: "5CEB5E90809843FF"
+				item: "epicskills:ability_stone"
+				type: "item"
+			}]
+			shape: "rsquare"
+			size: 1.5d
+			tasks: [{
+				entity: "epicfight_leonidas:leonidas"
+				icon: "epicfight_leonidas:the_lost_helmet"
+				id: "6F7ED27823087F4A"
+				type: "kill"
+				value: 1L
+			}]
+			title: "列奥尼达斯"
+			x: 7.5d
+			y: -1.5d
 		}
 	]
 	title: "{ftbquests.chapter.shen_mo.title}"

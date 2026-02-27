@@ -5,29 +5,9 @@
 	group: ""
 	icon: "tcrcore:ancient_oracle_fragment"
 	id: "18EFF26E3A176E9E"
-	order_index: 1
+	order_index: 6
 	quest_links: [ ]
 	quests: [
-		{
-			description: ["{ftbquests.chapter.zhong_yao_wu_pin.quest6337146310170777825.description1}"]
-			id: "57F210FE536818E1"
-			invisible: true
-			rewards: [{
-				id: "2DCC8895D83C14B4"
-				type: "xp"
-				xp: 1
-			}]
-			shape: "rsquare"
-			size: 2.0d
-			subtitle: "{ftbquests.chapter.zhong_yao_wu_pin.quest6337146310170777825.subtitle}"
-			tasks: [{
-				id: "1222BA314401C853"
-				item: "tcrcore:ancient_oracle_fragment"
-				type: "item"
-			}]
-			x: -8.0d
-			y: 4.0d
-		}
 		{
 			description: [
 				"{ftbquests.chapter.zhong_yao_wu_pin.quest2021770627758923696.description1}"
@@ -95,7 +75,7 @@
 				item: "aquamirae:shell_horn"
 				type: "item"
 			}]
-			x: 0.0d
+			x: 4.0d
 			y: -4.0d
 		}
 		{
@@ -138,7 +118,7 @@
 				item: "aquamirae:ship_graveyard_echo"
 				type: "item"
 			}]
-			x: 4.0d
+			x: 8.0d
 			y: -4.0d
 		}
 		{
@@ -182,7 +162,7 @@
 				type: "item"
 			}]
 			x: 8.0d
-			y: -4.0d
+			y: 0.0d
 		}
 		{
 			description: ["{ftbquests.chapter.zhong_yao_wu_pin.quest1702170312402154650.description1}"]
@@ -221,8 +201,8 @@
 				item: "fromtheshadows:crystallized_blood"
 				type: "item"
 			}]
-			x: 8.0d
-			y: 0.0d
+			x: -8.0d
+			y: 4.0d
 		}
 		{
 			description: ["{ftbquests.chapter.zhong_yao_wu_pin.quest7623977956706730271.description1}"]
@@ -495,6 +475,21 @@
 			title: "{item.armourers_workshop.skin-template}"
 			x: 8.0d
 			y: -12.0d
+		}
+		{
+			description: ["击败严厉掉落"]
+			id: "36CB2233DCA15781"
+			invisible: true
+			shape: "rsquare"
+			size: 2.0d
+			subtitle: "严厉的核心"
+			tasks: [{
+				id: "132D3FC6F37CCF23"
+				item: "fdbosses:justice_core"
+				type: "item"
+			}]
+			x: 0.0d
+			y: -4.0d
 		}
 	]
 	title: "{ftbquests.chapter.zhong_yao_wu_pin.title}"
