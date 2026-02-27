@@ -20,8 +20,6 @@ import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.PlayTitlePacket;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -328,6 +326,10 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
         offers.add(new MerchantOffer(
                 new ItemStack(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), 1),
                 judgementCutEnd,
+                142857, 0, 0.01f));
+        offers.add(new MerchantOffer(
+                new ItemStack(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), 1),
+                EFNItem.HF_MURASAMA.get().getDefaultInstance(),
                 142857, 0, 0.01f));
         offers.add(new MerchantOffer(
                 new ItemStack(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), 1),

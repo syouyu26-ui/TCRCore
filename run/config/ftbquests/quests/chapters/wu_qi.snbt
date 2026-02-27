@@ -27,7 +27,7 @@
 				type: "xp"
 				xp: 1
 			}]
-			shape: "square"
+			shape: "none"
 			size: 2.5d
 			subtitle: "{ftbquests.chapter.wu_qi.quest3431479692052966900.subtitle}"
 			tasks: [{
@@ -1754,6 +1754,13 @@
 			]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:soul_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "153BA3E9B85A96B9"
 			rewards: [{
 				id: "677E4A22AB2F5A83"
@@ -1776,6 +1783,13 @@
 			dependencies: ["49526E12F56F14D0"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:desert_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "2F6D380DC5FC69B1"
 			rewards: [{
 				id: "7E325C0DCEA2F6EC"
@@ -1801,6 +1815,13 @@
 			]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:storm_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "08658F49935E08E0"
 			rewards: [{
 				id: "6C237D57F8E5C4CB"
@@ -1943,6 +1964,13 @@
 			dependencies: ["016F12E968740FBA"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:flame_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "494B0310B146210A"
 			rewards: [{
 				id: "28E132ECF8738D2E"
@@ -1965,6 +1993,13 @@
 			dependencies: ["12C6899DBC971D90"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:abyss_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "1E2BB91EDAEA9EFB"
 			rewards: [{
 				id: "3AA684E8E2457C65"
@@ -1987,6 +2022,13 @@
 			dependencies: ["72C5DAEE93ACFDD5"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:netherite_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "51362145E6878F9F"
 			rewards: [{
 				id: "0E56FD2A36EEFF26"
@@ -2009,6 +2051,13 @@
 			dependencies: ["04A38D08B97A07B0"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:ender_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "30B91B89C7183932"
 			rewards: [{
 				id: "37F3A67215A4A1B7"
@@ -2028,13 +2077,16 @@
 			y: -11.0d
 		}
 		{
-			dependencies: [
-				"093CCFF3131C851E"
-				"14A3BA3C1B29330D"
-				"0A2D0C0F839703C0"
-			]
+			dependencies: ["093CCFF3131C851E"]
 			dependency_requirement: "one_completed"
 			hide_until_deps_visible: true
+			icon: {
+				Count: 1
+				id: "tcrcore:mech_fragment"
+				tag: {
+					fdbosses: { }
+				}
+			}
 			id: "50040C726AFC8352"
 			rewards: [{
 				id: "091E52A16CB755BA"

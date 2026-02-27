@@ -15,7 +15,7 @@
 	quest_links: [ ]
 	quests: [
 		{
-			dependencies: ["6C743EF6251C4026"]
+			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			id: "3825BFB29CCBF7E9"
@@ -35,8 +35,8 @@
 				}
 				type: "item"
 			}]
-			x: -1.0d
-			y: 0.5d
+			x: 0.0d
+			y: -0.5d
 		}
 		{
 			id: "048CB00656EE47EF"
@@ -52,23 +52,8 @@
 				id: "2C5FA8ACCAB07D14"
 				type: "advancement"
 			}]
-			x: 1.0d
-			y: 0.5d
-		}
-		{
-			id: "6C743EF6251C4026"
-			rewards: [{
-				id: "1C7C33F6A794AFF2"
-				type: "xp"
-				xp: 1
-			}]
-			tasks: [{
-				id: "6FBAB272CAF44C38"
-				item: "tcrcore:wither_soul_stone"
-				type: "item"
-			}]
 			x: 0.0d
-			y: -1.0d
+			y: 1.0d
 		}
 		{
 			dependencies: ["048CB00656EE47EF"]

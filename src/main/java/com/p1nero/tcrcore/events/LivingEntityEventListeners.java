@@ -22,14 +22,13 @@ import com.obscuria.aquamirae.Aquamirae;
 import com.obscuria.aquamirae.AquamiraeUtils;
 import com.obscuria.aquamirae.common.entities.CaptainCornelia;
 import com.obscuria.aquamirae.registry.AquamiraeItems;
-import com.p1nero.battle_field1.worldgen.PBF1Dimensions;
 import com.p1nero.cataclysm_dimension.worldgen.CataclysmDimensions;
 import com.p1nero.entityrespawner.EntityRespawnerMod;
 import com.p1nero.entityrespawner.entity.SoulEntity;
 import com.p1nero.p1nero_ec.capability.PECDataManager;
-import com.p1nero.tcr_bosses.entity.cataclysm.BaseBossEntity;
 import com.p1nero.tcr_bosses.entity.cataclysm.ancient_remnant.AncientRemnantHumanoid;
 import com.p1nero.tcr_bosses.entity.cataclysm.ender_gardian.EnderGuardianHumanoid;
+import com.p1nero.tcr_bosses.entity.cataclysm.harbinger.HarbingerHumanoid;
 import com.p1nero.tcr_bosses.entity.cataclysm.ignis.IgnisHumanoid;
 import com.p1nero.tcr_bosses.entity.cataclysm.leviathan.LeviathanHumanoid;
 import com.p1nero.tcr_bosses.entity.cataclysm.maledictus.MaledictusHumanoid;
@@ -382,6 +381,13 @@ public class LivingEntityEventListeners {
                 }
             }
 
+            if(livingEntity instanceof HarbingerHumanoid) {
+                if(!PlayerDataManager.harbingerRemnantHumanoidKilled.get(player)) {
+                    givePlayerAward(player, 3);
+                    PlayerDataManager.harbingerRemnantHumanoidKilled.put(player, true);
+                }
+            }
+
         });
 
         //===================服务端===================
@@ -527,9 +533,9 @@ public class LivingEntityEventListeners {
     public static void givePlayerAward(ServerPlayer player, int count) {
         ItemUtil.addItemEntity(player, EpicSkillsItems.ABILIITY_STONE.get(), count, ChatFormatting.YELLOW.getColor().intValue());
         if(count > 2) {
-            ItemUtil.addItemEntity(player, TCRItems.RARE_ARTIFACT_TICKET.get(), count, ChatFormatting.YELLOW.getColor().intValue());
+            ItemUtil.addItemEntity(player, TCRItems.RARE_ARTIFACT_TICKET.get(), 1, ChatFormatting.YELLOW.getColor().intValue());
         } else {
-            ItemUtil.addItemEntity(player, TCRItems.ARTIFACT_TICKET.get(), count, ChatFormatting.YELLOW.getColor().intValue());
+            ItemUtil.addItemEntity(player, TCRItems.ARTIFACT_TICKET.get(), 1, ChatFormatting.YELLOW.getColor().intValue());
         }
     }
 

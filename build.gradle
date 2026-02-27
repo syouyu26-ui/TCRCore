@@ -428,6 +428,8 @@ dependencies {
     implementation fg.deobf("curse.maven:ambientsounds-254284:6570130")
     implementation fg.deobf("curse.maven:creativecore-257814:6383884")
 
+    implementation fg.deobf("curse.maven:spark-361579:4738952")
+
     implementation fg.deobf("curse.maven:inventory-profiles-next-495267:6095062")
     implementation fg.deobf("curse.maven:libipn-679177:5208511")
     implementation fg.deobf("curse.maven:kotlin-for-forge-351264:5402061")

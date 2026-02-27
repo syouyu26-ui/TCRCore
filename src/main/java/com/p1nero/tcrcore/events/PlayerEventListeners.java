@@ -425,6 +425,10 @@ public class PlayerEventListeners {
                     TCRQuests.GO_TO_OVERWORLD_CORE.finish(serverPlayer, true);
                     TCRQuests.USE_CORE_RESONANCE_STONE.start(serverPlayer);
                 }
+                if (TCRQuestManager.hasQuest(serverPlayer, TCRQuests.GO_TO_OVERWORLD_END)) {
+                    TCRQuests.GO_TO_OVERWORLD_END.finish(serverPlayer, true);
+                    TCRQuests.USE_END_RESONANCE_STONE.start(serverPlayer);
+                }
             }
             if (event.getTo().equals(Level.NETHER)) {
                 if (TCRQuestManager.hasQuest(serverPlayer, TCRQuests.GO_TO_NETHER)) {

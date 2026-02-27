@@ -11,16 +11,6 @@
 		}
 	}
 	id: "2454D069098E415A"
-	images: [{
-		alpha: 128
-		color: 16772521
-		height: 18.0d
-		image: "tcrcore:textures/ftb/armor_shelf.png"
-		rotation: 0.0d
-		width: 32.0d
-		x: 0.0d
-		y: 0.0d
-	}]
 	order_index: 2
 	quest_links: [ ]
 	quests: [

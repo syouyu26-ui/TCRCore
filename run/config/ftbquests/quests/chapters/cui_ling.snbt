@@ -16,6 +16,7 @@
 	quests: [
 		{
 			id: "721C4011155C1854"
+			invisible: true
 			tasks: [{
 				advancement: "tcrcore:unlock_magic_and_boss"
 				criterion: ""
@@ -998,6 +999,7 @@
 			y: 0.0d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "21FD4E16142443B8"
 			rewards: [{
@@ -1609,6 +1611,7 @@
 			y: 7.5d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "63929B798CE6AE03"
 			rewards: [{
@@ -1644,6 +1647,7 @@
 			y: 7.5d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "3AB92219E9BAA4BB"
 			rewards: [{
@@ -1679,6 +1683,7 @@
 			y: 7.0d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "7DB5A93FF6B27EF4"
 			rewards: [{
@@ -2002,6 +2007,7 @@
 			y: -1.0d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "3BD3AD3DA2BD85D4"
 			rewards: [{
@@ -2073,6 +2079,7 @@
 			y: 6.0d
 		}
 		{
+			dependencies: ["721C4011155C1854"]
 			hide_dependency_lines: true
 			id: "5B6AC49F60177AF8"
 			rewards: [{

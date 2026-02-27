@@ -90,6 +90,7 @@ public class PlayerDataManager {
     public static BoolData leviathanHumanoidKilled = new BoolData("leviathanHumanoidKilled", false);
     public static BoolData enderGuardianHumanoidKilled = new BoolData("enderGuardianHumanoidKilled", false);
     public static BoolData ancientRemnantHumanoidKilled = new BoolData("ancientRemnantHumanoidKilled", false);
+    public static BoolData harbingerRemnantHumanoidKilled = new BoolData("harbingerRemnantHumanoidKilled", false);
 
     public static void putData(Player player, String key, double value) {
         getTCRPlayer(player).putDouble(key, value);
