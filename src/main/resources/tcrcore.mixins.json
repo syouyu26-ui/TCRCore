@@ -66,7 +66,9 @@
     "WraithonEntityMixin"
   ],
   "client": [
+    "PonderLocalizationMixin",
     "AbilityStoneItemClientMixin",
+    "AltarRendererMixin",
     "AquamiraeClientMixin",
     "CataclysmClientEventMixin",
     "CEPosFollowBaseParticleMixin",

@@ -106,7 +106,11 @@ public class ForgeEvents {
                 if(living != null) {
                     if(living.isAlive()) {
                         serverBossEvent.setProgress(living.getHealth() / living.getMaxHealth());
+                    } else {
+                        serverBossEvent.removeAllPlayers();
                     }
+                } else {
+                    serverBossEvent.removeAllPlayers();
                 }
             }));
         }

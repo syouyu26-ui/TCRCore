@@ -15,12 +15,54 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.shelmarow.combat_evolution.ai.util.BehaviorUtils;
+import net.shelmarow.combat_evolution.execution.ExecutionHandler;
+import net.shelmarow.combat_evolution.execution.ExecutionTask;
+import net.shelmarow.combat_evolution.execution.ExecutionTypeManager;
+import net.shelmarow.combat_evolution.tickTask.TickTaskManager;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class EntityUtil {
+
+    public static void entityForceExecuteToDie(LivingEntity executor, LivingEntity target) {
+        if (executor != null && target != null) {
+            LivingEntityPatch<?> executorPatch = EpicFightCapabilities.getEntityPatch(executor, LivingEntityPatch.class);
+            LivingEntityPatch<?> targetPatch = EpicFightCapabilities.getEntityPatch(target, LivingEntityPatch.class);
+            if (targetPatch != null && executorPatch != null) {
+                ExecutionTypeManager.Type executionType = ExecutionHandler.getExecutionType(executorPatch, targetPatch);
+                Vec3 frontPos = calculateExecutionPosition(target, executionType.offset());
+                BehaviorUtils.stopCurrentBehavior(executor);
+                BehaviorUtils.stopCurrentBehavior(target);
+                executor.setDeltaMovement(Vec3.ZERO);
+                target.setDeltaMovement(Vec3.ZERO);
+                executor.teleportTo(frontPos.x, frontPos.y, frontPos.z);
+                TickTaskManager.addTask(target.getUUID(), new ExecutionTask(executor, target, executionType, executionType.totalTick()){
+                    @Override
+                    public void onFinish() {
+                        target.kill();
+                    }
+                });
+            }
+        }
+    }
+
+    private static Vec3 calculateExecutionPosition(LivingEntity target, Vec3 offset) {
+        float yaw = target.getYRot();
+        double rad = Math.toRadians((double)yaw);
+        double forwardX = -Math.sin(rad);
+        double forwardZ = Math.cos(rad);
+        double rightX = Math.cos(rad);
+        double rightZ = Math.sin(rad);
+        double offsetX = forwardX * offset.x + rightX * offset.z;
+        double offsetY = offset.y;
+        double offsetZ = forwardZ * offset.x + rightZ * offset.z;
+        return target.position().add(offsetX, offsetY, offsetZ);
+    }
 
     public static void safelyClearAll(ServerLevel serverLevel) {
         List<Entity> newList = new ArrayList<>();

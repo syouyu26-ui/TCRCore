@@ -492,9 +492,6 @@ public class LivingEntityEventListeners {
                         //防堆命机制
                         living.setHealth(living.getMaxHealth());
                         living.removeAllEffects();
-                        if (entity instanceof Arterius arterius) {
-                            arterius.resetBossStatus(true);
-                        }
                     }
                 });
             }
@@ -636,10 +633,6 @@ public class LivingEntityEventListeners {
 
         if (event.getEntity().level().isClientSide) {
             return;
-        }
-
-        if (event.getEntity() instanceof Arterius arterius) {
-            arterius.setInBattle(false);
         }
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();

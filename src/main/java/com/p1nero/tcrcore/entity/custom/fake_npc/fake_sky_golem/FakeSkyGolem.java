@@ -8,14 +8,13 @@ import com.p1nero.dialog_lib.client.screen.DialogueScreen;
 import com.p1nero.dialog_lib.client.screen.builder.DialogueScreenBuilder;
 import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcrcore.TCRCoreMod;
-import com.p1nero.tcrcore.capability.PlayerDataManager;
-import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.capability.TCRQuests;
 import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.entity.custom.fake_npc.FakeNPCEntity;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.SetThirdPersonPacket;
+import com.p1nero.tcrcore.utils.EntityUtil;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -159,9 +158,7 @@ public class FakeSkyGolem extends FakeNPCEntity {
                 ItemUtil.addItemEntity(player, player.getMainHandItem().copy());
                 player.setItemInHand(InteractionHand.MAIN_HAND, Items.IRON_SWORD.getDefaultInstance());
             }
-            if(!ExecutionHandler.entityForceExecute(player, this, false)){
-                this.discard();
-            }
+            EntityUtil.entityForceExecuteToDie(player, this);
         }
         setConversingPlayer(null);
     }

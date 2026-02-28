@@ -16,7 +16,8 @@
     "tcrcore:cursed_altar_block_entity",
     "tcrcore:mech_altar_block_entity",
     "tcrcore:void_altar_block_entity",
-    "tcrcore:monst_altar_block_entity"
+    "tcrcore:monst_altar_block_entity",
+    "summoningrituals:altar"
   ],
   "entityWhitelist": [
     "botania:mana_burst",

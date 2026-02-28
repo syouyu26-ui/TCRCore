@@ -11,6 +11,7 @@ import com.p1nero.tcrcore.block.entity.TCRBlockEntities;
 import com.p1nero.tcrcore.client.gui.BlockTooltipHandler;
 import com.p1nero.tcrcore.client.item_renderer.RenderDualBokken;
 import com.p1nero.tcrcore.client.item_renderer.RenderTheIncinerator;
+import com.p1nero.tcrcore.client.ponder.TCRPonderPlugin;
 import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.entity.custom.aine_iris.AineIrisRenderer;
 import com.p1nero.tcrcore.entity.custom.fake_npc.fake_boss.FakeBossNpcRenderer;
@@ -22,6 +23,7 @@ import com.p1nero.tcrcore.entity.custom.mimic.PTCRMimicRenderer;
 import com.p1nero.tcrcore.entity.custom.mimic.TCRMimicRenderer;
 import com.p1nero.tcrcore.entity.custom.ornn.OrnnlGeoRenderer;
 import com.p1nero.tcrcore.entity.custom.tutorial_golem.TutorialGolemRenderer;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -43,70 +45,75 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() ->{
 
-        EntityRenderers.register(TCREntities.CUSTOM_COLOR_ITEM.get(), ItemEntityRenderer::new);
+            EntityRenderers.register(TCREntities.CUSTOM_COLOR_ITEM.get(), ItemEntityRenderer::new);
 
-        EntityRenderers.register(TCREntities.CHRONOS_SOL.get(), ChronosSolGeoRenderer::new);
-        EntityRenderers.register(TCREntities.FERRY_GIRL.get(), FerryGirlGeoRenderer::new);
-        EntityRenderers.register(TCREntities.ORNN.get(), OrnnlGeoRenderer::new);
-        EntityRenderers.register(TCREntities.AINE.get(), AineIrisRenderer::new);
-        EntityRenderers.register(TCREntities.FAKE_SKY_GOLEM.get(), FakeSkyGolemRenderer::new);
-        EntityRenderers.register(TCREntities.FAKE_END_GOLEM.get(), FakeEndGolemRenderer::new);
-        EntityRenderers.register(TCREntities.TUTORIAL_GOLEM.get(), TutorialGolemRenderer::new);
+            EntityRenderers.register(TCREntities.CHRONOS_SOL.get(), ChronosSolGeoRenderer::new);
+            EntityRenderers.register(TCREntities.FERRY_GIRL.get(), FerryGirlGeoRenderer::new);
+            EntityRenderers.register(TCREntities.ORNN.get(), OrnnlGeoRenderer::new);
+            EntityRenderers.register(TCREntities.AINE.get(), AineIrisRenderer::new);
+            EntityRenderers.register(TCREntities.FAKE_SKY_GOLEM.get(), FakeSkyGolemRenderer::new);
+            EntityRenderers.register(TCREntities.FAKE_END_GOLEM.get(), FakeEndGolemRenderer::new);
+            EntityRenderers.register(TCREntities.TUTORIAL_GOLEM.get(), TutorialGolemRenderer::new);
 
-        EntityRenderers.register(TCREntities.TCR_MIMIC.get(), TCRMimicRenderer::new);
+            EntityRenderers.register(TCREntities.TCR_MIMIC.get(), TCRMimicRenderer::new);
 
-        EntityRenderers.register(TCREntities.FAKE_MALEDICTUS_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.MALEDICTUS_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_MALEDICTUS_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.MALEDICTUS_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_IGNIS_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.IGNIS_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_IGNIS_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.IGNIS_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_NETHERITE_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.NETHERITE_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_NETHERITE_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.NETHERITE_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_SCYLLA_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.SCYLLA_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_SCYLLA_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.SCYLLA_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_ENDER_GUARDIAN_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.ENDER_GUARDIAN_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_ENDER_GUARDIAN_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.ENDER_GUARDIAN_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_HARBINGER_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.HARBINGER_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_HARBINGER_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.HARBINGER_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_LEVIATHAN_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.LEVIATHAN_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_LEVIATHAN_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.LEVIATHAN_HUMANOID_TEXTURE));
 
-        EntityRenderers.register(TCREntities.FAKE_ANCIENT_REMNANT_HUMANOID.get(),
-                context -> new FakeBossNpcRenderer(context, TCRMeshes.ANCIENT_REMAIN_HUMANOID_TEXTURE));
+            EntityRenderers.register(TCREntities.FAKE_ANCIENT_REMNANT_HUMANOID.get(),
+                    context -> new FakeBossNpcRenderer(context, TCRMeshes.ANCIENT_REMAIN_HUMANOID_TEXTURE));
 
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.ABYSS_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", ModEntities.THE_LEVIATHAN.get().getDescription().copy().withStyle(ChatFormatting.BLUE), ModItems.TIDAL_CLAWS.get().getDescription().copy().withStyle(ChatFormatting.GOLD)),
-                TCRCoreMod.getInfo("related_loot", ModEntities.CORALSSUS.get().getDescription(), EFNItem.NF_CLAW.get().getDescription().copy().withStyle(ChatFormatting.LIGHT_PURPLE)));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.CURSED_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", ModEntities.MALEDICTUS.get().getDescription().copy().withStyle(ChatFormatting.DARK_GREEN), ModItems.SOUL_RENDER.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.DESERT_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", ModEntities.ANCIENT_REMNANT.get().getDescription().copy().withStyle(ChatFormatting.YELLOW), ModItems.WRATH_OF_THE_DESERT.get().getDescription().copy().withStyle(ChatFormatting.GOLD)),
-                TCRCoreMod.getInfo("related_loot", ModEntities.KOBOLEDIATOR.get().getDescription(), EFNItem.EXSILIUMGLADIUS.get().getDescription().copy().withStyle(ChatFormatting.LIGHT_PURPLE)));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.FLAME_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", ModEntities.IGNIS.get().getDescription().copy().withStyle(ChatFormatting.RED), ModItems.THE_INCINERATOR.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.STORM_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", ModEntities.SCYLLA.get().getDescription().copy().withStyle(ChatFormatting.AQUA), ModItems.CERAUNUS.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.ABYSS_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.THE_LEVIATHAN.get().getDescription().copy().withStyle(ChatFormatting.BLUE), ModItems.TIDAL_CLAWS.get().getDescription().copy().withStyle(ChatFormatting.GOLD)),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.CORALSSUS.get().getDescription(), EFNItem.NF_CLAW.get().getDescription().copy().withStyle(ChatFormatting.LIGHT_PURPLE)));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.CURSED_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.MALEDICTUS.get().getDescription().copy().withStyle(ChatFormatting.DARK_GREEN), ModItems.SOUL_RENDER.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.DESERT_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.ANCIENT_REMNANT.get().getDescription().copy().withStyle(ChatFormatting.YELLOW), ModItems.WRATH_OF_THE_DESERT.get().getDescription().copy().withStyle(ChatFormatting.GOLD)),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.KOBOLEDIATOR.get().getDescription(), EFNItem.EXSILIUMGLADIUS.get().getDescription().copy().withStyle(ChatFormatting.LIGHT_PURPLE)));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.FLAME_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.IGNIS.get().getDescription().copy().withStyle(ChatFormatting.RED), ModItems.THE_INCINERATOR.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.STORM_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", ModEntities.SCYLLA.get().getDescription().copy().withStyle(ChatFormatting.AQUA), ModItems.CERAUNUS.get().getDescription().copy().withStyle(ChatFormatting.GOLD)));
 
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.VOID_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", "???", "???"));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.MECH_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", "???", "???"));
-        BlockTooltipHandler.registerBlockTooltip(TCRBlocks.MONST_ALTAR_BLOCK,
-                TCRCoreMod.getInfo("altar_dim_info"),
-                TCRCoreMod.getInfo("related_loot", "???", "???"));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.VOID_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", "???", "???"));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.MECH_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", "???", "???"));
+            BlockTooltipHandler.registerBlockTooltip(TCRBlocks.MONST_ALTAR_BLOCK,
+                    TCRCoreMod.getInfo("altar_dim_info"),
+                    TCRCoreMod.getInfo("related_loot", "???", "???"));
+
+            PonderIndex.addPlugin(new TCRPonderPlugin());
+
+        });
     }
 
     @SubscribeEvent

@@ -212,7 +212,7 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.add(TCRItems.WITHER_SOUL_STONE.get(), "凋灵魂石");
         this.addItemUsageInfo(TCRItems.WITHER_SOUL_STONE.get(), "它现在似乎失去了魔力，只是一块独特的石头。想办法激活它吧！");
         this.add(TCRItems.WITHER_SOUL_STONE_ACTIVATED.get(), "凋灵魂石");
-        this.addItemUsageInfo(TCRItems.WITHER_SOUL_STONE_ACTIVATED.get(), "可打开前往§6[{travelerstitles.pbf1.sanctum_of_the_battle1}]§r的大门。");
+        this.addItemUsageInfo(TCRItems.WITHER_SOUL_STONE_ACTIVATED.get(), "可打开前往[%s]的大门。");
         this.add(TCRItems.MAGIC_BOTTLE.get(), "魔力之瓶");
         this.addItemUsageInfo(TCRItems.MAGIC_BOTTLE.get(), "使用后可恢复一定比例的魔力。当用尽后，需在主城中使用以补充魔力。");
         this.add(TCRItems.MYSTERIOUS_WEAPONS.get(), "百兵图");

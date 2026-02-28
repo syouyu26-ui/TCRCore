@@ -462,7 +462,7 @@
   "item.tcrcore.wither_soul_stone": "凋灵魂石",
   "item.tcrcore.wither_soul_stone.usage": "它现在似乎失去了魔力，只是一块独特的石头。想办法激活它吧！",
   "item.tcrcore.wither_soul_stone_activated": "凋灵魂石",
-  "item.tcrcore.wither_soul_stone_activated.usage": "可打开前往§6[{travelerstitles.pbf1.sanctum_of_the_battle1}]§r的大门。",
+  "item.tcrcore.wither_soul_stone_activated.usage": "可打开前往[%s]的大门。",
   "item.waystones.warp_stone.tcr_info": "点击物品栏中的传送卷轴按钮以进行传送。",
   "itemGroup.tcr.items": "远梦之棺 —— 核心 物品",
   "key.categories.tcrcore": "远梦之棺 —— 核心",
