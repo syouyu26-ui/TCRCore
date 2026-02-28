@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -37,9 +38,8 @@ public abstract class BTMonolithMixin extends Entity {
 
     @Shadow(remap = false) protected abstract void playKeyInteractionSound();
 
-    @Shadow(remap = false) protected abstract void spawnGolem();
-
-    @Shadow(remap = false) protected abstract void playSpawnSound();
+    @Shadow(remap = false)
+    public abstract int getKeyCountInEntity();
 
     public BTMonolithMixin(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
@@ -49,26 +49,30 @@ public abstract class BTMonolithMixin extends Entity {
     private void tcr$interact(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (this.monolithType != null) {
             Item itemInHand = player.getItemInHand(hand).getItem();
+            if(this.monolithType.equals(BTEntityType.END_MONOLITH.get())
+            ||this.monolithType.equals(BTEntityType.NETHER_MONOLITH.get())) {
+                //直接生
+                if (!player.isCreative() && itemInHand.equals(this.correctMonolithKey)) {
+                    player.getItemInHand(hand).shrink(1);
+                }
+                this.setKeyCountInEntity(3);
+                this.setEyeSlotDisplayed();
+                this.playKeyInteractionSound();
+                cir.setReturnValue(InteractionResult.sidedSuccess(this.getCommandSenderWorld().isClientSide()));
+                return;
+            }
             if (itemInHand.equals(this.correctMonolithKey)) {
-                if(this.monolithType.equals(BTEntityType.END_MONOLITH.get())) {
-                    //末地不消耗，保留
-                    spawnGolem();
-                    if (!player.isCreative()) {
-                        player.getItemInHand(hand).shrink(1);
-                    }
-                    this.playSpawnSound();
-                    this.setKeyCountInEntity(0);
-                } else {
+                int min = this.monolithType.equals(BTEntityType.LAND_MONOLITH.get()) ? 2 : 1;
+                if(this.getKeyCountInEntity() == min) {
                     this.setKeyCountInEntity(3);
                     this.playKeyInteractionSound();
                     if (!player.isCreative()) {
                         player.getItemInHand(hand).shrink(1);
                     }
                     this.setEyeSlotDisplayed();
+                    cir.setReturnValue(InteractionResult.sidedSuccess(this.getCommandSenderWorld().isClientSide()));
                 }
-                cir.setReturnValue(InteractionResult.sidedSuccess(this.getCommandSenderWorld().isClientSide()));
             }
         }
-        cir.setReturnValue(super.interact(player, hand));
     }
 }

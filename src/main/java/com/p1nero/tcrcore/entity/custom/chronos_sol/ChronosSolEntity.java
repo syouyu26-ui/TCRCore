@@ -22,6 +22,7 @@ import com.p1nero.tcrcore.network.packet.clientbound.PlayTitlePacket;
 import com.p1nero.tcrcore.save_data.TCRDimSaveData;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
+import com.yesman.epicskills.registry.entry.EpicSkillsSkillTrees;
 import com.yesman.epicskills.skilltree.SkillTree;
 import com.yesman.epicskills.world.capability.SkillTreeProgression;
 import net.minecraft.ChatFormatting;
@@ -437,7 +438,7 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
             TCRQuests.GO_TO_AETHER.start(player);
             PlayerDataManager.canEnterAether.put(player, true);
             player.getCapability(SkillTreeProgression.SKILL_TREE_PROGRESSION).ifPresent(skillTreeProgression -> {
-                ResourceKey<SkillTree> resourceKey = ResourceKey.create(SkillTree.SKILL_TREE_REGISTRY_KEY, ResourceLocation.fromNamespaceAndPath(DodgeParryRewardMod.MOD_ID, "passive"));
+                ResourceKey<SkillTree> resourceKey = EpicSkillsSkillTrees.BATTLEBORN;
                 skillTreeProgression.unlockTree(resourceKey, player);
                 skillTreeProgression.unlockNode(resourceKey, FlyingSkills.SWORD_SOARING_ELYTRA_MASTER, player);
                 skillTreeProgression.unlockNode(resourceKey, FlyingSkills.SWORD_SOARING_MASTER, player);

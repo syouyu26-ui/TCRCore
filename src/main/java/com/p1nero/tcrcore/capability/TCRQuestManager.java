@@ -94,7 +94,7 @@ public class TCRQuestManager {
         tcrPlayer.syncToClient(player);
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new RefreshClientQuestsPacket(), player);
         //大地图标点，仅大地图可见
-        if(quest.getTrackingPos() != null && quest.getDimension().equals(player.level().dimension())) {
+        if(quest.getTrackingPos() != null && quest.getDimension().equals(player.level().dimension()) && TCRCoreMod.isIsXaeroLoaded()) {
             WaypointUtil.sendWaypoint(player, TCRCoreMod.getInfoKey("quest_map_mark"), quest.getTrackingPos(), WaypointColor.GOLD, WaypointVisibilityType.WORLD_MAP_LOCAL);
         }
     }
@@ -132,7 +132,9 @@ public class TCRQuestManager {
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new RefreshClientQuestsPacket(), player);
         //移除大地图标点
         if(quest.getTrackingPos() != null && quest.getDimension().equals(player.level().dimension())) {
-            WaypointUtil.removeWaypoint(player, TCRCoreMod.getInfoKey("quest_map_mark"), quest.getTrackingPos());
+            if(TCRCoreMod.isIsXaeroLoaded()) {
+                WaypointUtil.removeWaypoint(player, TCRCoreMod.getInfoKey("quest_map_mark"), quest.getTrackingPos());
+            }
         }
         playFinishSound(player, quest);
         return true;

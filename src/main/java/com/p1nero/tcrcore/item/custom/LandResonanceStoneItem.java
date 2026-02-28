@@ -51,7 +51,7 @@ public class LandResonanceStoneItem extends ResonanceStoneItem{
 
                     BlockPos pos = null;
                     try {
-                        pos = WorldUtil.getNearbyStructurePosByCommand(serverPlayer, targetStructure.toString(), y);
+                        pos = WorldUtil.getNearbyStructurePos(serverPlayer, targetStructure.toString(), y);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", targetStructure, e.getMessage());
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", targetStructure).withStyle(ChatFormatting.RED), false);
@@ -60,7 +60,7 @@ public class LandResonanceStoneItem extends ResonanceStoneItem{
                     BlockPos pos1 = null;
                     try {
                         //以大地高塔为中心搜奇美拉的位置
-                        pos1 = WorldUtil.getNearbyStructurePosByCommand(serverPlayer.serverLevel(), pos, WorldUtil.BONE_CHIMERA_STRUCTURE, 999);
+                        pos1 = WorldUtil.getNearbyStructurePos(serverPlayer.serverLevel(), pos, WorldUtil.BONE_CHIMERA_STRUCTURE, 999);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", WorldUtil.BONE_CHIMERA_STRUCTURE, e.getMessage());
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", WorldUtil.BONE_CHIMERA_STRUCTURE).withStyle(ChatFormatting.RED), false);
@@ -85,13 +85,19 @@ public class LandResonanceStoneItem extends ResonanceStoneItem{
                             pos1 = WorldUtil.getSurfaceBlockPos(serverPlayer.serverLevel(), pos1);
                         }
                         tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos1.getX(), player.getEyeY(), pos1.getZ()));
-                        WaypointUtil.sendWaypoint(serverPlayer, "bone_chimera_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.BONE_CHIMERA_STRUCTURE))), pos1, WaypointColor.YELLOW);
+                        if(TCRCoreMod.isIsXaeroLoaded()) {
+                            WaypointUtil.sendWaypoint(serverPlayer, "bone_chimera_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.BONE_CHIMERA_STRUCTURE))), pos1, WaypointColor.YELLOW);
+                        }
                     } else {
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", WorldUtil.BONE_CHIMERA_STRUCTURE).withStyle(ChatFormatting.RED), false);
                     }
                     //保险，俩都找到再消耗
                     if(pos != null && pos1 != null) {
                         itemStack.shrink(1);
+                        if(!TCRCoreMod.isIsXaeroLoaded()) {
+                            ResonanceStoneItem.handleNoXaeroMap(Component.literal(targetStructure.toString()), pos, serverPlayer);
+                            ResonanceStoneItem.handleNoXaeroMap(Component.literal(WorldUtil.BONE_CHIMERA_STRUCTURE), pos1, serverPlayer);
+                        }
                         callback.accept(pos, serverPlayer);
                         TCRQuests.BONE_CHIMERA_QUEST.start(serverPlayer);
                     }

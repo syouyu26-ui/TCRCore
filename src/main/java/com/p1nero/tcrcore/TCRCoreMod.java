@@ -56,7 +56,8 @@ public class TCRCoreMod {
     public static final String MOD_ID = "tcrcore";
     public static final Logger LOGGER = LogUtils.getLogger();
     private static boolean isCheatMod = false;
-    private static boolean isWorldEditLoad;
+    private static boolean isWorldEditLoaded;
+    private static boolean isXaeroLoaded;
 
     public TCRCoreMod(FMLJavaModLoadingContext context) {
         SkillSlot.ENUM_MANAGER.registerEnumCls(TCRCoreMod.MOD_ID, TCRSkillSlots.class);
@@ -77,6 +78,8 @@ public class TCRCoreMod {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            isWorldEditLoaded = ModList.get().isLoaded("worldedit");
+            isXaeroLoaded = ModList.get().isLoaded("xaerominimap");
             TCRPacketHandler.register();
             TCRQuestManager.init();
 //        List<String> cheatModList = List.of("tacz", "projecte", "enchantmentlevelbreak");
@@ -85,8 +88,6 @@ public class TCRCoreMod {
 //                isCheatMod = true;
 //            }
 //        });
-            isWorldEditLoad = ModList.get().isLoaded("worldedit");
-
             PlayerEventListeners.illegalItems.add(UAItems.STARVED_WOLF_SKULL.get());
             PlayerEventListeners.illegalItems.add(artifacts.registry.ModItems.VAMPIRIC_GLOVE.get());
             PlayerEventListeners.illegalItems.add(UAItems.BURNING_SOUL.get());
@@ -188,7 +189,14 @@ public class TCRCoreMod {
     }
 
     public static boolean isWorldEditLoad() {
-        return isWorldEditLoad;
+        return isWorldEditLoaded;
+    }
+
+    /**
+     * 做成联动，低配机需移除
+     */
+    public static boolean isIsXaeroLoaded() {
+        return isXaeroLoaded;
     }
 
     public static MutableComponent getInfo(String key) {

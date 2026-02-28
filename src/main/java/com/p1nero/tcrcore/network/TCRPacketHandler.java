@@ -7,6 +7,7 @@ import com.p1nero.tcrcore.network.packet.serverbound.EndScreenCallbackPacket;
 import com.p1nero.tcrcore.network.packet.serverbound.ExecuteRiptidePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
@@ -22,8 +23,10 @@ public class TCRPacketHandler {
     private static int index;
 
     public static synchronized void register() {
-        register(AddWaypointPacket.class, AddWaypointPacket::decode);
-        register(RemoveWaypointPacket.class, RemoveWaypointPacket::decode);
+        if(TCRCoreMod.isIsXaeroLoaded()) {
+            register(AddWaypointPacket.class, AddWaypointPacket::decode);
+            register(RemoveWaypointPacket.class, RemoveWaypointPacket::decode);
+        }
 
         register(PlayTitlePacket.class, PlayTitlePacket::decode);
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);

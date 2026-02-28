@@ -10,7 +10,10 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -42,6 +45,7 @@ public class ResonanceStoneItem extends Item {
     public static final int SURFACE = 999;
     protected final BiConsumer<BlockPos, ServerPlayer> callback;
     protected final Predicate<ServerPlayer> predicate;
+    protected boolean ignoreFounded = true;
 
     public ResonanceStoneItem(Properties properties, ResourceLocation targetStructure, int y, ResourceKey<Level> dimension, Predicate<ServerPlayer> predicate, BiConsumer<BlockPos, ServerPlayer> callback) {
         super(properties);
@@ -50,6 +54,11 @@ public class ResonanceStoneItem extends Item {
         this.callback = callback;
         this.predicate = predicate;
         this.y = y;
+    }
+
+    public ResonanceStoneItem(Properties properties, ResourceLocation targetStructure, int y, ResourceKey<Level> dimension, Predicate<ServerPlayer> predicate, BiConsumer<BlockPos, ServerPlayer> callback, boolean ignoreFounded) {
+        this(properties, targetStructure, y, dimension, predicate, callback);
+        this.ignoreFounded = ignoreFounded;
     }
 
     @Override
@@ -62,7 +71,7 @@ public class ResonanceStoneItem extends Item {
                     serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EpicSkillsSounds.GAIN_ABILITY_POINTS.get()), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
                     BlockPos pos = null;
                     try {
-                        pos = WorldUtil.getNearbyStructurePosByCommand(serverPlayer, targetStructure.toString(), y);
+                        pos = WorldUtil.getNearbyStructurePos(serverPlayer, targetStructure.toString(), y, ignoreFounded);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", targetStructure, e.getMessage());
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", targetStructure).withStyle(ChatFormatting.RED), false);
@@ -78,6 +87,9 @@ public class ResonanceStoneItem extends Item {
                         tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos.getX(), player.getEyeY(), pos.getZ()));
                         itemStack.shrink(1);
                         serverPlayer.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EpicSkillsSounds.GAIN_ABILITY_POINTS.get()), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, 1.0F, player.getRandom().nextInt()));
+                        if(!TCRCoreMod.isIsXaeroLoaded()) {
+                            ResonanceStoneItem.handleNoXaeroMap(Component.literal(targetStructure.toString()), pos, serverPlayer);
+                        }
                         callback.accept(pos, serverPlayer);
                     } else {
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", targetStructure).withStyle(ChatFormatting.RED), false);
@@ -105,4 +117,20 @@ public class ResonanceStoneItem extends Item {
     public boolean isFoil(@NotNull ItemStack itemStack) {
         return true;
     }
+
+    public static void handleNoXaeroMap(Component prefix, BlockPos pos, ServerPlayer serverPlayer) {
+        String s = pos.getY() == ResonanceStoneItem.SURFACE ? String.valueOf(WorldUtil.getSurfaceBlockPos(serverPlayer.serverLevel(), pos.getX(), pos.getZ()).getY()) : String.valueOf(pos.getY());
+        s = " " + s + " ";
+        String finalS = s;
+        Component location = ComponentUtils.wrapInSquareBrackets(Component.translatable("chat.coordinates", pos.getX(), s, pos.getZ()))
+                .withStyle((style) -> style
+                        .withColor(ChatFormatting.GREEN)
+                        .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tp @s " + pos.getX() + finalS + pos.getZ()))
+                        .withHoverEvent(new HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.translatable("chat.coordinates.tooltip"))));
+
+        serverPlayer.displayClientMessage(Component.literal("Xaero Map not loaded. Failed to mark pos!").withStyle(ChatFormatting.RED), false);
+        serverPlayer.displayClientMessage(prefix.copy().withStyle(ChatFormatting.GOLD), false);
+        serverPlayer.displayClientMessage(location, false);
+    }
+
 }

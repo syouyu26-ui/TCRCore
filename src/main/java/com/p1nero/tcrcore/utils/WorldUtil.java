@@ -123,7 +123,17 @@ public class WorldUtil {
     }
 
     @Nullable
+    public static BlockPos getNearbyStructurePos(ServerPlayer serverPlayer, String structureId, int y, boolean ignoreFounded) {
+        return getNearbyStructurePos(serverPlayer.serverLevel(), serverPlayer.getOnPos(), structureId, y, ignoreFounded);
+    }
+
+    @Nullable
     public static BlockPos getNearbyStructurePos(ServerLevel serverLevel, BlockPos playerPos, String structureId, int y) {
+        return getNearbyStructurePos(serverLevel, playerPos, structureId, y, true);
+    }
+
+    @Nullable
+    public static BlockPos getNearbyStructurePos(ServerLevel serverLevel, BlockPos playerPos, String structureId, int y, boolean ignoreFounded) {
         ResourceLocation structureResourceLocation = ResourceLocation.tryParse(structureId);
         if (structureResourceLocation == null) {
             return null;
@@ -146,7 +156,7 @@ public class WorldUtil {
                 structureSet,
                 playerPos,
                 100,
-                true//跳过已找？
+                ignoreFounded//跳过已找？
         );
 
         if (result != null) {

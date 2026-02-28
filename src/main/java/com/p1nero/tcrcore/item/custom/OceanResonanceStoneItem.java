@@ -51,7 +51,7 @@ public class OceanResonanceStoneItem extends ResonanceStoneItem{
 
                     BlockPos pos = null;
                     try {
-                        pos = WorldUtil.getNearbyStructurePosByCommand(serverPlayer, targetStructure.toString(), y);
+                        pos = WorldUtil.getNearbyStructurePos(serverPlayer, targetStructure.toString(), y);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", targetStructure, e.getMessage());
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", targetStructure).withStyle(ChatFormatting.RED), false);
@@ -60,7 +60,7 @@ public class OceanResonanceStoneItem extends ResonanceStoneItem{
                     BlockPos pos1 = null;
                     try {
                         //以海洋塔为中心搜呱呱村的位置
-                        pos1 = WorldUtil.getNearbyStructurePosByCommand(serverPlayer.serverLevel(), pos, WorldUtil.RIBBIT_VILLAGE, 130);
+                        pos1 = WorldUtil.getNearbyStructurePos(serverPlayer.serverLevel(), pos, WorldUtil.RIBBIT_VILLAGE, 130);
                     } catch (Exception e) {
                         TCRCoreMod.LOGGER.error("TCRCore : Error finding structure [{}]: {}", WorldUtil.RIBBIT_VILLAGE, e.getMessage());
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", WorldUtil.RIBBIT_VILLAGE).withStyle(ChatFormatting.RED), false);
@@ -80,13 +80,19 @@ public class OceanResonanceStoneItem extends ResonanceStoneItem{
                     if(pos1 != null) {
                         pos1 = WorldUtil.getSurfaceBlockPos(serverPlayer.serverLevel(), pos1);
                         tcrPlayer.playDirectionParticle(player.getEyePosition(), new Vec3(pos1.getX(), player.getEyeY(), pos1.getZ()));
-                        WaypointUtil.sendWaypoint(serverPlayer, "ribbit_village_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.RIBBIT_VILLAGE))), pos1, WaypointColor.BLUE);
+                        if(TCRCoreMod.isIsXaeroLoaded()) {
+                            WaypointUtil.sendWaypoint(serverPlayer, "ribbit_village_mark", Component.translatable(Util.makeDescriptionId("structure", ResourceLocation.parse(WorldUtil.RIBBIT_VILLAGE))), pos1, WaypointColor.BLUE);
+                        }
                     } else {
                         player.displayClientMessage(TCRCoreMod.getInfo("resonance_search_failed", WorldUtil.RIBBIT_VILLAGE).withStyle(ChatFormatting.RED), false);
                     }
                     //保险，俩都找到再消耗
                     if(pos != null && pos1 != null) {
                         itemStack.shrink(1);
+                        if(!TCRCoreMod.isIsXaeroLoaded()) {
+                            ResonanceStoneItem.handleNoXaeroMap(Component.literal(targetStructure.toString()), pos, serverPlayer);
+                            ResonanceStoneItem.handleNoXaeroMap(Component.literal(WorldUtil.RIBBIT_VILLAGE), pos1, serverPlayer);
+                        }
                         callback.accept(pos, serverPlayer);
                         TCRQuests.RIBBITS_QUEST.start(serverPlayer);
                     }
