@@ -447,6 +447,7 @@ dependencies {
     implementation fg.deobf("curse.maven:fast-tpa-1122207:6680358")
 
     implementation fg.deobf("curse.maven:resourceful-config-714059:6231176")
+    implementation fg.deobf("curse.maven:async-locator-625069:4603343")
 
     implementation fg.deobf("curse.maven:fancy-toasts-1326436:6932752")//优化进度贴图
 

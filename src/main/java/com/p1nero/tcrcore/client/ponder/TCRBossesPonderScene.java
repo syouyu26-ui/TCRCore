@@ -15,11 +15,14 @@ import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
@@ -168,8 +171,8 @@ public class TCRBossesPonderScene {
 
         ItemStack item1 = new ItemStack(ModItems.ANCIENT_METAL_INGOT.get());
         ItemStack item2 = new ItemStack(ModItems.NECKLACE_OF_THE_DESERT.get());
-        ItemStack item3 = new ItemStack(Items.BONE, 5);
-        ItemStack item4 = new ItemStack(ModItems.KOBOLETON_BONE.get(), 5);
+        ItemStack item3 = new ItemStack(Items.BONE, 11);
+        ItemStack item4 = new ItemStack(ModItems.KOBOLETON_BONE.get(), 11);
 
         scene.configureBasePlate(0, 0, 5);
         scene.showBasePlate();
@@ -298,8 +301,8 @@ public class TCRBossesPonderScene {
         ItemStack catalyst = new ItemStack(Items.GHAST_TEAR);
 
         ItemStack item1 = new ItemStack(TCRItems.VOID_CORE.get());
-        ItemStack item2 = new ItemStack(Items.PURPUR_BLOCK, 5);
-        ItemStack item3 = new ItemStack(Items.SHULKER_SHELL, 5);
+        ItemStack item2 = new ItemStack(Items.PURPUR_BLOCK, 16);
+        ItemStack item3 = new ItemStack(Items.SHULKER_SHELL, 9);
         ItemStack item4 = new ItemStack(ModItems.VOID_STONE.get(), 1);
 
         scene.configureBasePlate(0, 0, 5);
@@ -545,7 +548,7 @@ public class TCRBossesPonderScene {
 
         ItemStack item1 = new ItemStack(Items.NETHER_WART, 5);
         ItemStack item2 = new ItemStack(Items.MAGMA_BLOCK, 5);
-        ItemStack item3 = new ItemStack(ModItems.BURNING_ASHES.get(), 1);
+        ItemStack item3 = new ItemStack(ModItems.BURNING_ASHES.get(), 3);
         ItemStack item4 = new ItemStack(ModItems.IGNITIUM_INGOT.get(), 1);
 
         scene.configureBasePlate(0, 0, 5);
@@ -677,7 +680,14 @@ public class TCRBossesPonderScene {
 
         ItemStack item1 = new ItemStack(TCRItems.ABYSS_CORE.get(), 1);
         ItemStack item2 = new ItemStack(Items.CONDUIT, 1);
-        ItemStack item3 = new ItemStack(ModItems.CORAL_CHUNK.get(), 1);
+        ItemStack item3 = new ItemStack(ModItems.CORAL_CHUNK.get(), 3);
+        Item ModItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("irons_spellbooks:ruined_book"));
+        ItemStack item4;
+        if (ModItem != null) {
+            item4 = new ItemStack(ModItem, 1);
+        } else {
+            item4 = ItemStack.EMPTY;
+        }
 
         scene.configureBasePlate(0, 0, 5);
         scene.showBasePlate();
@@ -725,6 +735,22 @@ public class TCRBossesPonderScene {
 
         scene.world().modifyBlockEntity(altarPos, AltarBlockEntity.class, altarBlockEntity -> {
             altarBlockEntity.handleInteraction(null, item3);
+            if(altarBlockEntity.getLevel() != null) {
+                altarBlockEntity.getLevel().sendBlockUpdated(altarBlockEntity.getBlockPos(), altarBlockEntity.getBlockState(), altarBlockEntity.getBlockState(), 3);
+            }
+        });
+
+        scene.idle(20);
+        scene.overlay().showText(20)
+                .text(catalyst.getItem().getDescription().getString() + " × " + catalyst.getCount())
+                .attachKeyFrame()
+                .pointAt(altarSurface)
+                .placeNearTarget();
+
+        scene.idle(20);
+
+        scene.world().modifyBlockEntity(altarPos, AltarBlockEntity.class, altarBlockEntity -> {
+            altarBlockEntity.handleInteraction(null, item4);
             if(altarBlockEntity.getLevel() != null) {
                 altarBlockEntity.getLevel().sendBlockUpdated(altarBlockEntity.getBlockPos(), altarBlockEntity.getBlockState(), altarBlockEntity.getBlockState(), 3);
             }
@@ -790,10 +816,17 @@ public class TCRBossesPonderScene {
 
         ItemStack catalyst = new ItemStack(Items.GHAST_TEAR);
 
-        ItemStack item1 = new ItemStack(ItemRegistry.FROZEN_BONE_SHARD.get(), 5);
-        ItemStack item2 = new ItemStack(Items.ICE, 5);
+        ItemStack item1 = new ItemStack(ItemRegistry.FROZEN_BONE_SHARD.get(), 11);
+        ItemStack item2 = new ItemStack(Items.ICE, 11);
         ItemStack item3 = new ItemStack(ModItems.CURSIUM_INGOT.get(), 1);
-        ItemStack item4 = new ItemStack(ModItems.STRANGE_KEY.get(), 1);
+        ItemStack item4 = new ItemStack(ModItems.STRANGE_KEY.get(), 3);
+        Item ModItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("bosses_of_mass_destruction:soul_star"));
+        ItemStack item5;
+        if (ModItem != null) {
+            item5 = new ItemStack(ModItem, 4);
+        } else {
+            item5 = ItemStack.EMPTY;
+        }
 
         scene.configureBasePlate(0, 0, 5);
         scene.showBasePlate();
@@ -872,6 +905,22 @@ public class TCRBossesPonderScene {
         scene.idle(20);
 
         scene.world().modifyBlockEntity(altarPos, AltarBlockEntity.class, altarBlockEntity -> {
+            altarBlockEntity.handleInteraction(null, item5);
+            if(altarBlockEntity.getLevel() != null) {
+                altarBlockEntity.getLevel().sendBlockUpdated(altarBlockEntity.getBlockPos(), altarBlockEntity.getBlockState(), altarBlockEntity.getBlockState(), 3);
+            }
+        });
+
+        scene.idle(20);
+        scene.overlay().showText(20)
+                .text(catalyst.getItem().getDescription().getString() + " × " + catalyst.getCount())
+                .attachKeyFrame()
+                .pointAt(altarSurface)
+                .placeNearTarget();
+
+        scene.idle(20);
+
+        scene.world().modifyBlockEntity(altarPos, AltarBlockEntity.class, altarBlockEntity -> {
             altarBlockEntity.handleInteraction(null, catalyst);
             if(altarBlockEntity.getLevel() != null) {
                 altarBlockEntity.getLevel().sendBlockUpdated(altarBlockEntity.getBlockPos(), altarBlockEntity.getBlockState(), altarBlockEntity.getBlockState(), 3);
@@ -921,10 +970,10 @@ public class TCRBossesPonderScene {
 
         ItemStack catalyst = new ItemStack(Items.GHAST_TEAR);
 
-        ItemStack item1 = new ItemStack(Items.CRYING_OBSIDIAN, 5);
-        ItemStack item2 = new ItemStack(Items.OBSIDIAN, 5);
+        ItemStack item1 = new ItemStack(Items.CRYING_OBSIDIAN, 8);
+        ItemStack item2 = new ItemStack(Items.OBSIDIAN, 8);
         ItemStack item3 = new ItemStack(ModItems.MONSTROUS_HORN.get(), 1);
-        ItemStack item4 = new ItemStack(ModItems.LAVA_POWER_CELL.get(), 1);
+        ItemStack item4 = new ItemStack(ModItems.LAVA_POWER_CELL.get(), 8);
 
         scene.configureBasePlate(0, 0, 5);
         scene.showBasePlate();
