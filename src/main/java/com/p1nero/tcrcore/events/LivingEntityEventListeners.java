@@ -39,6 +39,7 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.*;
 import com.p1nero.tcrcore.client.sound.CorneliaMusicPlayer;
 import com.p1nero.tcrcore.client.sound.WraithonMusicPlayer;
+import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.entity.custom.fake_npc.fake_end_golem.FakeEndGolem;
 import com.p1nero.tcrcore.entity.custom.fake_npc.fake_sky_golem.FakeSkyGolem;
 import com.p1nero.tcrcore.entity.custom.mimic.TCRMimic;
@@ -50,7 +51,6 @@ import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import com.p1nero.tcrcore.worldgen.TCRDimensions;
 import com.yesman.epicskills.registry.entry.EpicSkillsItems;
-import net.createmod.ponder.api.level.PonderLevel;
 import net.kenddie.fantasyarmor.item.FAItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -64,7 +64,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -75,11 +74,9 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -91,12 +88,9 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.p1nero.ss.item.SwordSoaringItems;
-import net.shelmarow.nightfall_invade.entity.spear_knight.Arterius;
 import net.sonmok14.fromtheshadows.server.entity.mob.BulldrogiothEntity;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
-import reascer.wom.world.gamerules.WOMGamerules;
 import yesman.epicfight.api.animation.AnimationPlayer;
 import yesman.epicfight.client.input.EpicFightKeyMappings;
 import yesman.epicfight.gameasset.Animations;
@@ -104,7 +98,6 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.EntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
-import yesman.epicfight.world.item.EpicFightItems;
 
 import java.util.*;
 
@@ -419,6 +412,13 @@ public class LivingEntityEventListeners {
 
             }
 
+            //打似战灵爆mimic
+            if(livingEntity instanceof WraithonEntity) {
+                if(serverLevel.getEntities(TCREntities.TCR_MIMIC.get(), (Entity::isAlive)).isEmpty()) {
+                    TCREntities.TCR_MIMIC.get().spawn(serverLevel, livingEntity.getOnPos().above(5), MobSpawnType.MOB_SUMMONED);
+                }
+            }
+
             //打似最终boss处理通关
             if (livingEntity instanceof TCRMimic) {
                 serverLevel.players().forEach(serverPlayer -> {
@@ -484,21 +484,19 @@ public class LivingEntityEventListeners {
             //===================服务端玩家===================
             if (livingEntity instanceof ServerPlayer serverPlayer && !event.isCanceled()) {
                 serverPlayer.displayClientMessage(TCRCoreMod.getInfo("death_info"), false);
-                ServerLevel wraithonLevel = serverPlayer.server.getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
-                if (wraithonLevel != null && wraithonLevel.players().isEmpty()) {
-                    EntityUtil.safelyClearAll(wraithonLevel);
-                    TCRDimSaveData.get(wraithonLevel).setBossSummoned(false);
+
+                if(serverPlayer.level().dimension() == WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY) {
+                    //清理战灵维度
+                    ServerLevel wraithonLevel = serverPlayer.server.getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
+                    if (wraithonLevel != null && wraithonLevel.players().isEmpty()) {
+                        EntityUtil.safelyClearAll(wraithonLevel);
+                        TCRDimSaveData.get(wraithonLevel).setBossSummoned(false);
+                    }
                 }
 
 
                 EntityUtil.getNearByEntities(serverPlayer, 20).forEach(entity -> {
                     if (!(entity instanceof OwnableEntity) && entity instanceof LivingEntity living) {
-                        if (entity instanceof WraithonEntity wraithonEntity) {
-                            if (!EntityUtil.getNearByPlayers(serverPlayer, 30).isEmpty()) {
-                                return;
-                            }
-                            wraithonEntity.setPhase(WraithonEntity.START_PHASE);
-                        }
                         //防堆命机制
                         living.setHealth(living.getMaxHealth());
                         living.removeAllEffects();

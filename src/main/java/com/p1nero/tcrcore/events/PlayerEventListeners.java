@@ -82,8 +82,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.p1nero.ss.SwordSoaringMod;
 import net.p1nero.ss.gameassets.skills.SwordControllerSkills;
-import org.merlin204.mimic.worldgen.WraithonDimensions;
 import org.merlin204.wraithon.util.PositionTeleporter;
+import org.merlin204.wraithon.worldgen.WraithonDimensions;
 import top.theillusivec4.curios.api.event.CurioEquipEvent;
 import yesman.epicfight.api.utils.math.MathUtils;
 import yesman.epicfight.network.EpicFightNetworkManager;
@@ -406,8 +406,8 @@ public class PlayerEventListeners {
     public static void onPlayerEnteredDim(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             TCRCapabilityProvider.syncPlayerDataToClient(serverPlayer);
-            if (event.getFrom() == WraithonDimensions.THE_LETHEAN_SEA_LEVEL_KEY) {
-                ServerLevel wraithonLevel = serverPlayer.server.getLevel(WraithonDimensions.THE_LETHEAN_SEA_LEVEL_KEY);
+            if (event.getFrom() == WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY) {
+                ServerLevel wraithonLevel = serverPlayer.server.getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
                 if (wraithonLevel != null && wraithonLevel.players().isEmpty()) {
                     EntityUtil.safelyClearAll(wraithonLevel);
                     TCRDimSaveData.get(wraithonLevel).setBossSummoned(false);

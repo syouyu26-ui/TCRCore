@@ -10,7 +10,6 @@ public class TCRSounds {
     public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TCRCoreMod.MOD_ID);
 
     public static final RegistryObject<SoundEvent> WIN_BGM = createEvent("bgm.tcr.win_bgm");
-    public static final RegistryObject<SoundEvent> BOSS_FIGHT_BGM = createEvent("bgm.tcr.boss_fight_bgm");
     public static final RegistryObject<SoundEvent> CLAP = createEvent("sound.tcr.clap");
 
     private static RegistryObject<SoundEvent> createEvent(String sound) {

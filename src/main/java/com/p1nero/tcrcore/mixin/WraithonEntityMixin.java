@@ -1,6 +1,5 @@
 package com.p1nero.tcrcore.mixin;
 
-import com.p1nero.tcrcore.client.sound.TCRSounds;
 import com.p1nero.tcrcore.client.sound.WraithonMusicPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -8,6 +7,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import org.merlin204.mimic.client.sound.MimicSounds;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,8 +24,8 @@ public class WraithonEntityMixin extends PathfinderMob {
 
     @Inject(method = "getDefaultAttribute", at = @At("HEAD"), cancellable = true, remap = false)
     private static void tcr$getDefaultAttribute(CallbackInfoReturnable<AttributeSupplier> cir) {
-        cir.setReturnValue(Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 1000)
-                .add(Attributes.ATTACK_DAMAGE, 30.0F)
+        cir.setReturnValue(Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100)
+                .add(Attributes.ATTACK_DAMAGE, 20.0F)
                 .add(Attributes.FOLLOW_RANGE, 72.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1000.0F)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 50.0F).build());
@@ -34,7 +34,7 @@ public class WraithonEntityMixin extends PathfinderMob {
     @Inject(method = "tick", at = @At("TAIL"))
     private void tcr$tick(CallbackInfo ci) {
         if(this.level().isClientSide) {
-            WraithonMusicPlayer.playBossMusic(this, TCRSounds.BOSS_FIGHT_BGM.get(), 400);
+            WraithonMusicPlayer.playBossMusic(this, MimicSounds.PHASE_1.get(), 400);
         }
     }
 }

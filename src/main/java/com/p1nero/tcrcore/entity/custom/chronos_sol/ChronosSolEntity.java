@@ -14,7 +14,6 @@ import com.p1nero.tcr_bosses.entity.TCRBossEntities;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.*;
 import com.p1nero.tcrcore.entity.TCREntities;
-import com.p1nero.tcrcore.entity.custom.mimic.TCRMimic;
 import com.p1nero.tcrcore.gameassets.TCRSkills;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
@@ -55,9 +54,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.p1nero.ss.gameassets.skills.FlyingSkills;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.merlin204.mimic.MimicMod;
 import org.merlin204.mimic.util.PositionTeleporter;
-import org.merlin204.mimic.worldgen.WraithonDimensions;
+import org.merlin204.wraithon.WraithonMod;
+import org.merlin204.wraithon.entity.WraithonEntities;
+import org.merlin204.wraithon.worldgen.WraithonDimensions;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -464,14 +464,15 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
             if(!TCRQuestManager.hasQuest(player, TCRQuests.KILL_MAD_CHRONOS)) {
                 TCRQuests.KILL_MAD_CHRONOS.start(player);
             }
-            ServerLevel mimicDim = player.server.getLevel(WraithonDimensions.THE_LETHEAN_SEA_LEVEL_KEY);
+            ServerLevel mimicDim = player.server.getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
             if(mimicDim != null) {
-                player.changeDimension(mimicDim, new PositionTeleporter(MimicMod.PLAYER_SPAWN_POS));
-                if(mimicDim.getEntities(TCREntities.TCR_MIMIC.get(), (Entity::isAlive)).isEmpty()) {
+                player.changeDimension(mimicDim, new PositionTeleporter(WraithonMod.PLAYER_SPAWN_POS));
+                if(mimicDim.getEntities(TCREntities.TCR_MIMIC.get(), (Entity::isAlive)).isEmpty()
+                        && mimicDim.getEntities(WraithonEntities.WRAITHON.get(), (Entity::isAlive)).isEmpty()) {
                     TCRDimSaveData saveData = TCRDimSaveData.get(mimicDim);
                     if(!saveData.isBossSummoned()) {
-                        TCRMimic tcrMimic = TCREntities.TCR_MIMIC.get().spawn(mimicDim, MimicMod.PLAYER_SPAWN_POS, MobSpawnType.MOB_SUMMONED);
-                        if(tcrMimic != null) {
+                        LivingEntity boss = WraithonEntities.WRAITHON.get().spawn(mimicDim, WraithonMod.WRAITHON_SPAWN_POS, MobSpawnType.MOB_SUMMONED);
+                        if(boss != null) {
                             saveData.setBossSummoned(true);
                         }
                     }
