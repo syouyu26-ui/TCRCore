@@ -1,6 +1,7 @@
 package com.p1nero.tcrcore.mixin;
 
 import com.p1nero.tcrcore.client.sound.WraithonMusicPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -37,4 +38,10 @@ public class WraithonEntityMixin extends PathfinderMob {
             WraithonMusicPlayer.playBossMusic(this, MimicSounds.PHASE_1.get(), 400);
         }
     }
+
+    @Inject(method = "isAnyDamageTypeInRange", at = @At("HEAD"), cancellable = true, remap = false)
+    private void tcr$isAny(DamageSource damageSource, float pAmount, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(false);
+    }
+
 }
