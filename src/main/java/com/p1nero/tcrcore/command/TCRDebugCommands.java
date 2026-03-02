@@ -12,15 +12,16 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TCRDebugCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        StringArgumentType quests = StringArgumentType.string();
-        quests.getExamples().addAll(TCRQuestManager.getAllQuests().stream().map((TCRQuestManager.Quest::getKey)).toList());
         dispatcher.register(Commands.literal(TCRCoreMod.MOD_ID).requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
                 .then(Commands.literal("debug")
                         .then(Commands.literal("addQuest")
-                                .then(Commands.argument("quest_id", quests)
+                                .then(Commands.argument("quest_id", StringArgumentType.string())
                                         .executes((context) -> {
                                             if(context.getSource().getPlayer() != null){
                                                 TCRQuestManager.Quest quest = TCRQuestManager.getQuestByKey(StringArgumentType.getString(context, "quest_id"));
@@ -36,7 +37,7 @@ public class TCRDebugCommands {
                                 )
                         )
                         .then(Commands.literal("finishQuest")
-                                .then(Commands.argument("quest_id", quests)
+                                .then(Commands.argument("quest_id", StringArgumentType.string())
                                         .executes((context) -> {
                                             if(context.getSource().getPlayer() != null){
                                                 TCRQuestManager.Quest quest = TCRQuestManager.getQuestByKey(StringArgumentType.getString(context, "quest_id"));
@@ -52,6 +53,21 @@ public class TCRDebugCommands {
                                         })
                                 )
                         )
+                        .then(Commands.literal("list_quest_ids")
+                                .executes(context -> {
+                                    List<String> questKeys = TCRQuestManager.getAllQuests().stream()
+                                            .map(TCRQuestManager.Quest::getKey)
+                                            .toList();
+                                    if (context.getSource().getPlayer() != null) {
+                                        String formatted = questKeys.stream()
+                                                .map(key -> "[" + key + "]")
+                                                .collect(Collectors.joining(", "));
+                                        context.getSource().getPlayer().displayClientMessage(
+                                                Component.literal(formatted).withStyle(ChatFormatting.GREEN), false
+                                        );
+                                    }
+                                    return 0;
+                                }))
                 )
         );
     }
