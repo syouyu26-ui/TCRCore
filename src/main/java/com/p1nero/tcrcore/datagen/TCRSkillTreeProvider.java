@@ -21,8 +21,8 @@ public class TCRSkillTreeProvider extends SkillTreeProvider {
 
     @Override
     protected void buildSkillTreePages(Consumer<SkillTreePageBuilder> writer) {
-        int centerX = 250;
-        int centerY = 250;
+        int centerX = 120;
+        int centerY = 150;
         int radius = 100;
         int skillCount = 8;
         double angleStep = 2 * Math.PI / skillCount;

@@ -14,12 +14,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
 /**
- * 调试命令，用来增减任务
+ * 调试命令，用来调试指定任务
  */
 public class TCRDebugCommands {
 
@@ -91,15 +90,6 @@ public class TCRDebugCommands {
                                             return executeAddQuest(context, sender);
                                         })
                                 )
-                                .then(Commands.argument("player", EntityArgument.player())
-                                        .then(Commands.argument("quest_id", StringArgumentType.string())
-                                                .suggests(QUEST_SUGGESTIONS)
-                                                .executes((context) -> {
-                                                    ServerPlayer target = EntityArgument.getPlayer(context, "player");
-                                                    return executeAddQuest(context, target);
-                                                })
-                                        )
-                                )
                         )
                         .then(Commands.literal("finishQuest")
                                 .then(Commands.argument("quest_id", StringArgumentType.string())
@@ -115,7 +105,18 @@ public class TCRDebugCommands {
                                             return executeFinishQuest(context, sender);
                                         })
                                 )
-                                .then(Commands.argument("player", EntityArgument.player())
+                        )
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.literal("addQuest")
+                                        .then(Commands.argument("quest_id", StringArgumentType.string())
+                                                .suggests(QUEST_SUGGESTIONS)
+                                                .executes((context) -> {
+                                                    ServerPlayer target = EntityArgument.getPlayer(context, "player");
+                                                    return executeAddQuest(context, target);
+                                                })
+                                        )
+                                )
+                                .then(Commands.literal("finishQuest")
                                         .then(Commands.argument("quest_id", StringArgumentType.string())
                                                 .suggests(QUEST_SUGGESTIONS)
                                                 .executes((context) -> {
@@ -129,7 +130,7 @@ public class TCRDebugCommands {
                                 .executes(context -> {
                                     List<TCRQuestManager.Quest> quests = TCRQuestManager.getAllQuests().stream().toList();
                                     if (context.getSource().getPlayer() != null) {
-                                        Player player = context.getSource().getPlayer();
+                                        ServerPlayer player = context.getSource().getPlayer();
                                         MutableComponent message = Component.empty();
                                         for (int i = 0; i < quests.size(); i++) {
                                             TCRQuestManager.Quest quest = quests.get(i);
