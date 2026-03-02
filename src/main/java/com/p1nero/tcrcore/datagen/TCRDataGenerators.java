@@ -11,8 +11,10 @@ import com.p1nero.tcrcore.datagen.tags.TCREntityTagGenerator;
 import com.p1nero.tcrcore.datagen.tags.TCRItemTagGenerator;
 import com.p1nero.tcrcore.datagen.tags.TCRPoiTypeTagsProvider;
 import com.p1nero.tcrcore.worldgen.TCRWorldGenProvider;
+import com.yesman.epicskills.data.provider.EpicSkillsSkillTreeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -51,5 +53,7 @@ public class TCRDataGenerators {
         generator.addProvider(event.includeServer(), new TCRItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
         generator.addProvider(event.includeServer(), new TCRPoiTypeTagsProvider(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new TCRWorldGenProvider(output, lookupProvider));
+
+        event.getGenerator().addProvider(true, (DataProvider.Factory<TCRSkillTreeProvider>) TCRSkillTreeProvider::new);
     }
 }

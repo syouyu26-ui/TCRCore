@@ -30,6 +30,7 @@ public class TCRZHLangGenerator extends TCRLangProvider {
 
     @Override
     protected void addTranslations() {
+        this.add("skill_tree.tcrcore.magic", "魔法技能");
         this.add("unlock_tip.epicskills.acrobat.spider_techniques", " 击杀50只蜘蛛");
         this.add("unlock_tip.epicskills.acrobat.natural_sprinter", " 击杀2只狼人并冲刺10公里");
         this.add("unlock_tip.epicskills.acrobat.aqua_maneuvre", " 击杀3只远古守卫者并游泳3公里");

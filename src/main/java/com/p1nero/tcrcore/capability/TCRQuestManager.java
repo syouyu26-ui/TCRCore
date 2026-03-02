@@ -8,6 +8,7 @@ import com.p1nero.tcrcore.utils.WaypointUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -187,9 +188,9 @@ public class TCRQuestManager {
 
         private final int id;
         private final String key;
-        private Component shortDesc;
-        private Component desc;
-        private Component title;
+        private MutableComponent shortDesc;
+        private MutableComponent desc;
+        private MutableComponent title;
         private ResourceLocation icon;
         private BlockPos trackingPos;
         private ResourceKey<Level> dimension;
@@ -264,15 +265,15 @@ public class TCRQuestManager {
             return dimension;
         }
 
-        public Component getTitle() {
+        public MutableComponent getTitle() {
             return title;
         }
 
-        public Component getShortDesc() {
+        public MutableComponent getShortDesc() {
             return shortDesc;
         }
 
-        public Component getDesc() {
+        public MutableComponent getDesc() {
             return desc;
         }
 

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * 仅主城才能回蓝，超级无敌天才的设计！
+ * 仅主城才能回蓝
  */
 @Mixin(MagicManager.class)
 public class MagicManagerMixin {

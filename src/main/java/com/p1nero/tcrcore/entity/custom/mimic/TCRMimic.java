@@ -40,8 +40,12 @@ public class TCRMimic extends ProteusEntity {
     @Override
     public void die(DamageSource cause) {
         super.die(cause);
-        ServerLevel mimicLevel = this.getServer().getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
-        TCRDimSaveData.get(mimicLevel).setBossSummoned(false);
+        if(this.getServer() != null) {
+            ServerLevel mimicLevel = this.getServer().getLevel(WraithonDimensions.SANCTUM_OF_THE_WRAITHON_LEVEL_KEY);
+            if(mimicLevel != null) {
+                TCRDimSaveData.get(mimicLevel).setBossSummoned(false);
+            }
+        }
     }
 
     @Override

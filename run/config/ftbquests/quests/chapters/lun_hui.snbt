@@ -91,24 +91,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "694E0FA7BB8B0BF9"
-			rewards: [
-				{
-					id: "6F403FCAE2AA6DC5"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "5C3D1FF9A5F6DAD6"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:against_magic"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "6F403FCAE2AA6DC5"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -126,24 +113,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "53CFE811E8DFC94B"
-			rewards: [
-				{
-					id: "2D99EEE119BDC388"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "2EDCBDBD4EE0FE1F"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:blood_into_mana"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "2D99EEE119BDC388"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -161,24 +135,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "53F18B77C2660FB3"
-			rewards: [
-				{
-					id: "0E185AFD8CE58FD3"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "1C796018A57DF788"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:reserve_mana"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "0E185AFD8CE58FD3"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -196,24 +157,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "6DEFCFCCA208D4B5"
-			rewards: [
-				{
-					id: "55256E271EF21ACF"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "6AD4801CD81B5ADC"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:blood_into_mana"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "55256E271EF21ACF"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -231,24 +179,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "07B1764854F554EC"
-			rewards: [
-				{
-					id: "0FF8F545EA902A18"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "1117F3C7C06F9775"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:mana_shield"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "0FF8F545EA902A18"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -266,24 +201,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "5DC5B9BF9FC71C81"
-			rewards: [
-				{
-					id: "5B59BE40C8077B5B"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "25B1DDE6DA4F3AB6"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:hasty_casting"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "5B59BE40C8077B5B"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -301,24 +223,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "2D463BC74C77DD06"
-			rewards: [
-				{
-					id: "0359FF1A7F28D235"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "77EEA664A5E1E668"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:rapid_chant"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "0359FF1A7F28D235"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -336,24 +245,11 @@
 			dependencies: ["048CB00656EE47EF"]
 			hide_dependency_lines: true
 			id: "49C81203A9E34F2B"
-			rewards: [
-				{
-					id: "4AE33AAD75BE8DDD"
-					type: "xp"
-					xp: 1
-				}
-				{
-					id: "78381DA83E2D6F10"
-					item: {
-						Count: 1
-						id: "epicfight:skillbook"
-						tag: {
-							skill: "efs_iss:auto_heal"
-						}
-					}
-					type: "item"
-				}
-			]
+			rewards: [{
+				id: "4AE33AAD75BE8DDD"
+				type: "xp"
+				xp: 1
+			}]
 			shape: "none"
 			size: 1.5d
 			tasks: [{
@@ -368,5 +264,5 @@
 			y: -2.9015873015873055d
 		}
 	]
-	title: "轮回绝境"
+	title: "&b轮回绝境"
 }

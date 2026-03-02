@@ -8,6 +8,7 @@ import com.p1nero.dialog_lib.api.component.DialogueComponentBuilder;
 import com.p1nero.dialog_lib.api.entity.custom.IEntityNpc;
 import com.p1nero.dialog_lib.client.screen.DialogueScreen;
 import com.p1nero.dialog_lib.client.screen.builder.StreamDialogueScreenBuilder;
+import com.p1nero.dpr.DodgeParryRewardMod;
 import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcr_bosses.entity.TCRBossEntities;
 import com.p1nero.tcrcore.TCRCoreMod;
@@ -15,13 +16,17 @@ import com.p1nero.tcrcore.capability.PlayerDataManager;
 import com.p1nero.tcrcore.capability.TCRQuestManager;
 import com.p1nero.tcrcore.capability.TCRQuests;
 import com.p1nero.tcrcore.datagen.TCRAdvancementData;
+import com.p1nero.tcrcore.datagen.TCRSkillTreeProvider;
 import com.p1nero.tcrcore.entity.TCREntities;
+import com.p1nero.tcrcore.gameassets.TCRSkills;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.PlayTitlePacket;
 import com.p1nero.tcrcore.utils.EntityUtil;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
+import com.yesman.epicskills.skilltree.SkillTree;
+import com.yesman.epicskills.world.capability.SkillTreeProgression;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
@@ -36,6 +41,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -346,9 +352,14 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PlayTitlePacket(PlayTitlePacket.UNLOCK_NEW_CHAPTER), serverPlayer);
         }
 
+        //获得蓝瓶
         if (code == 6) {
             TCRQuests.TALK_TO_AINE_MAGIC_2.finish(serverPlayer);
             ItemUtil.addItemEntity(serverPlayer, TCRItems.MAGIC_BOTTLE.get(), 1, ChatFormatting.AQUA.getColor());
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PlayTitlePacket(PlayTitlePacket.UNLOCK_NEW_SKILL), serverPlayer);
+            serverPlayer.getCapability(SkillTreeProgression.SKILL_TREE_PROGRESSION).ifPresent(skillTreeProgression -> {
+                skillTreeProgression.unlockTree(TCRSkillTreeProvider.MAGIC, serverPlayer);
+            });
         }
 
         if (code == 8) {

@@ -9,7 +9,9 @@ import com.p1nero.tcrcore.client.gui.*;
 import com.p1nero.tcrcore.dialog.custom.handler.HandleIronGolemDialog;
 import com.p1nero.tcrcore.dialog.custom.handler.HandleVillagerDialog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -23,12 +25,14 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Optional;
+import java.util.*;
 
 import static net.minecraft.client.gui.components.BossHealthOverlay.GUI_BARS_LOCATION;
 
 @Mod.EventBusSubscriber(modid = TCRCoreMod.MOD_ID, value = Dist.CLIENT)
 public class ClientForgeEvents {
+
+    public static Set<Button> buttonsInCreateWorldScreen = new HashSet<>();
 
     public static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/light_dirt_background.png");
 
@@ -36,7 +40,15 @@ public class ClientForgeEvents {
     public static void onClientTick(TickEvent.ClientTickEvent event){
         if(event.phase == TickEvent.Phase.END) {
             CustomQuestOverlayRenderer.tick();
+            buttonsInCreateWorldScreen.forEach(button -> {
+                if(button.isHovered()) {
+                    int dx = (int)(Math.random() * 100) - 50;
+                    int dy = (int)(Math.random() * 100) - 50;
+                    button.setPosition(button.getX() + dx, button.getY() + dy);
+                }
+            });
         }
+
     }
 
     /**
@@ -93,6 +105,7 @@ public class ClientForgeEvents {
             event.getGuiGraphics().blit(BACKGROUND_LOCATION, 0, 0, 0, 0.0F, 0.0F, event.getScreen().width, event.getScreen().height, 32, 32);
 //            event.getGuiGraphics().fill(0, 0, event.getScreen().width, event.getScreen().height, FastColor.ABGR32.color(255, 255, 255, 255));
         }
+
     }
 
 }

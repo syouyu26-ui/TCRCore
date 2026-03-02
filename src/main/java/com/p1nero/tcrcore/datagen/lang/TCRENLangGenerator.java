@@ -31,6 +31,7 @@ public class TCRENLangGenerator extends TCRLangProvider {
     @Override
     protected void addTranslations() {
 
+        this.add("skill_tree.tcrcore.magic", "Magic Skills");
         this.add("unlock_tip.epicskills.acrobat.spider_techniques", " Slaught 50 Spider");
         this.add("unlock_tip.epicskills.acrobat.natural_sprinter", " Slaught 2 Lycanth and sprint 10 km");
         this.add("unlock_tip.epicskills.acrobat.aqua_maneuvre", " Slaught 3 Elder Guadian and swim 3 km");
