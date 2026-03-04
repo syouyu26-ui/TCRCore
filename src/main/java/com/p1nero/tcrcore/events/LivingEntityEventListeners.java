@@ -75,6 +75,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Pillager;
@@ -692,6 +693,12 @@ public class LivingEntityEventListeners {
         if (event.getEntity() instanceof Bone_Chimera_Entity boneChimeraEntity) {
             if (WorldUtil.isInStructure(boneChimeraEntity, WorldUtil.BONE_CHIMERA_STRUCTURE)) {
                 saveSpawnPos(boneChimeraEntity);
+            }
+        }
+
+        if(event.getEntity() instanceof Drowned drowned) {
+            if(WorldUtil.isInStructure(drowned, WorldUtil.OCEAN_GOLEM)) {
+                drowned.getPersistentData().putBoolean("spawn_in_ocean_tower", true);
             }
         }
 

@@ -1,8 +1,8 @@
 {
   "values": [
     "#forge:is_mountain",
-    "minecraft:badlands",
-    "minecraft:wooded_badlands",
-    "minecraft:eroded_badlands"
+    "#forge:is_plains",
+    "#forge:is_mountain",
+    "#minecraft:is_forest"
   ]
 }

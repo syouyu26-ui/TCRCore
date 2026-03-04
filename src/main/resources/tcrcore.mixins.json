@@ -6,6 +6,7 @@
   "refmap": "tcrcore.refmap.json",
   "mixins": [
     "AetherMixin",
+    "AlexServerEventsMixin",
     "AltarOfAbyssBlockEntityMixin",
     "Ancient_Remnant_EntityMixin",
     "Apothecarist",
@@ -16,6 +17,7 @@
     "Bone_ChimeraMixin",
     "CaptainCorneliaMixin",
     "DragonBaseMixin",
+    "DrownedMixin",
     "FAArmorItemMixin",
     "GuiHooksMixin",
     "Ignited_Revenant_EntityMixin",
@@ -45,6 +47,7 @@
     "ba_bt.AbstractDestructionEntityMixin",
     "ba_bt.AbstractGolemInvoker",
     "ba_bt.BTMonolithMixin",
+    "ba_bt.BTOceanObeliskMixin",
     "ba_bt.CoreMatterBlockMixin",
     "ba_bt.CoreTowerMixin",
     "ba_bt.LandTowerMixin",
