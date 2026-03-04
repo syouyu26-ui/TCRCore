@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -22,7 +23,9 @@ import net.shelmarow.combat_evolution.execution.ExecutionTypeManager;
 import net.shelmarow.combat_evolution.tickTask.TickTaskManager;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,20 +34,21 @@ public class EntityUtil {
 
     public static void entityForceExecuteToDie(LivingEntity executor, LivingEntity target) {
         if (executor != null && target != null) {
-            LivingEntityPatch<?> executorPatch = EpicFightCapabilities.getEntityPatch(executor, LivingEntityPatch.class);
+            PlayerPatch<?> executorPatch = EpicFightCapabilities.getEntityPatch(executor, PlayerPatch.class);
             LivingEntityPatch<?> targetPatch = EpicFightCapabilities.getEntityPatch(target, LivingEntityPatch.class);
             if (targetPatch != null && executorPatch != null) {
+                if(!executorPatch.isEpicFightMode()) {
+                    executorPatch.toEpicFightMode(true);
+                }
                 ExecutionTypeManager.Type executionType = ExecutionHandler.getExecutionType(executorPatch, targetPatch);
-                Vec3 frontPos = calculateExecutionPosition(target, executionType.offset());
+                ExecutionHandler.ExecutionTransform transform = calculateExecutionPosition(executor.level(), executor, target, executionType.offset());
                 BehaviorUtils.stopCurrentBehavior(executor);
                 BehaviorUtils.stopCurrentBehavior(target);
                 executor.setDeltaMovement(Vec3.ZERO);
                 target.setDeltaMovement(Vec3.ZERO);
-                executor.teleportTo(frontPos.x, frontPos.y, frontPos.z);
-                if(target.distanceTo(executor) > 3) {
-                    target.teleportTo(frontPos.x, frontPos.y, frontPos.z);
-                }
-                TickTaskManager.addTask(target.getUUID(), new ExecutionTask(executor, target, executionType, executionType.totalTick()){
+                Vec3 executionPos = transform.position();
+                executor.teleportTo(executionPos.x, executionPos.y, executionPos.z);
+                TickTaskManager.addTask(target.getUUID(), new ExecutionTask(executor, target, executionType, transform, executionType.totalTick()){
                     @Override
                     public void onFinish() {
                         super.onFinish();
@@ -55,8 +59,12 @@ public class EntityUtil {
         }
     }
 
-    private static Vec3 calculateExecutionPosition(LivingEntity target, Vec3 offset) {
+    private static ExecutionHandler.ExecutionTransform calculateExecutionPosition(Level level, LivingEntity executor, LivingEntity target, Vec3 offset) {
         float yaw = target.getYRot();
+        return findPosAround(level, executor, target, offset, yaw);
+    }
+
+    private static ExecutionHandler.ExecutionTransform findPosAround(Level level, LivingEntity executor, LivingEntity target, Vec3 offset, float yaw) {
         double rad = Math.toRadians(yaw);
         double forwardX = -Math.sin(rad);
         double forwardZ = Math.cos(rad);
@@ -65,7 +73,8 @@ public class EntityUtil {
         double offsetX = forwardX * offset.x + rightX * offset.z;
         double offsetY = offset.y;
         double offsetZ = forwardZ * offset.x + rightZ * offset.z;
-        return target.position().add(offsetX, offsetY, offsetZ);
+        Vec3 testPos = target.position().add(offsetX, offsetY, offsetZ);
+        return new ExecutionHandler.ExecutionTransform(testPos, yaw);
     }
 
     public static void safelyClearAll(ServerLevel serverLevel) {

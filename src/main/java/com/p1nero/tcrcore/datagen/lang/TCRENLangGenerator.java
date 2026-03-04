@@ -263,9 +263,9 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.add(TCRItems.RARE_ARTIFACT_TICKET.get(), "Golden Artifact Essence");
         this.addItemUsageInfo(TCRItems.RARE_ARTIFACT_TICKET.get(), "Obtained from certain quests in the quest book. Can be used to refine rare artifact with the §3[Ferry girl]§r at the §d[Saint Harbor]§r");
         this.add(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "Oracle Fragment");
-        this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "It bears an ancient oracle hinting at the locations of scattered embers. Show it to the The Sanctuary Keeper in the The Sanctuary; it might aid your adventure!");
-        this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§cIn multiplayer mode, do not occupy other players'! Everyone must submit their own!", 2);
+        this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§c§kI'm Your...");
 
+        this.addInfo("cataclysm_humanoid_drop_desc", "Dropped at [%s] by defeating [%s]");
         this.addInfo("can_not_use_scroll_directly", "Please enchant the spell to a weapon to use it!!");
         this.addInfo("quest_updated","Current Quest Updated!");
         this.addInfo("i18n_pack", "I18n pack, thanks to all translators!");
@@ -347,7 +347,6 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addInfo("time_to_ask_godness_statue", "§d*This item can be used at the statue of the Goddess.");
         this.addInfo("time_to_end", "All altars are lit. It's time to find the The Sanctuary Keeper to perform the ritual...");
 
-        this.addInfo("can_not_enter_dim", "It seems you have not yet gained the divine approval to enter... §6Continue collecting embers§r to receive more oracles!");
         this.addInfo("reset_when_no_player", "If no players remain in the Cloudland, leaving for too long will reset the Cloudland!");
         this.addInfo("on_full_set", "Full Set Effect");
         this.addInfo("unlock_new_ftb_page", "A new quest page has been unlocked. Please open the §6[Quest Book]§r to check");
