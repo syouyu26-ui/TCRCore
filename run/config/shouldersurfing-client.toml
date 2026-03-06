@@ -65,21 +65,21 @@
 		[camera.offset.max]
 			#When x-offset is limited this is the maximum amount.
 			#Range: -1.7976931348623157E308 ~ 1.7976931348623157E308
-			max_offset_x = 3.0
+			max_offset_x = 30.0
 			#When y-offset is limited this is the maximum amount.
 			#Range: -1.7976931348623157E308 ~ 1.7976931348623157E308
-			max_offset_y = 1.5
+			max_offset_y = 30.0
 			#When z-offset is limited this is the maximum amount.
 			#Range: -1.7976931348623157E308 ~ 1.7976931348623157E308
-			max_offset_z = 5.0
+			max_offset_z = 30.0
 
 		[camera.offset.limits]
 			#Whether or not x-offset adjustment has limits.
-			unlimited_offset_x = false
+			unlimited_offset_x = true
 			#Whether or not y-offset adjustment has limits.
-			unlimited_offset_y = false
+			unlimited_offset_y = true
 			#Whether or not z-offset adjustment has limits.
-			unlimited_offset_z = false
+			unlimited_offset_z = true
 
 		[camera.offset.multiplier]
 

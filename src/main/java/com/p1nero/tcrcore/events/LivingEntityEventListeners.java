@@ -646,8 +646,8 @@ public class LivingEntityEventListeners {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
-        if (AquamiraeUtils.isInIceMaze(event.getEntity())) {
-            if (event.getEntity() instanceof Pillager pillager && event.getEntity().getRandom().nextFloat() < 0.1) {
+        if (event.getEntity() instanceof Pillager pillager && AquamiraeUtils.isInIceMaze(event.getEntity())) {
+            if (event.getEntity().getRandom().nextFloat() < 0.1) {
                 pillager.getPersistentData().putString("DeathLootTable", Aquamirae.MODID + ":entities/maze_captain");
                 pillager.setGlowingTag(true);
             }

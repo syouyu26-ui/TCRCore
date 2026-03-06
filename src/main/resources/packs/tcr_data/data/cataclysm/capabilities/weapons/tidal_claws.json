@@ -2,7 +2,9 @@
   "type": "p1nero_ec:tidal_claw",
   "attributes": {
     "common": {
+      "damage_bonus": 5.0,
       "armor_negation":40.0,
+      "impact": 4.5,
       "max_strikes":2
     }
   }

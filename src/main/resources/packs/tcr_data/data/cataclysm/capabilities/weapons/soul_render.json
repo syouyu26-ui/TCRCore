@@ -2,7 +2,8 @@
   "type": "p1nero_ec:soul_render",
   "attributes": {
     "common": {
-      "impact": 1.0,
+      "damage_bonus": 5.0,
+      "impact": 4.5,
       "armor_negation":40.0,
       "max_strikes":3
     }

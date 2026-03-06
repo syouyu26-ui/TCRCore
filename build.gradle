@@ -248,8 +248,7 @@ dependencies {
     implementation fg.deobf("curse.maven:epic-fight-skillbook-description-1454141:7629226")
 
 //    implementation fg.deobf("curse.maven:shoulder-surfing-reloaded-243190:6993788")
-    
-    implementation fg.deobf("curse.maven:better-lock-on-1339577:7613473")
+    implementation fg.deobf("curse.maven:better-lock-on-1339577:7717444")
 
     implementation fg.deobf("curse.maven:default-options-232131:6972483")
 

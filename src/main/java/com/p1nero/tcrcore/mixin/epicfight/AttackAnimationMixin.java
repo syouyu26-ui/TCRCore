@@ -1,5 +1,6 @@
 package com.p1nero.tcrcore.mixin.epicfight;
 
+import com.hm.efn.registries.EFNItem;
 import com.merlin204.sg.item.SGItems;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +20,12 @@ public class AttackAnimationMixin {
     private void tcr$getPlaySpeed(LivingEntityPatch<?> entityPatch, DynamicAnimation animation, CallbackInfoReturnable<Float> cir) {
         float max = 1.5F;
         ItemStack itemStack = entityPatch.getOriginal().getMainHandItem();
+        //赤月额外算
+        if(itemStack.is(EFNItem.CRIMSON_MOON.get())) {
+            max = 3.0F;
+            cir.setReturnValue(Math.min(max, cir.getReturnValue()));
+            return;
+        }
         CapabilityItem capabilityItem = EpicFightCapabilities.getItemStackCapabilityOr(itemStack, CapabilityItem.EMPTY);
         if(!capabilityItem.isEmpty()) {
             if(capabilityItem.getWeaponCategory().equals(CapabilityItem.WeaponCategories.UCHIGATANA)

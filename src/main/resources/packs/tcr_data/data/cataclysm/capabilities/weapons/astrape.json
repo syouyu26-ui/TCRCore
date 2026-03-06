@@ -1,0 +1,12 @@
+{
+  "type": "p1nero_ec:astrape",
+  "attributes": {
+    "common": {
+      "damage_bonus": 5.0,
+      "impact": 4.5,
+      "armor_negation":30.0,
+      "speed_bonus": 0.2,
+      "max_strikes":4
+    }
+  }
+}

@@ -1,10 +1,10 @@
 {
-  "type": "p1nero_ec:ceraunus",
+  "type": "p1nero_ec:dual_annihilator",
   "attributes": {
     "common": {
       "damage_bonus": 5.0,
       "impact": 4.5,
-      "armor_negation":50.0,
+      "armor_negation":30.0,
       "max_strikes":3,
       "speed_bonus": 0.3
     }

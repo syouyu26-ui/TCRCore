@@ -495,7 +495,7 @@
   "screen.tcrcore.opt.first_enter_cloudland_0": "继续",
   "screen.tcrcore.opt.first_enter_cloudland_1": "结束对话",
   "screen.tcrcore.opt.reset_game_0": "§4[确定]",
-  "screen.tcrcore.opt.reset_game_1": "再想想",
+  "screen.tcrcore.opt.reset_game_1": "[再想想]",
   "screen.tcrcore.opt.start_screen_0": "继续",
   "screen.tcrcore.opt.start_screen_1": "进入圣殿",
   "skill.tcrcore.fire_avoid": "避火咒",

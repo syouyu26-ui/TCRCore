@@ -51,7 +51,7 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.BLOOD_UPGRADE_ORB.get(), 1)
                 .requires(ItemRegistry.ARCANE_ESSENCE.get())
-                .requires(TCRItems.SOUL_FRAGMENT.get())
+                .requires(TCRItems.PROOF_OF_ADVENTURE.get())
                 .unlockedBy(getHasName(TCRItems.WITHER_SOUL_STONE.get()), has(TCRItems.WITHER_SOUL_STONE.get()))
                 .save(consumer);
 
@@ -69,7 +69,7 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.COOLDOWN_UPGRADE_ORB.get(), 1)
                 .requires(ItemRegistry.ARCANE_ESSENCE.get())
-                .requires(TCRItems.ENDER_FRAGMENT.get())
+                .requires(TCRItems.RARE_ARTIFACT_TICKET.get())
                 .unlockedBy(getHasName(TCRItems.WITHER_SOUL_STONE.get()), has(TCRItems.WITHER_SOUL_STONE.get()))
                 .save(consumer);
 

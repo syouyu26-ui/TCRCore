@@ -5,7 +5,7 @@
   },
   "minutesUntilRespawn": {
     "desc:": "Sets the time after which a structure can respawn, the timer starts after the last activity within the structure. default:5760 minutes(96h)",
-    "minutesUntilRespawn": 1
+    "minutesUntilRespawn": 120
   },
   "increaseDifficultyWithRespawn": {
     "desc:": "Enables increased difficulty for mobs in respawned dungeons(mobs can get enchanted items/potions effects), default: true",
@@ -17,7 +17,7 @@
   },
   "playerRespawnDist": {
     "desc:": "Sets the minimum distance from player respawn position(bed e.g.) to allow structure respawning, 0 to disable this. default: 200 blocks",
-    "playerRespawnDist": 0
+    "playerRespawnDist": 120
   },
   "playerNearbyTime": {
     "desc:": "Prevents respawns in too busy player areas, tracks how much percent of the respawntime a player was nearby loading the chunk. Resets respawn time counter when it prevent a structure respawn. default: 15 percent, range 0-100",
@@ -29,7 +29,7 @@
   },
   "respawnableStructures": {
     "desc:": "List of structure IDs(or tags of structures) that should respawn always respawn, no matter if a player build sth inside, has a portal there etc.: e.g. minecraft:mansion",
-    "respawnableStructures": []
+    "respawnableStructures": ["#tcrcore:respawnable"]
   },
   "blacklistedStructures": {
     "desc:": "List of blacklisted structures(or tags of structures), those won't respawn ever: e.g. minecraft:mansion   Seperate multiple entries by , ",

@@ -37,17 +37,19 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 import yesman.epicfight.api.client.model.Meshes;
 import yesman.epicfight.client.renderer.patched.entity.PHumanoidRenderer;
 import yesman.epicfight.client.renderer.patched.entity.PIronGolemRenderer;
+import yesman.epicfight.config.ClientConfig;
 
 @Mod.EventBusSubscriber(modid = TCRCoreMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() ->{
+        event.enqueueWork(() -> {
 
             EntityRenderers.register(TCREntities.CUSTOM_COLOR_ITEM.get(), ItemEntityRenderer::new);
 
@@ -114,6 +116,19 @@ public class ClientModEvents {
                     TCRCoreMod.getInfo("related_loot", "???", "???"));
 
             PonderIndex.addPlugin(new TCRPonderPlugin());
+
+            //借大小来判断是否启动过
+            if(ClientConfig.miningPreferredItems != null && ClientConfig.combatPreferredItems != null) {
+                if(ClientConfig.miningPreferredItems.size() < 10) {
+                    ForgeRegistries.ITEMS.getValues().forEach(item -> {
+                        if (!ClientConfig.combatPreferredItems.contains(item)) {
+                            ClientConfig.miningPreferredItems.add(item);
+                        }
+                    });
+                }
+            } else {
+                TCRCoreMod.LOGGER.error("[TCRCore]: Preferred items is null!!!");
+            }
 
         });
     }

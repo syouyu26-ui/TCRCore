@@ -2,7 +2,8 @@
   "type": "tcrcore:the_incinerator",
   "attributes": {
     "common": {
-      "impact": 2.5,
+      "damage_bonus": 5.0,
+      "impact": 4.5,
       "armor_negation":40.0,
       "max_strikes":4,
       "speed_bonus": -0.3
