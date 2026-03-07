@@ -228,6 +228,16 @@
     },
     {
         "mob": [
+            "cnb:sporeling"
+        ],
+        "mincount": {
+            "amount": 3,
+            "perplayer": true
+        },
+        "result": "deny"
+    },
+    {
+        "mob": [
             "fromtheshadows:froglin"
         ],
         "mincount": {
