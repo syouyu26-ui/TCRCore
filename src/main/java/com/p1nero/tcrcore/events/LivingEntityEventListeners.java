@@ -558,11 +558,12 @@ public class LivingEntityEventListeners {
             }
         }
 
+        //防止boss坠机
         if (event.getEntity() instanceof BaseBossEntity baseBossEntity) {
-            if (event.getSource().is(DamageTypes.IN_WALL)) {
+            if (event.getSource().is(DamageTypes.IN_WALL) || event.getSource().is(DamageTypes.OUTSIDE_BORDER)) {
                 event.setCanceled(true);
                 if (baseBossEntity.level().dimension() == PBF1Dimensions.SANCTUM_OF_THE_BATTLE_LEVEL_KEY) {
-                    baseBossEntity.setPos(PBF1Mod.START_POS.getCenter());
+                    baseBossEntity.setPos(PBF1Mod.START_POS.atY(5).getCenter());
                 } else {
                     baseBossEntity.discard();
                 }
