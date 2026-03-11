@@ -59,7 +59,6 @@ public class TCRMimicPatch<T extends ProteusEntity> extends MimicPatch<T> {
         return AvalonFctions.EMPTY;
     }
 
-
     @Override
     public void tick(LivingEvent.LivingTickEvent event) {
         super.tick(event);

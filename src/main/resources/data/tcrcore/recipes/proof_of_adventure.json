@@ -2,13 +2,10 @@
     "type": "minecraft:crafting_shaped",
     "pattern": [
         "WAS",
-        "VDI",
+        "V I",
         "LMC"
     ],
     "key": {
-        "D": {
-            "item": "minecraft:dragon_egg"
-        },
         "W": {
             "item": "cataclysm:witherite_ingot"
         },

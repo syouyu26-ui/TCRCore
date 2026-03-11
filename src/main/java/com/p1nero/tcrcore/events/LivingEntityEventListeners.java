@@ -61,7 +61,6 @@ import net.magister.bookofdragons.entity.base.dragon.DragonBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -98,7 +97,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.sonmok14.fromtheshadows.server.entity.mob.BulldrogiothEntity;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
@@ -491,6 +489,9 @@ public class LivingEntityEventListeners {
                         living.removeAllEffects();
                         if (living instanceof Bone_Chimera_Entity boneChimeraEntity) {
                             boneChimeraEntity.setStanding(false);//重置阶段
+                        }
+                        if(living instanceof TCRMimic tcrMimic) {
+                            tcrMimic.resetMemory();
                         }
                     }
                 });

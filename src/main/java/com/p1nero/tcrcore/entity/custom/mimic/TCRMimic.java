@@ -48,6 +48,10 @@ public class TCRMimic extends ProteusEntity {
         }
     }
 
+    public void resetMemory() {
+        this.getPatch().copyMap.clear();
+    }
+
     @Override
     public boolean removeWhenFarAway(double v) {
         return false;
