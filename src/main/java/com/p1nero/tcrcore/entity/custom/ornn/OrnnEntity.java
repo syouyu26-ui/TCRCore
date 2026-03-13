@@ -127,7 +127,7 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
             DialogNode whoAreU = new DialogNode(dBuilder.ans(1), dBuilder.opt(0))
                     .addLeaf(dBuilder.opt(-2));
             DialogNode firstMeetGift = new DialogNode(dBuilder.ans(4), dBuilder.opt(3))
-                    .addLeaf(dBuilder.opt(4, EpicFightItems.IRON_DAGGER.get().getDescription()), 2)
+//                    .addLeaf(dBuilder.opt(4, EpicFightItems.IRON_DAGGER.get().getDescription()), 2) //气笑了，匕首无法进行招架
                     .addLeaf(dBuilder.opt(4, Items.IRON_SWORD.getDescription()), 3)
                     .addLeaf(dBuilder.opt(4, EpicFightItems.GOLDEN_LONGSWORD.get().getDescription()), 4)
                     .addLeaf(dBuilder.opt(4, EpicFightItems.GOLDEN_TACHI.get().getDescription()), 5)
