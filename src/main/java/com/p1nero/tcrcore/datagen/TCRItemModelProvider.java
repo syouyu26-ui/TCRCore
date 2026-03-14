@@ -57,6 +57,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.WITHER_SOUL_STONE_ACTIVATED);
         simpleItem(TCRItems.STONE_OF_REINCARNATION);
         simpleItem(TCRItems.RESET_SKILL_STONE);
+        simpleItem(TCRItems.RETRACEMENT_STONE);
     }
 
     // Thank you kaupenjoe & El_Redstoniano!

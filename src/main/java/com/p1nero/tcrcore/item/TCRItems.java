@@ -49,6 +49,8 @@ public class TCRItems {
     public static final RegistryObject<Item> RESONANCE_STONE = REGISTRY.register("resonance_stone", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryObject<Item> RESET_SKILL_STONE = REGISTRY.register("reset_skill_stone", () -> new ResetSkillStoneItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
+    public static final RegistryObject<Item> RETRACEMENT_STONE = REGISTRY.register("retracement_stone", () -> new RetracementStoneItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
     public static final RegistryObject<Item> LAND_RESONANCE_STONE = REGISTRY.register("land_resonance_stone",
             () -> new LandResonanceStoneItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant(), ResourceLocation.parse(WorldUtil.LAND_GOLEM), ResonanceStoneItem.SURFACE, Level.OVERWORLD, (serverPlayer) ->
                     TCRQuestManager.hasQuest(serverPlayer, TCRQuests.USE_LAND_RESONANCE_STONE) || serverPlayer.isCreative(),

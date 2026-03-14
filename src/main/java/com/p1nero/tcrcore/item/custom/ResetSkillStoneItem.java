@@ -2,9 +2,6 @@ package com.p1nero.tcrcore.item.custom;
 
 import com.hm.efn.gameasset.EFNSkills;
 import com.p1nero.dpr.gameassets.DPRSkills;
-import com.yesman.epicskills.network.NetworkManager;
-import com.yesman.epicskills.network.client.ClientBoundDeallocateAbilityPoints;
-import com.yesman.epicskills.network.client.ClientBoundReloadSkillTree;
 import com.yesman.epicskills.registry.entry.EpicSkillsSkillTrees;
 import com.yesman.epicskills.registry.entry.EpicSkillsSounds;
 import com.yesman.epicskills.skilltree.SkillTree;

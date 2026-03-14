@@ -1733,6 +1733,7 @@
 						skill: "efn:zansetsu"
 					}
 				}
+				match_nbt: true
 				type: "item"
 			}]
 			title: "{ftbquests.chapter.wu_qi.quest4A93C88987F02ECF.title}"
@@ -1856,6 +1857,7 @@
 						fdbosses: { }
 					}
 				}
+				match_nbt: true
 				type: "item"
 			}]
 			title: "{ftbquests.chapter.wu_qi.quest3254967D776D648C.title}"
@@ -1886,6 +1888,7 @@
 						fdbosses: { }
 					}
 				}
+				match_nbt: true
 				type: "item"
 			}]
 			title: "{ftbquests.chapter.wu_qi.quest6533118C2C897C1E.title}"
@@ -1916,6 +1919,7 @@
 						fdbosses: { }
 					}
 				}
+				match_nbt: true
 				type: "item"
 			}]
 			title: "{ftbquests.chapter.wu_qi.quest4108291A69C3FFF6.title}"
@@ -1946,6 +1950,7 @@
 						fdbosses: { }
 					}
 				}
+				match_nbt: true
 				type: "item"
 			}]
 			title: "{ftbquests.chapter.wu_qi.quest5DBFF2EAFF720ABF.title}"

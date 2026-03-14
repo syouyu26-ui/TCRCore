@@ -487,6 +487,8 @@
   "item.tcrcore.reset_skill_stone": "Reset Skill Stone",
   "item.tcrcore.reset_skill_stone.usage": "After use, it will reset all skills in the skill tree and refund the points, very precious!",
   "item.tcrcore.resonance_stone": "Resonance Stone",
+  "item.tcrcore.retracement_stone": "Retracement Stone",
+  "item.tcrcore.retracement_stone.usage": "After use, it will clear all entities in [%s] !",
   "item.tcrcore.sky_resonance_stone": "Aether Resonance Stone",
   "item.tcrcore.soul_fragment": "Dust of the Cursed Bone Prison",
   "item.tcrcore.stone_of_reincarnation": "Stone of Reincarnation",

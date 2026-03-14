@@ -215,6 +215,8 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addSkill("fire_avoid", "避火咒", "免疫火焰伤害！");
         this.addSkill("perfect_dodge", "闪避特效", "完美闪避时将有帅气的动作！");
 
+        this.add(TCRItems.RETRACEMENT_STONE.get(), "回溯之石");
+        this.addItemUsageInfo(TCRItems.RETRACEMENT_STONE.get(), "使用后将重置[%s]内的所有实体！");
         this.add(TCRItems.RESET_SKILL_STONE.get(), "重置技能石");
         this.addItemUsageInfo(TCRItems.RESET_SKILL_STONE.get(), "使用后将重置技能树中的所有技能并返还点数，十分的珍贵！");
         this.add(TCRItems.PROOF_OF_ADVENTURE_PLUS.get(), "真·冒险之证");

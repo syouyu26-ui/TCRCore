@@ -487,6 +487,8 @@
   "item.tcrcore.reset_skill_stone": "重置技能石",
   "item.tcrcore.reset_skill_stone.usage": "使用后将重置技能树中的所有技能并返还点数，十分的珍贵！",
   "item.tcrcore.resonance_stone": "共鸣石",
+  "item.tcrcore.retracement_stone": "回溯之石",
+  "item.tcrcore.retracement_stone.usage": "使用后将重置[%s]内的所有实体！",
   "item.tcrcore.sky_resonance_stone": "天域共鸣石",
   "item.tcrcore.soul_fragment": "咒骨囚魂的遗尘",
   "item.tcrcore.stone_of_reincarnation": "轮回之石",

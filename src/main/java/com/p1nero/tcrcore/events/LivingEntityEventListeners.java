@@ -677,6 +677,7 @@ public class LivingEntityEventListeners {
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
 
+        //处理多周目的boss加强
         if(serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0) {
             if (event.getEntity() instanceof LivingEntity living && (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy)) {
                 EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
@@ -699,6 +700,13 @@ public class LivingEntityEventListeners {
                     living.addTag("tcr-stronger-mob");
                 }
             }
+        }
+
+        //灾变人形送个重置石
+        if(event.getEntity() instanceof BaseBossEntity && serverLevel.dimension() == PBF1Dimensions.SANCTUM_OF_THE_BATTLE_LEVEL_KEY) {
+            serverLevel.players().forEach(serverPlayer -> {
+                ItemUtil.addItemEntity(serverPlayer, TCRItems.RETRACEMENT_STONE.get().getDefaultInstance());
+            });
         }
 
         if (event.getEntity() instanceof BulldrogiothEntity bulldrogiothEntity) {

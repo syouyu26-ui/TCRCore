@@ -217,6 +217,8 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addSkill("fire_avoid", "Fire Avoidance Charm", "Immunity to fire damage!");
         this.addSkill("perfect_dodge", "Dodge Effect", "Play a cool animation when perfect dodge!");
 
+        this.add(TCRItems.RETRACEMENT_STONE.get(), "Retracement Stone");
+        this.addItemUsageInfo(TCRItems.RETRACEMENT_STONE.get(), "After use, it will clear all entities in [%s] !");
         this.add(TCRItems.RESET_SKILL_STONE.get(), "Reset Skill Stone");
         this.addItemUsageInfo(TCRItems.RESET_SKILL_STONE.get(), "After use, it will reset all skills in the skill tree and refund the points, very precious!");
         this.add(TCRItems.PROOF_OF_ADVENTURE_PLUS.get(), "True · Proof of Adventure");
