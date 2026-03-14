@@ -142,6 +142,11 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
     }
 
     @Override
+    public boolean isPickable() {
+        return false;
+    }
+
+    @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         //通关就不可交互，假装看不见～
         if(!canInteract(player)) {

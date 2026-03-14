@@ -77,11 +77,11 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
     @Nullable
     private Player tradingPlayer;
     private MerchantOffers offersArtifact = new MerchantOffers();
-    private final List<Item> rareItems;
+    private final List<Item> rareArtifactItems;
 
     public FerryGirlEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
-        rareItems = List.of(artifacts.registry.ModItems.CRYSTAL_HEART.get(),
+        rareArtifactItems = List.of(artifacts.registry.ModItems.CRYSTAL_HEART.get(),
                 artifacts.registry.ModItems.FERAL_CLAWS.get(),
                 artifacts.registry.ModItems.VAMPIRIC_GLOVE.get(),
                 artifacts.registry.ModItems.POWER_GLOVE.get(),
@@ -123,18 +123,22 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
                 return;
             }
             if (item instanceof ArtifactItem || item instanceof UAUniqueCurioItem) {
-                if (rareItems.contains(item)) {
-                    offersArtifact.add(new MerchantOffer(
-                            new ItemStack(TCRItems.RARE_ARTIFACT_TICKET.get(), 1),
-                            new ItemStack(item, 1),
-                            142857, 0, 0.02f));
-                } else {
+                if (!rareArtifactItems.contains(item)) {
                     offersArtifact.add(new MerchantOffer(
                             new ItemStack(TCRItems.ARTIFACT_TICKET.get(), 1),
                             new ItemStack(item, 1),
                             142857, 0, 0.02f));
                 }
             }
+        });
+        rareArtifactItems.forEach(item -> {
+            if (PlayerEventListeners.illegalItems.contains(item)) {
+                return;
+            }
+            offersArtifact.add(new MerchantOffer(
+                    new ItemStack(TCRItems.RARE_ARTIFACT_TICKET.get(), 1),
+                    new ItemStack(item, 1),
+                    142857, 0, 0.02f));
         });
     }
 
@@ -422,6 +426,11 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
+        return false;
+    }
+
+    @Override
+    public boolean isPickable() {
         return false;
     }
 

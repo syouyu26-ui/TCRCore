@@ -78,10 +78,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -132,8 +129,8 @@ public class PlayerEventListeners {
                 PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PlayTitlePacket(PlayTitlePacket.RIPTIDE_TUTORIAL), player);
             }
 
-            if(namespace.equals(EFN.MODID) && (path.equals("yamato_dmc4_in_sheath") || path.equals("yamato_dmc_in_sheath"))) {
-                if(!TCRQuestManager.hasFinished(player, TCRQuests.TALK_TO_ORNN_YAMATO)) {
+            if (namespace.equals(EFN.MODID) && (path.equals("yamato_dmc4_in_sheath") || path.equals("yamato_dmc_in_sheath"))) {
+                if (!TCRQuestManager.hasFinished(player, TCRQuests.TALK_TO_ORNN_YAMATO)) {
                     TCRQuests.TALK_TO_ORNN_YAMATO.start(player);
                 }
             }
@@ -157,7 +154,7 @@ public class PlayerEventListeners {
             ServerLevel targetLevel = serverPlayer.server.getLevel(TCRDimensions.SANCTUM_LEVEL_KEY);
             serverPlayer = (ServerPlayer) serverPlayer.changeDimension(targetLevel, new PositionTeleporter(new BlockPos(WorldUtil.START_POS)));
             TCRAdvancementData.finishAdvancement(TCRCoreMod.MOD_ID, serverPlayer);
-            if(!isNGPlus) {
+            if (!isNGPlus) {
                 serverPlayer.server.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).set(true, serverPlayer.server);
                 serverPlayer.server.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(false, serverPlayer.server);
                 serverPlayer.server.getGameRules().getRule(EpicFightGameRules.SKILL_REPLACE_COOLDOWN.getRuleKey()).set(200, serverPlayer.server);
@@ -185,7 +182,7 @@ public class PlayerEventListeners {
             TCRQuests.TALK_TO_AINE_0.start(serverPlayer);
             TCRQuests.TALK_TO_CHRONOS_0.start(serverPlayer);
 
-            if(!isNGPlus) {
+            if (!isNGPlus) {
                 PECDataManager.resetAll(serverPlayer, true);
             }
 
@@ -359,17 +356,17 @@ public class PlayerEventListeners {
     public static void onPlayerTryToEnterDim(EntityTravelToDimensionEvent event) {
 
         //维度重置时候的保护
-        if(event.getEntity().level() instanceof ServerLevel serverLevel && CataclysmDimensions.LEVELS.contains(event.getDimension())) {
+        if (event.getEntity().level() instanceof ServerLevel serverLevel && CataclysmDimensions.LEVELS.contains(event.getDimension())) {
             ServerLevel targetLevel = serverLevel.getServer().getLevel(event.getDimension());
             TCRDimSaveData dimSaveData = TCRDimSaveData.get(targetLevel);
-            if(dimSaveData.isResetting() || CataclysmDimensionMod.RESOURCE_LOCATION_INTEGER_MAP.getOrDefault(targetLevel.dimension().location(), 0) > 0){
-                if(event.getEntity() instanceof ServerPlayer serverPlayer) {
+            if (dimSaveData.isResetting() || CataclysmDimensionMod.RESOURCE_LOCATION_INTEGER_MAP.getOrDefault(targetLevel.dimension().location(), 0) > 0) {
+                if (event.getEntity() instanceof ServerPlayer serverPlayer) {
                     serverPlayer.displayClientMessage(TCRCoreMod.getInfo("dim_demending", dimSaveData.getResetCooldown() / 20), false);
                 }
                 event.setCanceled(true);
                 return;
             }
-            if(event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.tickCount < 300) {
+            if (event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.tickCount < 300) {
                 event.setCanceled(true);
                 serverPlayer.displayClientMessage(TCRCoreMod.getInfo("dim_demending", (300 - serverPlayer.tickCount) / 20), false);
             }
@@ -390,38 +387,28 @@ public class PlayerEventListeners {
                             serverPlayer.setGameMode(GameType.SPECTATOR);
                         }
                     }
-                }
-
-                else if (event.getDimension() == TCRDimensions.REAL_LEVEL_KEY) {
+                } else if (event.getDimension() == TCRDimensions.REAL_LEVEL_KEY) {
                     //卡在中间，只有击败最终boss才能进，后日谈完成后也不能进
                     if (TCRQuests.TALK_TO_AINE_GAME_CLEAR.isFinished(serverPlayer) || !TCRQuests.KILL_MAD_CHRONOS.isFinished(serverPlayer)) {
                         event.setCanceled(true);
                         serverPlayer.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                     }
-                }
-
-                else if (event.getDimension() == Level.NETHER) {
+                } else if (event.getDimension() == Level.NETHER) {
                     if (!(TCRQuests.GO_TO_NETHER.isFinished(serverPlayer) || TCRQuestManager.hasQuest(serverPlayer, TCRQuests.GO_TO_NETHER))) {
                         event.setCanceled(true);
                         serverPlayer.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                     }
-                }
-
-                else if (event.getDimension() == Level.END) {
+                } else if (event.getDimension() == Level.END) {
                     if (!(TCRQuests.GO_TO_THE_END.isFinished(serverPlayer) || TCRQuestManager.hasQuest(serverPlayer, TCRQuests.GO_TO_THE_END))) {
                         event.setCanceled(true);
                         serverPlayer.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                     }
-                }
-
-                else if (event.getDimension() == AetherDimensions.AETHER_LEVEL) {
+                } else if (event.getDimension() == AetherDimensions.AETHER_LEVEL) {
                     if (!(TCRQuests.GO_TO_AETHER.isFinished(serverPlayer) || TCRQuestManager.hasQuest(serverPlayer, TCRQuests.GO_TO_AETHER))) {
                         event.setCanceled(true);
                         serverPlayer.displayClientMessage(TCRCoreMod.getInfo("can_not_do_this_too_early"), true);
                     }
-                }
-
-                else if (CataclysmDimensions.LEVELS.contains(event.getDimension())) {
+                } else if (CataclysmDimensions.LEVELS.contains(event.getDimension())) {
                     ServerLevel targetLevel = serverPlayer.server.getLevel(event.getDimension());
                     if (targetLevel != null) {
                         long realPlayerCount = targetLevel.players().stream()
@@ -508,9 +495,9 @@ public class PlayerEventListeners {
                     TCRQuests.GO_TO_THE_END.finish(serverPlayer, true);
                     TCRQuests.GET_VOID_EYE.start(serverPlayer);
                     ServerLevel end = serverPlayer.server.getLevel(Level.END);
-                    if(end != null) {
-                        IDragonFight dragonFight = (IDragonFight)end.getDragonFight();
-                        if(dragonFight != null) {
+                    if (end != null) {
+                        IDragonFight dragonFight = (IDragonFight) end.getDragonFight();
+                        if (dragonFight != null) {
                             dragonFight.betterendisland$reset(true);
                             //移除末地傀儡和末地假傀儡和石碑
                             List<EndGolem> list1 = List.copyOf(end.getEntities(BTEntityType.END_GOLEM.get(), LivingEntity::isAlive));
@@ -533,8 +520,8 @@ public class PlayerEventListeners {
             if (event.getFrom().equals(Level.END)) {
                 ServerLevel end = serverPlayer.server.getLevel(Level.END);
                 if (end != null && end.players().isEmpty()) {
-                    IDragonFight dragonFight = (IDragonFight)end.getDragonFight();
-                    if(dragonFight != null) {
+                    IDragonFight dragonFight = (IDragonFight) end.getDragonFight();
+                    if (dragonFight != null) {
                         dragonFight.betterendisland$reset(true);
                         //移除末地傀儡和末地假傀儡和石碑
                         List<EndGolem> list1 = List.copyOf(end.getEntities(BTEntityType.END_GOLEM.get(), LivingEntity::isAlive));
@@ -596,8 +583,8 @@ public class PlayerEventListeners {
             }
 
             //离开后后日谈
-            if(event.getFrom().equals(TCRDimensions.REAL_LEVEL_KEY)) {
-                if(!TCRQuestManager.hasFinished(serverPlayer, TCRQuests.TALK_TO_AINE_GAME_CLEAR) && TCRQuestManager.hasFinished(serverPlayer, TCRQuests.KILL_MAD_CHRONOS)) {
+            if (event.getFrom().equals(TCRDimensions.REAL_LEVEL_KEY)) {
+                if (!TCRQuestManager.hasFinished(serverPlayer, TCRQuests.TALK_TO_AINE_GAME_CLEAR) && TCRQuestManager.hasFinished(serverPlayer, TCRQuests.KILL_MAD_CHRONOS)) {
                     TCRQuests.TALK_TO_AINE_GAME_CLEAR.start(serverPlayer);
                 }
             }
@@ -685,6 +672,18 @@ public class PlayerEventListeners {
             }
         }
 
+    }
+
+    /**
+     * 开箱的时候删非法物品，省得出现拿到了用不了= =
+     */
+    @SubscribeEvent
+    public static void onPlayerOpenContainer(PlayerContainerEvent.Open event) {
+        for (int i = 0; i < event.getContainer().slots.size(); i++) {
+            if (illegalItems.contains(event.getContainer().getItems().get(i).getItem())) {
+                event.getContainer().getItems().get(i).setCount(0);
+            }
+        }
     }
 
     /**

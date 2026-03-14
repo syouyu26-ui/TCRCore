@@ -402,6 +402,11 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
     }
 
     @Override
+    public boolean isPickable() {
+        return false;
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
