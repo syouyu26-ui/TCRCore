@@ -145,6 +145,9 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
 
     @Override
     public boolean hurt(@NotNull DamageSource damageSource, float p_21017_) {
+        if(this.isInvulnerable()) {
+            return false;
+        }
         if (damageSource.getEntity() instanceof Player player && player.isCreative()) {
             player.displayClientMessage(Component.translatable("/summon " + ForgeRegistries.ENTITY_TYPES.getKey(this.getType())).withStyle(ChatFormatting.RED), false);
             this.discard();

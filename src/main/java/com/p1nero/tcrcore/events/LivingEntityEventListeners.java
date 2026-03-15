@@ -703,9 +703,10 @@ public class LivingEntityEventListeners {
         }
 
         //灾变人形送个重置石
-        if(event.getEntity() instanceof BaseBossEntity && serverLevel.dimension() == PBF1Dimensions.SANCTUM_OF_THE_BATTLE_LEVEL_KEY) {
+        if(event.getEntity() instanceof BaseBossEntity baseBossEntity && serverLevel.dimension() == PBF1Dimensions.SANCTUM_OF_THE_BATTLE_LEVEL_KEY && !baseBossEntity.getPersistentData().getBoolean("retracement_stone_given")) {
             serverLevel.players().forEach(serverPlayer -> {
                 ItemUtil.addItemEntity(serverPlayer, TCRItems.RETRACEMENT_STONE.get().getDefaultInstance());
+                baseBossEntity.getPersistentData().putBoolean("retracement_stone_given", true);
             });
         }
 

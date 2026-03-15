@@ -84,6 +84,9 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float value) {
+        if(this.isInvulnerable()) {
+            return false;
+        }
         if(source.getEntity() instanceof Player player && player.isCreative()) {
             player.displayClientMessage(Component.translatable("/summon " + ForgeRegistries.ENTITY_TYPES.getKey(this.getType())).withStyle(ChatFormatting.RED), false);
             this.discard();
