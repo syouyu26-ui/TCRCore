@@ -336,7 +336,7 @@
   "info.tcr.can_not_use_scroll_directly": "武器に魔術を付与して使用してください！！",
   "info.tcr.cancel_tracking_quest": "クエストの追跡停止",
   "info.tcr.captain_start_heal": "§cコルネリアが回復を始めた！より多くのダメージを！",
-  "info.tcr.cataclysm_humanoid_drop_desc": "[%s]を倒して[%s]にドロップしました",
+  "info.tcr.cataclysm_humanoid_drop_desc": "[%s]で[%s]を倒すとドロップ",
   "info.tcr.click_to_return": "§a[クリックして戻る]",
   "info.tcr.cloud_follow_me": "§6[魔法の雲]: §fこんにちは、私に着いてきて!",
   "info.tcr.congratulation": "Congratulations!",
