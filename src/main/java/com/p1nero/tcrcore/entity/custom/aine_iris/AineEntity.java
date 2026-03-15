@@ -63,6 +63,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -842,8 +843,8 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
     }
 
     @Override
-    public boolean isPickable() {
-        return false;
+    public boolean isInvulnerable() {
+        return FMLEnvironment.production;
     }
 
     @Override

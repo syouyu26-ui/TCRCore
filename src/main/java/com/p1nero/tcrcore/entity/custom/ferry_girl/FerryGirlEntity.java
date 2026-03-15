@@ -56,6 +56,7 @@ import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -430,8 +431,8 @@ public class FerryGirlEntity extends PathfinderMob implements IEntityNpc, GeoEnt
     }
 
     @Override
-    public boolean isPickable() {
-        return false;
+    public boolean isInvulnerable() {
+        return FMLEnvironment.production;
     }
 
     @Override

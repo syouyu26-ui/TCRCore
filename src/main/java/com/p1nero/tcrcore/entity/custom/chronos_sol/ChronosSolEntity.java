@@ -50,6 +50,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.p1nero.ss.gameassets.skills.FlyingSkills;
 import org.jetbrains.annotations.NotNull;
@@ -132,17 +133,17 @@ public class ChronosSolEntity extends PathfinderMob implements IEntityNpc, GeoEn
     }
 
     @Override
+    public boolean isInvulnerable() {
+        return FMLEnvironment.production;
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
-        return false;
-    }
-
-    @Override
-    public boolean isPickable() {
         return false;
     }
 

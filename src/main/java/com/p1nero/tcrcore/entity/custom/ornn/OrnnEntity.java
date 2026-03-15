@@ -49,6 +49,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -401,9 +402,10 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
         return false;
     }
 
+
     @Override
-    public boolean isPickable() {
-        return false;
+    public boolean isInvulnerable() {
+        return FMLEnvironment.production;
     }
 
     @Override
