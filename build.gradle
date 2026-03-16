@@ -336,10 +336,8 @@ dependencies {
 
     //结构类
     implementation fg.deobf("curse.maven:ati-structures-964608:6730813")
-    implementation fg.deobf("curse.maven:integrated-stronghold-815548:6095052")
-    implementation fg.deobf("libs:idas_forge:1.12.1")
+    implementation fg.deobf("curse.maven:the-lost-castle-687118:4614797")
     implementation fg.deobf("libs:supplementaries:3.1.41")
-    implementation fg.deobf("curse.maven:integrated-api-817709:6369317")
     implementation fg.deobf("curse.maven:quark-243121:6427817")
     implementation fg.deobf("curse.maven:zeta-968868:6432578")
     implementation fg.deobf("curse.maven:selene-499980:7119907")

@@ -80,7 +80,7 @@ public class WorldUtil {
     public static final String LAND_GOLEM = "ba_bt:land_tower";
     public static final String CORE_GOLEM = "ba_bt:core_tower";
     public static final String NETHER_GOLEM = "tcrcore:gate_of_disaster";
-    public static final String STRONG_HOLD = "integrated_stronghold:stronghold";
+    public static final String STRONG_HOLD = "tlc:lost_castle";
     public static Vec2i storm, flame, abyss, cursed, desert;
 
     public static List<MapColor> surfaceMaterials = Arrays.asList(MapColor.WATER, MapColor.ICE);
