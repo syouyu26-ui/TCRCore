@@ -5,6 +5,7 @@ import com.brass_amber.ba_bt.init.BTEntityType;
 import com.github.L_Ender.cataclysm.init.ModEntities;
 import com.mojang.logging.LogUtils;
 import com.obscuria.aquamirae.registry.AquamiraeItems;
+import com.p1nero.invincible.mixin.AnimationManagerAccessor;
 import com.p1nero.p1nero_ec.PEpicCataclysmMod;
 import com.p1nero.tcr_bosses.entity.TCRBossEntities;
 import com.p1nero.tcrcore.block.TCRBlocks;
@@ -22,7 +23,6 @@ import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import com.p1nero.tcrcore.worldgen.TCRStructures;
-import com.simibubi.create.AllItems;
 import com.wintercogs.beyonddimensions.common.init.BDItems;
 import net.genzyuro.uniqueaccessories.registry.UAItems;
 import net.minecraft.ChatFormatting;
@@ -33,6 +33,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
@@ -40,7 +41,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.asset.AssetAccessor;
 import yesman.epicfight.skill.SkillSlot;
 
 import java.util.List;
@@ -55,6 +59,7 @@ public class TCRCoreMod {
     private static boolean worldEditLoaded;
     private static boolean xaeroMapLoaded;
     private static boolean journeyMapLoaded;
+    private static boolean epicParCoolLoaded;
 
     public TCRCoreMod(FMLJavaModLoadingContext context) {
         SkillSlot.ENUM_MANAGER.registerEnumCls(TCRCoreMod.MOD_ID, TCRSkillSlots.class);
@@ -78,6 +83,7 @@ public class TCRCoreMod {
             worldEditLoaded = ModList.get().isLoaded("worldedit");
             xaeroMapLoaded = ModList.get().isLoaded("xaerominimap");
             journeyMapLoaded = ModList.get().isLoaded("journeymap");
+            epicParCoolLoaded = ModList.get().isLoaded("epicparcool");
             TCRPacketHandler.register();
             TCRQuestManager.init();
 //        List<String> cheatModList = List.of("tacz", "projecte", "enchantmentlevelbreak");
@@ -93,7 +99,10 @@ public class TCRCoreMod {
             PlayerEventListeners.illegalItems.add(artifacts.registry.ModItems.SCARF_OF_INVISIBILITY.get());
             PlayerEventListeners.illegalItems.add(BDItems.NET_FEEDER_ITEM.get());
             if(ModList.get().isLoaded("create")) {
-                PlayerEventListeners.illegalItems.add(AllItems.CRAFTING_BLUEPRINT.get());
+                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("create:crafting_blueprint"));
+                if(item != null) {
+                    PlayerEventListeners.illegalItems.add(item);
+                }
             }
 
             LivingEntityEventListeners.illegalEntityTypes.addAll(List.of(
@@ -135,6 +144,9 @@ public class TCRCoreMod {
 
             PEpicCataclysmMod.theIncineratorLock = TCRCoreMod.getInfo("pec_weapon_lock", WorldUtil.SAMSARA_NAME,
                     TCRBossEntities.IGNIS_HUMANOID.get().getDescription().copy().withStyle(ChatFormatting.RED)).withStyle(ChatFormatting.RED);
+
+            //强制预加载
+            ((AnimationManagerAccessor)AnimationManager.getInstance()).getAnimationByName().values().forEach(AssetAccessor::get);
 
         });
     }
@@ -197,6 +209,10 @@ public class TCRCoreMod {
 
     public static boolean isJourneyMapLoaded() {
         return journeyMapLoaded;
+    }
+
+    public static boolean isEpicParCoolLoaded() {
+        return epicParCoolLoaded;
     }
 
     public static MutableComponent getInfo(String key) {

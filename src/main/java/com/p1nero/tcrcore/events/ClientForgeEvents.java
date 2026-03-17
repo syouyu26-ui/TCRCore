@@ -97,6 +97,9 @@ public class ClientForgeEvents {
         }
     }
 
+    /**
+     * 过时了，应该用dialog extension
+     */
     @SubscribeEvent
     public static void onDialogSend(ClientNpcEntityDialogueEvent event) {
         if(event.getSelf() instanceof Villager villager) {

@@ -18,6 +18,7 @@ import com.github.L_Ender.cataclysm.init.ModItems;
 import com.github.alexthe668.domesticationinnovation.server.entity.TameableUtils;
 import com.github.dodo.dodosmobs.entity.InternalAnimationMonster.IABossMonsters.Bone_Chimera_Entity;
 import com.hm.efn.registries.EFNItem;
+import com.hm.efn.registries.EFNMobEffectRegistry;
 import com.merlin204.sg.item.SGItems;
 import com.obscuria.aquamirae.Aquamirae;
 import com.obscuria.aquamirae.AquamiraeUtils;
@@ -56,6 +57,7 @@ import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import com.p1nero.tcrcore.worldgen.TCRDimensions;
 import com.yesman.epicskills.registry.entry.EpicSkillsItems;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
 import net.kenddie.fantasyarmor.item.FAItems;
 import net.magister.bookofdragons.entity.base.dragon.DragonBase;
 import net.minecraft.ChatFormatting;
@@ -97,7 +99,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.sonmok14.fromtheshadows.server.entity.mob.BulldrogiothEntity;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
 import yesman.epicfight.api.animation.AnimationPlayer;
@@ -108,6 +109,8 @@ import yesman.epicfight.world.capabilities.entitypatch.EntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
+import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.*;
 
@@ -624,6 +627,16 @@ public class LivingEntityEventListeners {
                 }
             }
         }
+        if(event.getSource().typeHolder().getTagKeys().anyMatch(damageTypeTagKey ->
+            damageTypeTagKey.location().getNamespace().equals(IronsSpellbooks.MODID)
+        )) {
+            LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(event.getEntity(), LivingEntityPatch.class);
+            if(patch != null
+                    && !event.getEntity().hasEffect(EFNMobEffectRegistry.SIN_STUN_IMMUNITY.get())
+                    && !event.getEntity().hasEffect(EpicFightMobEffects.STUN_IMMUNITY.get())) {
+                patch.applyStun(StunType.HOLD, Math.min(2, event.getAmount() * 0.33F));
+            }
+        }
     }
 
     /**
@@ -708,13 +721,6 @@ public class LivingEntityEventListeners {
                 ItemUtil.addItemEntity(serverPlayer, TCRItems.RETRACEMENT_STONE.get().getDefaultInstance());
                 baseBossEntity.getPersistentData().putBoolean("retracement_stone_given", true);
             });
-        }
-
-        if (event.getEntity() instanceof BulldrogiothEntity bulldrogiothEntity) {
-            if (WorldUtil.isInStructure(bulldrogiothEntity, WorldUtil.RIBBIT_VILLAGE)) {
-                bulldrogiothEntity.setGlowingTag(true);
-                saveSpawnPos(bulldrogiothEntity);
-            }
         }
 
         if (event.getEntity() instanceof Bone_Chimera_Entity boneChimeraEntity) {

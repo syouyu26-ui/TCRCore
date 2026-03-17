@@ -20,16 +20,16 @@ public class MimicBossBarMixin {
 
     @Inject(method = "drawName", at = @At("HEAD"), cancellable = true, remap = false)
     private static void tcr$renderName(String name, GuiGraphics guiGraphics, int y, LerpingBossEvent event, Entity boss, CallbackInfo ci) {
-        if(boss instanceof TCRMimic) {
+        if (boss instanceof TCRMimic) {
             ci.cancel();
             Font font = Minecraft.getInstance().font;
             Window window = Minecraft.getInstance().getWindow();
-            Component nameComponent = boss.getDisplayName().copy().withStyle(ChatFormatting.DARK_RED);
+            Component nameComponent = boss.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
 
             int nameWidth = font.width(nameComponent);
 
-            int nameX =  (window.getGuiScaledWidth()-nameWidth) / 2;
-            int nameY = y +5;
+            int nameX = (window.getGuiScaledWidth() - nameWidth) / 2;
+            int nameY = y + 5;
 
             guiGraphics.drawString(font, nameComponent, nameX, nameY, 0xFFFFFFFF, true);
         }

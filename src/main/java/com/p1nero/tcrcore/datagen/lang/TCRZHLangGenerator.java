@@ -22,7 +22,6 @@ import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
-import net.sonmok14.fromtheshadows.server.utils.registry.ItemRegistry;
 
 public class TCRZHLangGenerator extends TCRLangProvider {
     public TCRZHLangGenerator(PackOutput output) {
@@ -192,7 +191,6 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.add("item.domesticationinnovation.collar_tag.tcr_info", "可进行特殊附魔，并将附魔应用于宠物身上。");
         this.add("block.domesticationinnovation.pet_bed_white.tcr_info", "可使宠物在宠物床复活。");
         this.addTCRItemInfo(net.blay09.mods.waystones.item.ModItems.warpStone, "点击物品栏中的传送卷轴按钮以进行传送。");
-        this.addTCRItemInfo(ItemRegistry.BOTTLE_OF_BLOOD.get(), "使用§d[尼赫莫斯]§r掉落物§c[晶化血髓]§r酿造获取");
         this.addTCRItemInfo(EFNItem.DEEPDARK_HEART.get(), "击败§2[监守者]§r或§2[可妮莉亚船长]§r获取");
         this.addTCRItemInfo(ModItems.CORAL_CHUNK.get(), "于§d利维坦幻境§r击败§a[珊瑚巨像]§r获取");
         this.addTCRItemInfo(com.github.dodo.dodosmobs.init.ModItems.CHIERA_CLAW.get(), "击败§e[骸骨奇美拉]§r获取");
@@ -581,7 +579,7 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.addDialogOption(TCREntities.AINE.get(), 21, "关于黑潮的真相");
         this.addDialogOption(TCREntities.AINE.get(), 22, "关于未来");
         this.addDialogOption(TCREntities.AINE.get(), 23, "§a我没有想问的了");
-        this.addDialogAnswer(TCREntities.AINE.get(), 39, "我是你的主治医师，负责治疗你的人格分裂症。至于我为什么长这副样子，因为我们在你的精神世界，这里的一切都是你想象的样子。");
+        this.addDialogAnswer(TCREntities.AINE.get(), 39, "我是你的主治医师，负责治疗你的多重人格。");
         this.addDialogAnswer(TCREntities.AINE.get(), 40, "无需担心，你已经亲手杀死了它们，它们永远死在了你的梦中，它们不会再来了。");
         this.addDialogAnswer(TCREntities.AINE.get(), 41, "黑潮实际上是Risperdal的药物作用，我们通过药物控制住各个人格的活动。而你，作为最友善的一个人格，最纯洁的一个人格，我们选择了你，作为突破口。其他人格太难缠了，因此我们只能在你掌控身体的时候，对你使用药物，镇压其他人格。");
         this.addDialogAnswer(TCREntities.AINE.get(), 42, "药物在你的精神世界里就表现为“黑潮”，它替我们束缚住了其他人格。但是，在你的世界里，只有你能够对他们产生实质的影响。于是我们编造了再创世的谎言，引导你一步步地抹除它们。");
