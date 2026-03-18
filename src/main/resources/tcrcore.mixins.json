@@ -65,6 +65,7 @@
     "epicfight.EFXAnimationUtilsMixin",
     "epicfight.EFXLootMixin",
     "epicfight.EmergencyEscapeMixin",
+    "epicfight.EpicFightCameraAPIMixin",
     "epicfight.ExtraDamageInstanceMixin",
     "epicfight.GuardSkillMixin",
     "epicfight.PlayerPatchMixin",
@@ -98,7 +99,6 @@
     "epicfight.RenderEngineEventsMixin",
     "epicfight.SkillTreeScreenAccessor",
     "epicfight.SkillTreeScreenMixin",
-    "epicfight.EpicFightCameraAPIMixin",
     "epicfight.TempEpicFightCameraAPIMixin"
   ],
   "injectors": {

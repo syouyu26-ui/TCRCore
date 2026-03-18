@@ -63,11 +63,10 @@ import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.capabilities.item.CapabilityItem.ZoomInType;
 
 @Mixin(
-    value = {EpicFightCameraAPI.class},
-    remap = false
+        value = {EpicFightCameraAPI.class},
+        remap = false
 )
 public abstract class TempEpicFightCameraAPIMixin {
-    @Unique
     private static final float MAX_ZOOM_TICK = 8.0F;
     @Final
     @Shadow
@@ -184,17 +183,14 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Unique
-    private Vec3 blo$getCameraOffset(Camera camera, float partialTick) {
-        float offsetX = Mth.lerp(partialTick, BLOCameraSetting.cameraOffsetXO, BLOCameraSetting.cameraOffsetX);
-        float offsetY = Mth.lerp(partialTick, BLOCameraSetting.cameraOffsetYO, BLOCameraSetting.cameraOffsetY);
-        float offsetZ = Mth.lerp(partialTick, BLOCameraSetting.cameraOffsetZO, BLOCameraSetting.cameraOffsetZ);
-        return new Vec3((double)offsetX, (double)offsetY, (double)offsetZ);
+    private Vec3 blo$getCameraOffset(float partialTick) {
+        return BLOCameraSetting.getCameraPos(partialTick);
     }
 
     @Inject(
-        method = {"getYRotForHead"},
-        at = {@At("RETURN")},
-        cancellable = true
+            method = {"getYRotForHead"},
+            at = {@At("RETURN")},
+            cancellable = true
     )
     private void onGetYRotForHead(Player player, CallbackInfoReturnable<Float> cir) {
         if (this.isLockingOnTarget() && this.minecraft.options.keySprint.isDown() && !this.minecraft.options.keyUse.isDown()) {
@@ -204,9 +200,9 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"setNextLockOnTarget(IZZ)Z"},
-        at = {@At("HEAD")},
-        cancellable = true
+            method = {"setNextLockOnTarget(IZZ)Z"},
+            at = {@At("HEAD")},
+            cancellable = true
     )
     private void onSetNextLockOnTarget(int direction, boolean necessarilyLockingOn, boolean sendChange, CallbackInfoReturnable<Boolean> cir) {
         cir.cancel();
@@ -220,7 +216,7 @@ public abstract class TempEpicFightCameraAPIMixin {
             Vec3 cameraLocation = this.minecraft.gameRenderer.getMainCamera().getPosition();
             Matrix4f compactProjection = this.getCompactProjectionMatrix();
             double lockOnRange = (Double)LockOnConfig.MAX_TARGET_SELECT_DISTANCE.get();
-            Optional<Pair<LivingEntity, Float>> next = entitiesInLevel.stream().filter((entity) -> this.predicateFocusableEntity(entity) && !entity.is(this.focusingEntity) && MathUtils.canBeSeen(entity, this.minecraft.player, lockOnRange) && this.minecraft.getEntityRenderDispatcher().shouldRender(entity, this.minecraft.levelRenderer.getFrustum(), cameraLocation.x(), cameraLocation.y(), cameraLocation.z()) && !entity.hasIndirectPassenger(this.minecraft.player) && entity.distanceToSqr(this.minecraft.player) < lockOnRange * lockOnRange).map((entity) -> Pair.of((LivingEntity)entity, MathUtils.worldToScreenCoord(compactProjection, this.minecraft.gameRenderer.getMainCamera(), entity.getBoundingBox().getCenter()).x)).filter((pair) -> (Float)pair.getSecond() >= -1.0F && (Float)pair.getSecond() <= 1.0F && (direction == 0 || MathUtils.getSign((double)(Float)pair.getSecond()) == MathUtils.getSign((double)direction))).min((p1, p2) -> Float.compare(Math.abs((Float)p1.getSecond()), Math.abs((Float)p2.getSecond())));
+            Optional<Pair<LivingEntity, Float>> next = entitiesInLevel.stream().filter((entity) -> this.predicateFocusableEntity(entity) && (entity.getTeam() == null || entity.getTeam() != this.minecraft.player.getTeam()) && !entity.is(this.focusingEntity) && MathUtils.canBeSeen(entity, this.minecraft.player, lockOnRange) && this.minecraft.getEntityRenderDispatcher().shouldRender(entity, this.minecraft.levelRenderer.getFrustum(), cameraLocation.x(), cameraLocation.y(), cameraLocation.z()) && !entity.hasIndirectPassenger(this.minecraft.player) && entity.distanceToSqr(this.minecraft.player) < lockOnRange * lockOnRange).map((entity) -> Pair.of((LivingEntity)entity, MathUtils.worldToScreenCoord(compactProjection, this.minecraft.gameRenderer.getMainCamera(), entity.getBoundingBox().getCenter()).x)).filter((pair) -> (Float)pair.getSecond() >= -1.0F && (Float)pair.getSecond() <= 1.0F && (direction == 0 || MathUtils.getSign((double)(Float)pair.getSecond()) == MathUtils.getSign((double)direction))).min((p1, p2) -> Float.compare(Math.abs((Float)p1.getSecond()), Math.abs((Float)p2.getSecond())));
             next.ifPresent((pair) -> {
                 this.focusingEntity = (LivingEntity)pair.getFirst();
                 if (sendChange) {
@@ -233,13 +229,11 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"preClientTick"},
-        at = {@At("HEAD")}
+            method = {"preClientTick"},
+            at = {@At("HEAD")}
     )
     private void onPreClientTick(CallbackInfo ci) {
-        BLOCameraSetting.cameraOffsetXO = BLOCameraSetting.cameraOffsetX;
-        BLOCameraSetting.cameraOffsetYO = BLOCameraSetting.cameraOffsetY;
-        BLOCameraSetting.cameraOffsetZO = BLOCameraSetting.cameraOffsetZ;
+        BLOCameraSetting.tick();
         if (this.blo$isAiming && this.blo$aimingTick < this.blo$maxAimingTick) {
             ++this.blo$aimingTick;
         } else if (!this.blo$isAiming && this.blo$aimingTick > 0) {
@@ -249,31 +243,29 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"setLockOn"},
-        at = {@At(
-    value = "INVOKE",
-    target = "Lnet/minecraft/client/player/LocalPlayer;setXRot(F)V"
-)},
-        remap = true
+            method = {"setLockOn"},
+            at = {@At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/player/LocalPlayer;setXRot(F)V"
+            )},
+            remap = true
     )
     private void onSetLockOn(CallbackInfo ci) {
         this.minecraft.player.setYRot(this.cameraYRot);
-        BLOCameraSetting.cameraOffsetX = 0.0F;
-        BLOCameraSetting.cameraOffsetY = 0.0F;
-        BLOCameraSetting.cameraOffsetZ = 0.0F;
-        BLOCameraSetting.cameraOffsetXO = BLOCameraSetting.cameraOffsetX;
-        BLOCameraSetting.cameraOffsetYO = BLOCameraSetting.cameraOffsetY;
-        BLOCameraSetting.cameraOffsetZO = BLOCameraSetting.cameraOffsetZ;
+        BLOCameraSetting.fovOffset = 0.0F;
+        BLOCameraSetting.setTransitionTick();
+        BLOCameraSetting.setTargetOffset(0.0F, 0.0F, 0.0F);
     }
 
     @Redirect(
-        method = {"setLockOn"},
-        at = @At(
-    value = "INVOKE",
-    target = "Lyesman/epicfight/api/client/camera/EpicFightCameraAPI;setCameraRotations(FFZ)V"
-)
+            method = {"setLockOn"},
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lyesman/epicfight/api/client/camera/EpicFightCameraAPI;setCameraRotations(FFZ)V"
+            )
     )
     private void onSetLockOn2(EpicFightCameraAPI instance, float xRot, float yRot, boolean syncOld) {
+        BLOCameraSetting.setTransitionTick();
         if (ModList.get().isLoaded("shouldersurfing")) {
             HandlerShoulderSurfingCompat.handlerCam();
         } else {
@@ -283,9 +275,20 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"turnCamera"},
-        at = {@At("HEAD")},
-        cancellable = true
+            method = {"setLockOn"},
+            at = {@At("HEAD")}
+    )
+    private void onSetLockOn3(boolean flag, CallbackInfo ci) {
+        if (flag && this.focusingEntity != null) {
+            this.focusingEntity = null;
+        }
+
+    }
+
+    @Inject(
+            method = {"turnCamera"},
+            at = {@At("HEAD")},
+            cancellable = true
     )
     private void onTurnCamera(double dy, double dx, CallbackInfoReturnable<Boolean> cir) {
         cir.cancel();
@@ -312,9 +315,9 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"postClientTick"},
-        at = {@At("HEAD")},
-        cancellable = true
+            method = {"postClientTick"},
+            at = {@At("HEAD")},
+            cancellable = true
     )
     private void rewroteClientTick(CallbackInfo ci) {
         ci.cancel();
@@ -352,7 +355,7 @@ public abstract class TempEpicFightCameraAPIMixin {
             this.crosshairHitResult = localPlayer.level().clip(new ClipContext(cameraPos, rayEed, Block.OUTLINE, Fluid.NONE, localPlayer));
             double entityPickRange = (Double)LockOnConfig.MAX_TARGET_SELECT_DISTANCE.get() * (Double)LockOnConfig.MAX_TARGET_SELECT_DISTANCE.get();
             AABB aabb = localPlayer.getBoundingBox().move(cameraPos.subtract(localPlayer.getEyePosition(1.0F))).expandTowards(lookVec.scale(entityPickRange)).inflate((double)1.0F, (double)1.0F, (double)1.0F);
-            EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(localPlayer, cameraPos, rayEed, aabb, (entity -> entity.isPickable() && !entity.isSpectator()), entityPickRange);
+            EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(localPlayer, cameraPos, rayEed, aabb, entity -> entity.isPickable() && !entity.isSpectator(), entityPickRange);
             if (entityHitResult != null) {
                 this.crosshairHitResult = entityHitResult;
                 if (!entityHitResult.getEntity().is(this.focusingEntity)) {
@@ -480,24 +483,32 @@ public abstract class TempEpicFightCameraAPIMixin {
                         float distance2D = (new Vec2((float)localPlayer.position().x, (float)localPlayer.position().z)).distanceToSqr(new Vec2((float)this.focusingEntity.position().x, (float)this.focusingEntity.position().z));
                         float distance = Mth.sqrt(distance2D);
                         float distanceWeight = Mth.clampedMap(distance, 0.5F, 4.0F, 0.0F, 1.0F);
+                        if ((Boolean)LockOnConfig.ENABLE_DYNAMIC_FOV.get()) {
+                            BLOCameraSetting.fovOffset = (((Double)LockOnConfig.MAX_FOV_MULTIPLIER.get()).floatValue() - 1.0F) * progress * distanceWeight;
+                        } else if (BLOCameraSetting.fovOffset != 0.0F) {
+                            BLOCameraSetting.fovOffset = 0.0F;
+                        }
+
                         float length = -progress * ((Double)LockOnConfig.MAX_DYNAMIC_CAMERA_X.get()).floatValue() * distanceWeight;
                         Vec3 horizontalForward = (new Vec3(cameraToTarget.x, (double)0.0F, cameraToTarget.z)).normalize().scale((double)length);
-                        BLOCameraSetting.cameraOffsetX = (float)horizontalForward.x;
-                        BLOCameraSetting.cameraOffsetZ = (float)horizontalForward.z;
                         distanceWeight = Mth.clampedMap(distance, 0.0F, 3.0F, 0.0F, 1.0F);
                         float distanceY = (float)(this.focusingEntity.getEyePosition().y - localPlayer.getEyePosition().y) * distanceWeight;
-                        BLOCameraSetting.cameraOffsetY = Mth.clamp(distanceY, 0.0F, ((Double)LockOnConfig.MAX_DYNAMIC_CAMERA_Y.get()).floatValue()) * progress;
+                        distanceY = Mth.clamp(distanceY, 0.0F, ((Double)LockOnConfig.MAX_DYNAMIC_CAMERA_Y.get()).floatValue()) * progress;
                         float aimProgress = (float)this.blo$aimingTick / (float)this.blo$maxAimingTick;
                         Vec3f relocation = (new Vec3f((float)ClientConfig.cameraHorizontalLocation * 0.2F, (float)ClientConfig.cameraVerticalLocation * 0.2F, 0.0F)).scale(aimProgress);
                         OpenMatrix4f.transform3v(OpenMatrix4f.createRotatorDeg(-yRot, Vec3f.Y_AXIS), relocation, relocation);
-                        BLOCameraSetting.cameraOffsetX *= 1.0F - aimProgress;
-                        BLOCameraSetting.cameraOffsetY *= 1.0F - aimProgress;
-                        BLOCameraSetting.cameraOffsetZ *= 1.0F - aimProgress;
+                        double cameraOffsetX = horizontalForward.x * (double)(1.0F - aimProgress);
+                        double cameraOffsetY = (double)(distanceY * (1.0F - aimProgress));
+                        double cameraOffsetZ = horizontalForward.z * (double)(1.0F - aimProgress);
                         if (!this.isTPSMode()) {
-                            BLOCameraSetting.cameraOffsetX += relocation.x;
-                            BLOCameraSetting.cameraOffsetY += relocation.y;
-                            BLOCameraSetting.cameraOffsetZ += relocation.z;
+                            cameraOffsetX += (double)relocation.x;
+                            cameraOffsetY += (double)relocation.y;
+                            cameraOffsetZ += (double)relocation.z;
                         }
+
+                        BLOCameraSetting.setTargetOffset((float)cameraOffsetX, (float)cameraOffsetY, (float)cameraOffsetZ);
+                    } else {
+                        BLOCameraSetting.reset();
                     }
 
                     float xLerp = Mth.clamp(Mth.wrapDegrees(xRot - this.cameraXRot) * 0.4F, -clamp, clamp);
@@ -563,9 +574,9 @@ public abstract class TempEpicFightCameraAPIMixin {
     }
 
     @Inject(
-        method = {"setupCamera"},
-        at = {@At("HEAD")},
-        cancellable = true
+            method = {"setupCamera"},
+            at = {@At("HEAD")},
+            cancellable = true
     )
     private void rewroteSetupCamera(Camera camera, float partialTick, CallbackInfoReturnable<BuildCameraTransform.Pre> cir) {
         cir.cancel();
@@ -573,12 +584,10 @@ public abstract class TempEpicFightCameraAPIMixin {
         BuildCameraTransform.Pre event = new BuildCameraTransform.Pre(cameraAPI, camera, partialTick);
         if (!camera.getEntity().is(this.minecraft.player)) {
             event.cancel();
-            BLOCameraSetting.cameraPos = camera.getPosition();
             cir.setReturnValue(event);
         } else {
             yesman.epicfight.api.client.event.EpicFightClientHooks.Camera.BUILD_TRANSFORM_PRE.post(event);
             if (event.hasCanceled()) {
-                BLOCameraSetting.cameraPos = camera.getPosition();
                 cir.setReturnValue(event);
             } else if (this.isTPSMode()) {
                 float partialZoomTick = this.zoomTick == 0 ? 0.0F : Math.min((float)this.zoomTick + (this.zoomingIn ? partialTick : -partialTick), 7.0F);
@@ -588,7 +597,7 @@ public abstract class TempEpicFightCameraAPIMixin {
                 camera.setRotation(yRot, xRot);
                 Vec3 cameraOffset = Vec3.ZERO;
                 if (this.isLockingOnTarget()) {
-                    cameraOffset = this.blo$getCameraOffset(camera, partialTick);
+                    cameraOffset = this.blo$getCameraOffset(partialTick);
                 }
 
                 Vec3 playerPos = new Vec3(Mth.lerp((double)partialTick, camera.getEntity().xo, camera.getEntity().getX()), Mth.lerp((double)partialTick, camera.getEntity().yo, camera.getEntity().getY()) + Mth.lerp((double)partialTick, (double)camera.eyeHeightOld, (double)camera.eyeHeight), Mth.lerp((double)partialTick, camera.getEntity().zo, camera.getEntity().getZ()));
@@ -630,16 +639,15 @@ public abstract class TempEpicFightCameraAPIMixin {
 
                 event.setVanillaCameraSetupCanceled(true);
                 this.fireCameraBuildPost(camera, partialTick);
-                BLOCameraSetting.cameraPos = camera.getPosition();
                 cir.setReturnValue(event);
             } else {
-                if (this.lockingOnTarget && this.focusingEntity != null) {
+                if (!BLOCameraSetting.transitionFinished() && this.minecraft.options.getCameraType() == CameraType.THIRD_PERSON_BACK || this.lockingOnTarget && this.focusingEntity != null) {
                     if (this.minecraft.options.getCameraType() == CameraType.THIRD_PERSON_BACK) {
                         float xRot = Mth.rotLerp(partialTick, this.cameraXRotO, this.cameraXRot);
                         float yRot = Mth.rotLerp(partialTick, this.cameraYRotO, this.cameraYRot);
                         camera.setRotation(yRot, xRot);
                         Vec3 playerPos = new Vec3(Mth.lerp((double)partialTick, camera.getEntity().xo, camera.getEntity().getX()), Mth.lerp((double)partialTick, camera.getEntity().yo, camera.getEntity().getY()) + (double)Mth.lerp(partialTick, camera.eyeHeightOld, camera.eyeHeight), Mth.lerp((double)partialTick, camera.getEntity().zo, camera.getEntity().getZ()));
-                        Vec3 cameraOffset = this.blo$getCameraOffset(camera, partialTick);
+                        Vec3 cameraOffset = this.blo$getCameraOffset(partialTick);
                         Vec3 desiredPos = playerPos.add(cameraOffset.x, cameraOffset.y, cameraOffset.z);
                         double hitDistance = (double)1.0F;
 
@@ -681,7 +689,6 @@ public abstract class TempEpicFightCameraAPIMixin {
 
                         event.setVanillaCameraSetupCanceled(true);
                         this.fireCameraBuildPost(camera, partialTick);
-                        BLOCameraSetting.cameraPos = camera.getPosition();
                         cir.setReturnValue(event);
                         return;
                     }
@@ -697,7 +704,6 @@ public abstract class TempEpicFightCameraAPIMixin {
                     }
                 }
 
-                BLOCameraSetting.cameraPos = camera.getPosition();
                 cir.setReturnValue(event);
             }
         }
