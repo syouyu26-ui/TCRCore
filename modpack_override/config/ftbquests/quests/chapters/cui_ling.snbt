@@ -122,7 +122,7 @@
 							data: [{
 								id: "irons_spellbooks:ascension"
 								index: 0
-								level: 10
+								level: 1
 								locked: 1b
 							}]
 							maxSpells: 1
@@ -208,78 +208,6 @@
 			}]
 			x: 9.0d
 			y: 5.5d
-		}
-		{
-			dependencies: ["721C4011155C1854"]
-			hide_dependency_lines: true
-			id: "2E275E14A50E141F"
-			rewards: [{
-				id: "09DAF3BB14E29BD4"
-				type: "xp"
-				xp: 1
-			}]
-			size: 1.5d
-			tasks: [{
-				consume_items: false
-				id: "24B435D365BD57C2"
-				item: {
-					Count: 1
-					id: "irons_spellbooks:scroll"
-					tag: {
-						"irons_spellbooks:spell_container": {
-							data: [{
-								id: "irons_spellbooks:dragon_breath"
-								index: 0
-								level: 10
-								locked: 1b
-							}]
-							maxSpells: 1
-							mustEquip: 0b
-							spellWheel: 0b
-						}
-					}
-				}
-				match_nbt: true
-				type: "item"
-			}]
-			x: 7.785714285714285d
-			y: 0.1760461760461709d
-		}
-		{
-			dependencies: ["721C4011155C1854"]
-			hide_dependency_lines: true
-			id: "45EBA8B1EE660B90"
-			rewards: [{
-				id: "7EDE564E93D8586E"
-				type: "xp"
-				xp: 1
-			}]
-			size: 1.5d
-			tasks: [{
-				consume_items: false
-				id: "1315A734C8AB62C5"
-				item: {
-					Count: 1
-					id: "irons_spellbooks:scroll"
-					tag: {
-						"irons_spellbooks:spell_container": {
-							data: [{
-								id: "irons_spellbooks:earthquake"
-								index: 0
-								level: 10
-								locked: 1b
-							}]
-							maxSpells: 1
-							mustEquip: 0b
-							spellWheel: 0b
-						}
-					}
-				}
-				match_nbt: true
-				type: "item"
-			}]
-			x: 0.5d
-			y: 4.5d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -746,8 +674,8 @@
 				match_nbt: true
 				type: "item"
 			}]
-			x: 9.285714285714285d
-			y: 0.1760461760461709d
+			x: 7.928571428571431d
+			y: 0.9897959183673422d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -1346,7 +1274,7 @@
 							data: [{
 								id: "irons_spellbooks:heal"
 								index: 0
-								level: 8
+								level: 1
 								locked: 1b
 							}]
 							maxSpells: 1
@@ -1574,8 +1502,8 @@
 				match_nbt: true
 				type: "item"
 			}]
-			x: 8.785714285714285d
-			y: 1.176046176046171d
+			x: 9.0d
+			y: 0.0d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -1610,8 +1538,8 @@
 				match_nbt: true
 				type: "item"
 			}]
-			x: 7.785714285714285d
-			y: 1.676046176046171d
+			x: 8.98979591836735d
+			y: 2.051020408163268d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -1898,8 +1826,8 @@
 				match_nbt: true
 				type: "item"
 			}]
-			x: 6.785714285714285d
-			y: 1.176046176046171d
+			x: 6.867346938775512d
+			y: 1.9693877551020407d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -1922,7 +1850,7 @@
 							data: [{
 								id: "irons_spellbooks:shield"
 								index: 0
-								level: 10
+								level: 1
 								locked: 1b
 							}]
 							maxSpells: 1
@@ -2078,8 +2006,8 @@
 				match_nbt: true
 				type: "item"
 			}]
-			x: 6.285714285714285d
-			y: 0.1760461760461709d
+			x: 6.75d
+			y: 0.0d
 		}
 		{
 			dependencies: ["721C4011155C1854"]
@@ -2260,6 +2188,42 @@
 			}]
 			x: -7.5d
 			y: 0.0d
+		}
+		{
+			dependencies: ["721C4011155C1854"]
+			hide_dependency_lines: true
+			id: "4AE23ECB3CD85F2E"
+			rewards: [{
+				id: "7DD2A030C150508D"
+				type: "xp"
+				xp: 1
+			}]
+			size: 1.5d
+			tasks: [{
+				consume_items: false
+				id: "57CAA978B93702F5"
+				item: {
+					Count: 1
+					id: "irons_spellbooks:scroll"
+					tag: {
+						"irons_spellbooks:spell_container": {
+							data: [{
+								id: "irons_spellbooks:greater_heal"
+								index: 0
+								level: 1
+								locked: 1b
+							}]
+							maxSpells: 1
+							mustEquip: 0b
+							spellWheel: 0b
+						}
+					}
+				}
+				match_nbt: true
+				type: "item"
+			}]
+			x: 8.58163265306122d
+			y: -4.561224489795919d
 		}
 	]
 	title: "{ftbquests.chapter.cui_ling.title}"

@@ -520,6 +520,11 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
                 new ItemStack(Items.SNOWBALL, 1),
                 getSpellScroll(SpellRegistry.SNOWBALL_SPELL.get()),
                 142857, 0, 0.01f));
+        iceOffers.add(new MerchantOffer(
+                new ItemStack(ItemRegistry.FROZEN_BONE_SHARD.get(), 1),
+                new ItemStack(Items.SNOWBALL, 10),
+                getSpellScroll(SpellRegistry.ICE_BLOCK_SPELL.get()),
+                142857, 0, 0.01f));
 
         // 炽焰
         fireOffers.add(new MerchantOffer(
@@ -531,6 +536,11 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
                 new ItemStack(Items.BLAZE_ROD, 1),
                 new ItemStack(Items.SPECTRAL_ARROW, 1),
                 getSpellScroll(SpellRegistry.FIRE_ARROW_SPELL.get()),
+                142857, 0, 0.01f));
+        fireOffers.add(new MerchantOffer(
+                new ItemStack(Items.BLAZE_ROD, 1),
+                new ItemStack(Items.SPECTRAL_ARROW, 1),
+                getSpellScroll(SpellRegistry.FIREBOLT_SPELL.get()),
                 142857, 0, 0.01f));
         fireOffers.add(new MerchantOffer(
                 new ItemStack(Items.BLAZE_ROD, 1),
