@@ -95,11 +95,11 @@
     "epicfight.CEPosFollowBaseParticleMixin",
     "epicfight.ClientAnimatorMixin",
     "epicfight.ControlEngineMixin",
+    "epicfight.CuriosCompatMixin",
     "epicfight.EFClientConfigMixin",
     "epicfight.RenderEngineEventsMixin",
     "epicfight.SkillTreeScreenAccessor",
-    "epicfight.SkillTreeScreenMixin",
-    "epicfight.TempEpicFightCameraAPIMixin"
+    "epicfight.SkillTreeScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

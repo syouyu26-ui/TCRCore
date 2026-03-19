@@ -101,6 +101,9 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.shelmarow.combat_evolution.ai.CEHumanoidPatch;
+import net.shelmarow.combat_evolution.ai.iml.ILivingEntityData;
+import net.shelmarow.combat_evolution.ai.util.CEPatchUtils;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
 import reascer.wom.world.entity.mob.EvilSkeleton;
@@ -502,6 +505,12 @@ public class LivingEntityEventListeners {
                         if(living instanceof TCRMimic tcrMimic) {
                             tcrMimic.resetMemory();
                         }
+                        if(living instanceof AbstractGolem) {
+                            LivingEntityPatch<?> livingEntityPatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
+                            if(livingEntityPatch instanceof ILivingEntityData) {
+                                CEPatchUtils.setStamina(livingEntityPatch, CEPatchUtils.getMaxStamina(livingEntityPatch));
+                            }
+                        }
                     }
                 });
             }
@@ -619,6 +628,10 @@ public class LivingEntityEventListeners {
                 if(!TCREntityCapabilityProvider.getTCREntityPatch(endGolem).isFighting()) {
                     if(event.getSource().getEntity() instanceof Player player) {
                         player.displayClientMessage(TCRCoreMod.getInfo("talk_to_start").withStyle(ChatFormatting.GOLD), true);
+                    }
+                    LivingEntityPatch<?> entityPatch = EpicFightCapabilities.getEntityPatch(endGolem, LivingEntityPatch.class);
+                    if(entityPatch != null) {
+                        CEPatchUtils.addStamina(entityPatch, 999);
                     }
                     event.setCanceled(true);
                 }
