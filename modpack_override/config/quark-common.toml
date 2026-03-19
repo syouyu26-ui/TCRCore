@@ -334,9 +334,6 @@
 	[management.quick_armor_swapping]
 		"Swap Off Hand" = true
 
-	[management.hotbar_changer]
-		"Animation Time" = 7.0
-
 [tools]
 	Abacus = true
 	"Ambient Discs" = true
@@ -1716,7 +1713,7 @@
 		"Enchantments To Register" = []
 
 	[experimental.enchantments_begone]
-		"Enchantments To Begone" = ["minecraft:unbreaking", "minecraft:mending", "apotheosis:reflective", "apotheosis:shield_bash", "apotheosis:berserkers_fury", "apotheosis:life_mending", "apotheosis:capturing", "obscure_api:mirror", "obscure_api:fast_spin", "obscure_api:distance"]
+		"Enchantments To Begone" = ["minecraft:unbreaking", "minecraft:mending", "obscure_api:fast_spin", "obscure_api:distance", "combat_evolution:massacre", "combat_evolution:intimidate"]
 
 	[experimental.game_nerfs]
 		#Makes Mending act like the Unmending mod
