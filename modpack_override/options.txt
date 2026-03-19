@@ -169,7 +169,7 @@ key_key.epicfight.skill_gui:key.keyboard.unknown
 key_key.epicfight.lock_on:key.mouse.middle
 key_key.epicfight.lock_on_shift_left:key.keyboard.left
 key_key.epicfight.lock_on_shift_right:key.keyboard.right
-key_key.epicfight.lock_on_shift_freely:key.mouse.right
+key_key.epicfight.lock_on_shift_freely:key.keyboard.unknown
 key_key.epicfight.config:key.keyboard.unknown
 key_key.epicfight.switch_vanilla_model_debug:key.keyboard.unknown
 key_key.fast_tpa.send:key.keyboard.right.alt

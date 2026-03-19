@@ -67,6 +67,7 @@ key_key.jei.clearSearchBar:key.mouse.right:NONE
 key_key.jei.maxTransferRecipeBookmark:key.keyboard.unknown:NONE
 key_key.jei.cheatItemStack:key.keyboard.unknown:NONE
 key_key.jei.nextRecipePage:key.keyboard.page.down:NONE
+key_key.epicfight.lock_on_shift_freely:key.keyboard.unknown
 key_key.epicfight.show_tooltip:key.keyboard.left.shift:NONE
 key_key.epicfight.switch_mode:key.keyboard.f:NONE
 key_key.epicfight.dodge:key.keyboard.left.alt:NONE
