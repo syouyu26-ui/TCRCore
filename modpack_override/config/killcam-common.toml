@@ -25,7 +25,7 @@
 	#Enable the Kill Cam time slow feature
 	enableKillCamTimeSlow = true
 	#Make the player invulnerable during the kill cam time slow
-	invulnerableDuringKillCam = true
+	invulnerableDuringKillCam = false
 	#Lock the player's turning when the kill cam time slow is active
 	turningLockDuringKillCam = true
 	#Kill Cam screen effect duration (use when time slow disabled)
