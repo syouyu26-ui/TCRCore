@@ -155,6 +155,17 @@
 					}
 					type: "item"
 				}
+				{
+					id: "67520FC601303D8B"
+					item: {
+						Count: 1
+						id: "fantasy_armor:ornstein_helmet"
+						tag: {
+							Damage: 0
+						}
+					}
+					type: "item"
+				}
 			]
 			title: "{ftbquests.chapter.zhuang_bei.quest8905345727084916768.title}"
 			x: 4.0d

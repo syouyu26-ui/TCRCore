@@ -270,7 +270,9 @@ public class PlayerEventListeners {
     public static void onCurioEquip(CurioEquipEvent event) {
         if (illegalItems.contains(event.getStack().getItem())) {
             if (event.getEntity() instanceof Player player && !player.isCreative()) {
-                player.displayClientMessage(TCRCoreMod.getInfo("illegal_item_tip"), true);
+                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+                    player.displayClientMessage(TCRCoreMod.getInfo("illegal_item_tip"), true);
+                }
                 event.setResult(Event.Result.DENY);
             }
         }
