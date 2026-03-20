@@ -57,7 +57,7 @@ import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import com.p1nero.tcrcore.worldgen.TCRDimensions;
 import com.yesman.epicskills.registry.entry.EpicSkillsItems;
-import io.redspace.ironsspellbooks.IronsSpellbooks;
+import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
 import net.kenddie.fantasyarmor.item.FAItems;
 import net.magister.bookofdragons.entity.base.dragon.DragonBase;
 import net.minecraft.ChatFormatting;
@@ -67,11 +67,14 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -640,6 +643,8 @@ public class LivingEntityEventListeners {
 
     }
 
+    private static Set<ResourceKey<DamageType>> ISS_TAGS = null;
+
     /**
      * 血量上限超过200时最大伤害只能32%
      */
@@ -653,9 +658,20 @@ public class LivingEntityEventListeners {
                 }
             }
         }
-        if (!(event.getEntity() instanceof Player) && event.getSource().typeHolder().getTagKeys().anyMatch(damageTypeTagKey ->
-                damageTypeTagKey.location().getNamespace().equals(IronsSpellbooks.MODID)
-        )) {
+        if(ISS_TAGS == null) {
+            ISS_TAGS = Set.of(
+                    ISSDamageTypes.BLOOD_MAGIC,
+                    ISSDamageTypes.FIRE_MAGIC,
+                    ISSDamageTypes.ICE_MAGIC,
+                    ISSDamageTypes.LIGHTNING_MAGIC,
+                    ISSDamageTypes.HOLY_MAGIC,
+                    ISSDamageTypes.ENDER_MAGIC,
+                    ISSDamageTypes.EVOCATION_MAGIC,
+                    ISSDamageTypes.ELDRITCH_MAGIC,
+                    ISSDamageTypes.NATURE_MAGIC
+            );
+        }
+        if (!(event.getEntity() instanceof Player) && ISS_TAGS.stream().anyMatch(damageTypeResourceKey -> event.getSource().is(damageTypeResourceKey))) {
             LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(event.getEntity(), LivingEntityPatch.class);
             if (patch != null
                     && !event.getEntity().hasEffect(EFNMobEffectRegistry.SIN_STUN_IMMUNITY.get())
@@ -665,9 +681,12 @@ public class LivingEntityEventListeners {
         }
         //防止连续硬直
         if(!(event.getEntity() instanceof Player)) {
-            if(event.getSource() instanceof EpicFightDamageSource epicFightDamageSource && epicFightDamageSource.getAnimation().registryName().getNamespace().equals(WeaponsOfMinecraft.MODID)) {
-                event.getEntity().addEffect(new MobEffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 60, 0, false, false, false));
-                event.getEntity().addEffect(new MobEffectInstance(EFNMobEffectRegistry.SIN_STUN_IMMUNITY.get(), 60, 0, false, false, false));
+            if(event.getSource() instanceof EpicFightDamageSource epicFightDamageSource) {
+                ResourceLocation registryName = epicFightDamageSource.getAnimation().registryName();
+                if(registryName != null && registryName.getNamespace().equals(WeaponsOfMinecraft.MODID)) {
+                    event.getEntity().addEffect(new MobEffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 60, 0, false, false, false));
+                    event.getEntity().addEffect(new MobEffectInstance(EFNMobEffectRegistry.SIN_STUN_IMMUNITY.get(), 60, 0, false, false, false));
+                }
             }
         }
     }
@@ -723,29 +742,9 @@ public class LivingEntityEventListeners {
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
 
-        //处理多周目的boss加强
-        if (serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0) {
-            if (event.getEntity() instanceof LivingEntity living && (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy)) {
-                EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
-                if (entitypatch != null && entitypatch.isInitialized() && !event.getEntity().getTags().contains("tcr-stronger-mob")) {
-                    AttributeInstance entityMaxHealth = living.getAttribute(Attributes.MAX_HEALTH);
-                    AttributeModifier boostedHealth = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_health", TCRPlayer.SARDINE_COUNT, AttributeModifier.Operation.MULTIPLY_TOTAL);
-                    if (entityMaxHealth != null) {
-                        entityMaxHealth.removeModifier(boostedHealth);
-                        entityMaxHealth.addPermanentModifier(boostedHealth);
-                    }
-
-                    AttributeInstance entityAttackDamage = living.getAttribute(Attributes.ATTACK_DAMAGE);
-                    AttributeModifier boostedDamage = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_damage", TCRPlayer.SARDINE_COUNT * 0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL);
-                    if (entityAttackDamage != null) {
-                        entityAttackDamage.removeModifier(boostedDamage);
-                        entityAttackDamage.addPermanentModifier(boostedDamage);
-                    }
-
-                    living.heal(living.getMaxHealth());
-                    living.addTag("tcr-stronger-mob");
-                }
-            }
+        //处理多周目
+        if(serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0 && event.getEntity() instanceof LivingEntity living) {
+            handleNGPlus(living);
         }
 
         //灾变人形送个重置石
@@ -810,6 +809,36 @@ public class LivingEntityEventListeners {
             }
         }
 
+    }
+
+    private static void handleNGPlus(LivingEntity living) {
+        //处理多周目的boss加强
+        if (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy) {
+            EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
+            if (entitypatch != null && entitypatch.isInitialized() && !living.getTags().contains("tcr-stronger-mob")) {
+                AttributeInstance entityMaxHealth = living.getAttribute(Attributes.MAX_HEALTH);
+                float healthMul = TCRPlayer.SARDINE_COUNT;
+                AttributeModifier boostedHealth = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_health", healthMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                if (entityMaxHealth != null) {
+                    entityMaxHealth.removeModifier(boostedHealth);
+                    entityMaxHealth.addPermanentModifier(boostedHealth);
+                }
+
+                float atkMul = TCRPlayer.SARDINE_COUNT * 0.1F;
+                if(living instanceof AbstractGolem) {
+                    atkMul += 1;
+                }
+                AttributeInstance entityAttackDamage = living.getAttribute(Attributes.ATTACK_DAMAGE);
+                AttributeModifier boostedDamage = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_damage", atkMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                if (entityAttackDamage != null) {
+                    entityAttackDamage.removeModifier(boostedDamage);
+                    entityAttackDamage.addPermanentModifier(boostedDamage);
+                }
+
+                living.heal(living.getMaxHealth());
+                living.addTag("tcr-stronger-mob");
+            }
+        }
     }
 
     @SubscribeEvent
