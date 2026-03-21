@@ -404,6 +404,7 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.add(TCREntities.AINE.get(), "安");
         this.add(TCREntities.ORNN.get(), "老奥恩");
         this.add(TCREntities.TUTORIAL_GOLEM.get(), "训练傀儡");
+        this.add(TCREntities.TUTORIAL_HUMANOID.get(), "人形训练傀儡");
         this.add(TCREntities.TCR_MIMIC.get(), "我？");
 
         this.add(TCRBossEntities.LEVIATHAN_HUMANOID.get(), "沧溟|Thalassa-Mare");

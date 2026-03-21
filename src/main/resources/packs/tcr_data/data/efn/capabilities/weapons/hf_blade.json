@@ -1,0 +1,11 @@
+{
+  "type": "efn:hf_blade",
+  "attributes": {
+    "common": {
+      "impact": 2,
+      "armor_negation":30.0,
+      "max_strikes":8,
+      "damage_bonus": -5.0
+    }
+  }
+}

@@ -14,6 +14,7 @@ import com.p1nero.tcrcore.entity.custom.mimic.TCRMimic;
 import com.p1nero.tcrcore.entity.custom.mimic.TCRMimicPatch;
 import com.p1nero.tcrcore.entity.custom.ornn.OrnnEntity;
 import com.p1nero.tcrcore.entity.custom.tutorial_golem.TutorialGolem;
+import com.p1nero.tcrcore.entity.custom.tutorial_humanoid.TutorialHumanoid;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +30,7 @@ import yesman.epicfight.api.forgeevent.EntityPatchRegistryEvent;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.world.capabilities.entitypatch.Factions;
 import yesman.epicfight.world.capabilities.entitypatch.mob.IronGolemPatch;
+import yesman.epicfight.world.capabilities.entitypatch.mob.ZombiePatch;
 
 @Mod.EventBusSubscriber(modid = TCRCoreMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TCREntities {
@@ -57,6 +59,9 @@ public class TCREntities {
 
     public static final RegistryObject<EntityType<TutorialGolem>> TUTORIAL_GOLEM = register("tutorial_golem",
             EntityType.Builder.of(TutorialGolem::new, MobCategory.CREATURE).sized(1.4F, 2.7f).fireImmune());
+
+    public static final RegistryObject<EntityType<TutorialHumanoid>> TUTORIAL_HUMANOID = register("tutorial_humanoid",
+            EntityType.Builder.of(TutorialHumanoid::new, MobCategory.CREATURE).sized(0.8F, 1.9F).fireImmune());
 
     public static final RegistryObject<EntityType<TCRMimic>> TCR_MIMIC = register("tcr_mimic",
             EntityType.Builder.of(TCRMimic::new, MobCategory.CREATURE).sized(0.8f, 2.5f).fireImmune());
@@ -103,6 +108,7 @@ public class TCREntities {
         event.put(FAKE_SKY_GOLEM.get(), ChronosSolEntity.setAttributes());
         event.put(FAKE_END_GOLEM.get(), ChronosSolEntity.setAttributes());
         event.put(TUTORIAL_GOLEM.get(), TutorialGolem.setAttributes());
+        event.put(TUTORIAL_HUMANOID.get(), TutorialHumanoid.setAttributes());
 
     }
 

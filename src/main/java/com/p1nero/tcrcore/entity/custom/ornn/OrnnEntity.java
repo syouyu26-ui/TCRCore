@@ -352,7 +352,7 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
                 142857, 0, 0.01f));
         offers.add(new MerchantOffer(
                 new ItemStack(TCRItems.MECH_FRAGMENT.get(), 1),
-                EFNItem.HF_BLADE.get().getDefaultInstance(),
+                EFNItem.HF_MURASAMA.get().getDefaultInstance(),
                 142857, 0, 0.01f));
         offers.add(new MerchantOffer(
                 new ItemStack(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), 1),

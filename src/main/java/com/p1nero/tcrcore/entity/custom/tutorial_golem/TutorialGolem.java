@@ -3,6 +3,7 @@ package com.p1nero.tcrcore.entity.custom.tutorial_golem;
 import com.p1nero.fast_tpa.network.PacketRelay;
 import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
+import com.p1nero.tcrcore.entity.custom.tutorial_humanoid.TutorialHumanoid;
 import com.p1nero.tcrcore.network.TCRPacketHandler;
 import com.p1nero.tcrcore.network.packet.clientbound.PlayTitlePacket;
 import com.p1nero.tcrcore.utils.WorldUtil;
@@ -100,6 +101,9 @@ public class TutorialGolem extends IronGolem {
     private boolean shouldAttack(LivingEntity living) {
         if(this.hasEffect(EpicFightMobEffects.INSTABILITY.get())) {
             return true;
+        }
+        if(living instanceof TutorialHumanoid) {
+            return false;
         }
         if(living instanceof ServerPlayer serverPlayer) {
             return !PlayerDataManager.dodged.get(serverPlayer) ||

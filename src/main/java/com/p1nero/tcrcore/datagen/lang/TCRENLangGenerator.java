@@ -404,6 +404,7 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.add(TCREntities.ORNN.get(), "Old Ornn");
         this.add(TCREntities.AINE.get(), "Aine");
         this.add(TCREntities.TUTORIAL_GOLEM.get(), "Training Golem");
+        this.add(TCREntities.TUTORIAL_HUMANOID.get(), "Humanoid Training Golem");
         this.add(TCREntities.TCR_MIMIC.get(), "Me?");
 
         this.add(TCRBossEntities.LEVIATHAN_HUMANOID.get(), "Thalassa Mare");

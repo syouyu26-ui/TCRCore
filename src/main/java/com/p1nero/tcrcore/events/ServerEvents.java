@@ -52,6 +52,7 @@ public class ServerEvents {
                 TCREntities.CHRONOS_SOL.get().spawn(serverLevel, new BlockPos(WorldUtil.CHRONOS_SOL_BLOCK_POS), MobSpawnType.SPAWNER);
                 TCREntities.AINE.get().spawn(serverLevel, new BlockPos(WorldUtil.AINE_POS), MobSpawnType.SPAWNER);
                 TCREntities.ORNN.get().spawn(serverLevel, new BlockPos(WorldUtil.ORNN_POS), MobSpawnType.SPAWNER);
+                TCREntities.TUTORIAL_HUMANOID.get().spawn(serverLevel, new BlockPos(WorldUtil.GOLEM_CENTER_POS_VEC3I).above(5), MobSpawnType.SPAWNER);
                 serverLevel.setBlock(new BlockPos(WorldUtil.FERRY_GIRL_PORTAL_POS), ModBlocks.waystone.defaultBlockState(), 3);
                 serverLevel.setBlock(new BlockPos(WorldUtil.FERRY_GIRL_PORTAL_POS).above(), ModBlocks.waystone.defaultBlockState().setValue(WaystoneBlock.HALF, DoubleBlockHalf.UPPER), 3);
                 tryHandleLight(serverLevel);

@@ -27,11 +27,14 @@ import com.p1nero.tcrcore.entity.custom.mimic.PTCRMimicRenderer;
 import com.p1nero.tcrcore.entity.custom.mimic.TCRMimicRenderer;
 import com.p1nero.tcrcore.entity.custom.ornn.OrnnlGeoRenderer;
 import com.p1nero.tcrcore.entity.custom.tutorial_golem.TutorialGolemRenderer;
+import com.p1nero.tcrcore.entity.custom.tutorial_humanoid.TutorialHumanoidRenderer;
 import com.super_awesome_baby.ares_hud.client.gui.HudOverlay;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.HuskRenderer;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -43,8 +46,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.api.asset.AssetAccessor;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 import yesman.epicfight.api.client.model.Meshes;
+import yesman.epicfight.client.mesh.HumanoidMesh;
 import yesman.epicfight.client.renderer.patched.entity.PHumanoidRenderer;
 import yesman.epicfight.client.renderer.patched.entity.PIronGolemRenderer;
 import yesman.epicfight.config.ClientConfig;
@@ -65,6 +70,7 @@ public class ClientModEvents {
             EntityRenderers.register(TCREntities.FAKE_SKY_GOLEM.get(), FakeSkyGolemRenderer::new);
             EntityRenderers.register(TCREntities.FAKE_END_GOLEM.get(), FakeEndGolemRenderer::new);
             EntityRenderers.register(TCREntities.TUTORIAL_GOLEM.get(), TutorialGolemRenderer::new);
+            EntityRenderers.register(TCREntities.TUTORIAL_HUMANOID.get(), TutorialHumanoidRenderer::new);
 
             EntityRenderers.register(TCREntities.TCR_MIMIC.get(), TCRMimicRenderer::new);
 
@@ -142,6 +148,15 @@ public class ClientModEvents {
     public static void onRenderPatched(PatchedRenderersEvent.Add event) {
         EntityRendererProvider.Context context = event.getContext();
         event.addPatchedEntityRenderer(TCREntities.TUTORIAL_GOLEM.get(), (entityType) -> new PIronGolemRenderer(context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(TCREntities.TUTORIAL_HUMANOID.get(), (entityType) -> new PHumanoidRenderer<>(Meshes.BIPED_OLD_TEX, context, entityType){
+            @Override
+            public AssetAccessor<HumanoidMesh> getDefaultMesh() {
+                if(Minecraft.getInstance().player == null) {
+                    return Meshes.BIPED;
+                }
+                return Minecraft.getInstance().player.getModelName().equals("slim") ? Meshes.ALEX : Meshes.BIPED;
+            }
+        }.initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(EntityType.DROWNED, (entityType -> new PHumanoidRenderer<>(Meshes.BIPED_OLD_TEX, context, entityType)));
         event.addPatchedEntityRenderer(TCREntities.FAKE_SKY_GOLEM.get(), (entityType -> new PHumanoidRenderer<>(Meshes.BIPED_OLD_TEX, context, entityType)));
         event.addPatchedEntityRenderer(TCREntities.FAKE_END_GOLEM.get(), (entityType -> new PHumanoidRenderer<>(Meshes.BIPED_OLD_TEX, context, entityType)));

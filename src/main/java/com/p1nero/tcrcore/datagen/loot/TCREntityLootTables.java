@@ -31,6 +31,7 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         this.add(TCREntities.FERRY_GIRL.get(), emptyLootTable());
         this.add(TCREntities.ORNN.get(), emptyLootTable());
         this.add(TCREntities.TUTORIAL_GOLEM.get(), emptyLootTable());
+        this.add(TCREntities.TUTORIAL_HUMANOID.get(), emptyLootTable());
         this.add(TCREntities.AINE.get(), emptyLootTable());
         this.add(TCREntities.FAKE_SKY_GOLEM.get(), emptyLootTable());
         this.add(TCREntities.FAKE_END_GOLEM.get(), emptyLootTable());

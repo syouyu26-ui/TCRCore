@@ -605,7 +605,7 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
                 142857, 0, 0.01f));
         evocationOffers.add(new MerchantOffer(
                 new ItemStack(Items.EMERALD, 1),
-                new ItemStack(Items.FIREWORK_STAR, 1),
+                new ItemStack(Items.GUNPOWDER, 1),
                 getSpellScroll(SpellRegistry.FIRECRACKER_SPELL.get()),
                 142857, 0, 0.01f));
         evocationOffers.add(new MerchantOffer(
@@ -774,37 +774,37 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
 
         // 自然
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 1),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 1),
                 new ItemStack(Items.MOSS_BLOCK, 1),
                 getSpellScroll(SpellRegistry.EARTHQUAKE_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 1),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 1),
                 new ItemStack(Items.SHROOMLIGHT, 1),
                 getSpellScroll(SpellRegistry.FIREFLY_SWARM_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 1),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 1),
                 new ItemStack(Items.ARROW, 1),
                 getSpellScroll(SpellRegistry.POISON_ARROW_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 1),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 1),
                 new ItemStack(Items.MUD, 1),
                 getSpellScroll(SpellRegistry.POISON_BREATH_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 1),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 1),
                 new ItemStack(Items.MUD, 1),
                 getSpellScroll(SpellRegistry.POISON_SPLASH_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 2),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 2),
                 new ItemStack(Items.SPIDER_EYE, 1),
                 getSpellScroll(SpellRegistry.SPIDER_ASPECT_SPELL.get()),
                 142857, 0, 0.01f));
         natureOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 3),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 3),
                 new ItemStack(Items.MOSS_BLOCK, 1),
                 getSpellScroll(SpellRegistry.STOMP_SPELL.get()),
                 142857, 0, 0.01f));
@@ -825,7 +825,7 @@ public class AineEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
                 ItemRegistry.ENDER_UPGRADE_ORB.get().getDefaultInstance(),
                 142857, 0, 0.01f));
         ballOffers.add(new MerchantOffer(
-                new ItemStack(Items.POISONOUS_POTATO, 4),
+                new ItemStack(ItemRegistry.FIREFLY_JAR_ITEM.get(), 4),
                 new ItemStack(TCRItems.ARTIFACT_TICKET.get(), 1),
                 ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
                 142857, 0, 0.01f));
