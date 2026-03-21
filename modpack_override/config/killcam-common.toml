@@ -37,6 +37,6 @@
 	#This is a SERVER-SIDE setting
 	#Example: ["efn:biped/yamato_judgementcut_end", "efn:biped/hf_murasama/slash/"]
 	killCamAnimations = []
-    #Check Skill Damage Tag
-	"Check Skill Damage" = false
+	#Check Skill Damage Tag
+	CheckSkillDamage = false
 
