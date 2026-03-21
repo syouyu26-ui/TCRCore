@@ -1,0 +1,11 @@
+{
+	"trail": {
+		"color": [245, 145, 245],
+		"begin_pos": [-0.15, 0.0, -0.5],
+		"end_pos": [-0.15, 0.0, -1.4],
+		"lifetime": 6,
+		"interpolations": 10,
+		"texture_path": "epicfightx:textures/particle/scythe.png",
+		"particle_type": "efn:bloom_trail"
+	}
+}

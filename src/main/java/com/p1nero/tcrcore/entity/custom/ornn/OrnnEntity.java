@@ -1,5 +1,6 @@
 package com.p1nero.tcrcore.entity.custom.ornn;
 
+import com.asanginxst.epicfightx.registries.EFXItems;
 import com.hm.efn.gameasset.EFNEnchantment;
 import com.hm.efn.gameasset.EFNSkills;
 import com.hm.efn.registries.EFNItem;
@@ -322,6 +323,10 @@ public class OrnnEntity extends PathfinderMob implements IEntityNpc, GeoEntity, 
         ItemStack skillBook2 = new ItemStack(EpicFightItems.SKILLBOOK.get());
         SkillBookItem.setContainingSkill(EFNSkills.MORTAL_BLADE, skillBook2);
 
+        offers.add(new MerchantOffer(
+                new ItemStack(TCRItems.PROOF_OF_ADVENTURE.get(), 1),
+                new ItemStack(EFXItems.ETERNAL_NIGHT_SCYTHE.get(), 1),
+                142857, 0, 0.01f));
         offers.add(new MerchantOffer(
                 new ItemStack(TCRItems.PROOF_OF_ADVENTURE_PLUS.get(), 1),
                 broad,
