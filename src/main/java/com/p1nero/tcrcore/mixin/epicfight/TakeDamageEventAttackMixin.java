@@ -3,6 +3,7 @@ package com.p1nero.tcrcore.mixin.epicfight;
 import com.p1nero.p1nero_ec.capability.PECPlayer;
 import com.p1nero.tcrcore.capability.PlayerDataManager;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +40,11 @@ public abstract class TakeDamageEventAttackMixin extends AbstractPlayerEvent<Ser
                 if(weaponInnate.hasSkill()) {
                     weaponInnate.getSkill().setStackSynchronize(weaponInnate, weaponInnate.getStack() + 1);
                 }
+            }
+            //反弹凋零伤害
+            TakeDamageEvent.Attack attackEvent = ((TakeDamageEvent.Attack)(Object)this);
+            if(attackEvent.getDamageSource().getEntity() instanceof WitherBoss witherBoss) {
+                witherBoss.hurt(witherBoss.damageSources().playerAttack(serverPlayer), attackEvent.getDamage() * 0.5F);
             }
         }
     }

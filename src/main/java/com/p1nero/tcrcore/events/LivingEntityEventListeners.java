@@ -1,5 +1,6 @@
 package com.p1nero.tcrcore.events;
 
+import com.brass_amber.ba_bt.block.block.BTChestBlock;
 import com.brass_amber.ba_bt.entity.block.BTMonolith;
 import com.brass_amber.ba_bt.entity.hostile.golem.*;
 import com.brass_amber.ba_bt.init.BTEntityType;
@@ -51,6 +52,7 @@ import com.p1nero.tcrcore.entity.TCREntities;
 import com.p1nero.tcrcore.entity.custom.fake_npc.fake_end_golem.FakeEndGolem;
 import com.p1nero.tcrcore.entity.custom.fake_npc.fake_sky_golem.FakeSkyGolem;
 import com.p1nero.tcrcore.entity.custom.mimic.TCRMimic;
+import com.p1nero.tcrcore.entity.custom.tutorial_humanoid.TutorialHumanoid;
 import com.p1nero.tcrcore.gameassets.TCRSkills;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.item.custom.DragonFluteItem;
@@ -79,6 +81,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -100,6 +103,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
@@ -730,6 +737,10 @@ public class LivingEntityEventListeners {
                 }
             }
         }
+        //移除人形傀儡伤害
+        if(event.getSource().getEntity() instanceof TutorialHumanoid) {
+            event.setAmount(0.01F);
+        }
     }
 
     /**
@@ -806,6 +817,13 @@ public class LivingEntityEventListeners {
             if (WorldUtil.isInStructure(drowned, WorldUtil.OCEAN_GOLEM)) {
                 drowned.getPersistentData().putBoolean("spawn_in_ocean_tower", true);
             }
+        }
+
+        if(event.getEntity() instanceof WitherBoss witherBoss) {
+            EntityUtil.nearPlayerDo(witherBoss, 32, player -> {
+                player.displayClientMessage(TCRCoreMod.getInfo("wither_parry_tip", witherBoss.getDisplayName()).withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(TCRCoreMod.getInfo("wither_parry_tip", witherBoss.getDisplayName()).withStyle(ChatFormatting.GOLD), false);
+            });
         }
 
         if (illegalEntityTypes.contains(event.getEntity().getType())) {
@@ -901,6 +919,42 @@ public class LivingEntityEventListeners {
                     endGolem.setTarget(null);
                 }
             }
+        } else if(event.getEntity() instanceof WitherBoss witherBoss) {
+            //凋零破坏方块
+            if (witherBoss.tickCount > 0 && witherBoss.tickCount % 20 == 0) {
+                destroyBlocksNearby(witherBoss);
+            }
+        }
+    }
+    
+    public static void destroyBlocksNearby(LivingEntity pLiving) {
+        Vec3 offset = pLiving.getLookAngle().normalize().scale(0.5F);
+        int ox = Mth.floor(pLiving.getX() + offset.x);
+        int oy = Mth.floor(pLiving.getY() + (double)0.25F);
+        int oz = Mth.floor(pLiving.getZ() + offset.z);
+        int width = Mth.ceil(pLiving.getBbWidth() / 2.0F);
+        int height = Mth.ceil(pLiving.getBbHeight());
+        boolean playEffectFlag = false;
+
+        for(int ix = ox - width; ix <= ox + width; ++ix) {
+            for(int iy = oy; iy <= oy + height; ++iy) {
+                for(int iz = oz - width; iz <= oz + width; ++iz) {
+                    BlockPos pos = new BlockPos(ix, iy, iz);
+                    BlockState state = pLiving.level().getBlockState(pos);
+                    boolean isChest = state.getBlock() instanceof BTChestBlock;
+                    if (!isChest) {
+                        if (state.getBlock() instanceof FireBlock || state.is(Blocks.BEDROCK)) {
+                            pLiving.level().destroyBlock(pos, false, pLiving);
+                        } else {
+                            playEffectFlag |= pLiving.level().destroyBlock(pos, true, pLiving);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (playEffectFlag) {
+            pLiving.level().gameEvent(pLiving, GameEvent.BLOCK_DESTROY, pLiving.blockPosition());
         }
     }
 

@@ -4,7 +4,6 @@ import com.p1nero.tcrcore.TCRCoreMod;
 import com.p1nero.tcrcore.entity.custom.tutorial_golem.TutorialGolem;
 import com.p1nero.tcrcore.utils.WorldUtil;
 import net.kenddie.fantasyarmor.item.FAArmorItems;
-import net.kenddie.fantasyarmor.item.FAItems;
 import net.kenddie.fantasyarmor.item.armor.FAArmorSet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
