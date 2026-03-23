@@ -1,0 +1,32 @@
+{
+	id: "21C70520FA7176C6"
+	loot_size: 1
+	order_index: 0
+	rewards: [
+		{
+			command: "/tcrcore difficulty easy"
+			icon: "minecraft:feather"
+			title: "简单"
+			type: "command"
+		}
+		{
+			command: "/tcrcore difficulty normal"
+			icon: {
+				Count: 1
+				id: "minecraft:iron_sword"
+				tag: {
+					Damage: 0
+				}
+			}
+			title: "普通"
+			type: "command"
+		}
+		{
+			command: "/tcrcore difficulty hard"
+			icon: "minecraft:nether_star"
+			title: "困难"
+			type: "command"
+		}
+	]
+	title: "Difficulty"
+}

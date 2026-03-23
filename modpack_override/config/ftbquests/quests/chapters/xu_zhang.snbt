@@ -78,7 +78,7 @@
 				xp: 1
 			}]
 			shape: "none"
-			size: 2.0d
+			size: 1.0d
 			subtitle: "{ftbquests.chapter.xu_zhang.quest711034741643803066.subtitle}"
 			tasks: [{
 				id: "7A35FB5FAB5EC5CC"
@@ -111,7 +111,7 @@
 				type: "xp"
 				xp: 1
 			}]
-			shape: "rsquare"
+			shape: "none"
 			size: 2.0d
 			subtitle: "{ftbquests.chapter.xu_zhang.quest7487272814909384521.subtitle}"
 			tasks: [{
@@ -121,6 +121,39 @@
 			}]
 			x: -4.5d
 			y: -5.0d
+		}
+		{
+			can_repeat: true
+			description: [
+				"&b本整合包提供难度分级，随时可以进行修改，请选择适合自己的难度！并且不要因选择错误而辱骂作者。&r"
+				""
+				"&6位于&e专用服务器&6时，仅限服务器管理员可以使用此命令！&r"
+				""
+				"对于任意敌对生物："
+				"&a简单&r：0.6倍&b攻击力&r，0.8倍&c生命值&r"
+				"&6普通（默认）&r：1倍&b攻击力&r，1倍&c生命值&r"
+				"&4&l困难&r：2倍&b攻击力&r，1.5倍&c生命值&r"
+				""
+				"（轮回绝境[InfiniteSamsara]内的boss算法稍有变动）"
+			]
+			icon: "cataclysm:burning_ashes"
+			id: "44D2EB5EE8D3FEF8"
+			rewards: [{
+				exclude_from_claim_all: true
+				id: "561EFFF7EF07C464"
+				table_id: 2433919762815874758L
+				type: "choice"
+			}]
+			shape: "none"
+			size: 2.0d
+			subtitle: "选择合适的难度，不要强人锁难"
+			tasks: [{
+				id: "6A5FE5F7F06097C6"
+				title: "全局难度设置"
+				type: "checkmark"
+			}]
+			x: 7.0d
+			y: -0.5d
 		}
 	]
 	title: "{ftbquests.chapter.xu_zhang.title}"
