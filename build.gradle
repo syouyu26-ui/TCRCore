@@ -450,9 +450,9 @@ dependencies {
     implementation fg.deobf("curse.maven:embeddium-908741:5681725")
     implementation fg.deobf("curse.maven:oculus-581495:6020952")
 
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
-
-    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
+//    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+//
+//    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
 
 //    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}-${create_version_build}:slim") { transitive = false }
 
