@@ -830,11 +830,12 @@ public class LivingEntityEventListeners {
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
 
-        if(event.getEntity() instanceof LivingEntity living) {
+        if(event.getEntity() instanceof LivingEntity living && !(living instanceof Player)) {
             //处理多周目
             if(serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0) {
                 handleNGPlus(living);
             }
+            //处理难度
             Difficulty difficulty = TCRMainLevelSaveData.get(serverLevel).getDifficulty();
             if(!difficulty.equals(Difficulty.NORMAL)) {
                 handleDifficulty(living, difficulty);

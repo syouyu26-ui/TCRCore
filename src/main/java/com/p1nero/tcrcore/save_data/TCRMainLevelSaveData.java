@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.DimensionDataStorage;
 import org.jetbrains.annotations.NotNull;
 
 public class TCRMainLevelSaveData extends SavedData {
-    private Difficulty difficulty;//独立的difficulty，和游戏规则的不同
+    private Difficulty difficulty = Difficulty.NORMAL;//独立的difficulty，和游戏规则的不同
     private BlockPos villagePos = BlockPos.ZERO;
     private boolean npcPlaced;
     public static final String NAME = "tcr_level_save_data";
