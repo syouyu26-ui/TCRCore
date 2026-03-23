@@ -57,6 +57,7 @@ import com.p1nero.tcrcore.gameassets.TCRSkills;
 import com.p1nero.tcrcore.item.TCRItems;
 import com.p1nero.tcrcore.item.custom.DragonFluteItem;
 import com.p1nero.tcrcore.save_data.TCRDimSaveData;
+import com.p1nero.tcrcore.save_data.TCRMainLevelSaveData;
 import com.p1nero.tcrcore.utils.EntityUtil;
 import com.p1nero.tcrcore.utils.ItemUtil;
 import com.p1nero.tcrcore.utils.WorldUtil;
@@ -82,6 +83,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -120,6 +122,7 @@ import net.shelmarow.combat_evolution.ai.iml.ILivingEntityData;
 import net.shelmarow.combat_evolution.ai.util.CEPatchUtils;
 import org.merlin204.wraithon.entity.wraithon.WraithonEntity;
 import org.merlin204.wraithon.worldgen.WraithonDimensions;
+import org.violetmoon.quark.content.mobs.entity.Forgotten;
 import reascer.wom.main.WeaponsOfMinecraft;
 import reascer.wom.world.entity.mob.EvilSkeleton;
 import reascer.wom.world.entity.mob.Saulomonk;
@@ -174,6 +177,12 @@ public class LivingEntityEventListeners {
             if (entity instanceof IronGolem ironGolem && WorldUtil.isInStructure(ironGolem, WorldUtil.SKY_GOLEM)) {
                 ItemUtil.addItemEntity(entity, TCRItems.DIVINE_FRAGMENT.get(), 1, ChatFormatting.AQUA.getColor());
                 event.setCanceled(true);
+            }
+
+            if(entity instanceof Forgotten) {
+                if(entity.getTags().contains("tcr_drop_nether_golem_key")) {
+                    ItemUtil.addItemEntity(entity, BTItems.NETHER_MONOLITH_KEY.get(), 1, ChatFormatting.GOLD.getColor());
+                }
             }
 
             if (entity instanceof Pillager) {
@@ -232,10 +241,10 @@ public class LivingEntityEventListeners {
                     ItemUtil.addItemEntity(player, ItemRegistry.LIGHTNING_BOTTLE.get(), 4, ChatFormatting.GOLD.getColor().intValue());
                 } else if (livingEntity instanceof Ignis_Entity) {
                     if (!PlayerDataManager.flameEyeKilled.get(player)) {
-                        givePlayerAward(player, 5);
+                        givePlayerAward(player, 2);
                         PlayerDataManager.flameEyeKilled.put(player, true);
                     }
-                    ItemUtil.addItemEntity(player, Items.BLAZE_ROD, 11, ChatFormatting.GOLD.getColor().intValue());
+                    ItemUtil.addItemEntity(player, Items.BLAZE_ROD, 4, ChatFormatting.GOLD.getColor().intValue());
                 } else if (livingEntity instanceof The_Leviathan_Entity) {
                     if (!PlayerDataManager.abyssEyeKilled.get(player)) {
                         givePlayerAward(player, 2);
@@ -537,7 +546,9 @@ public class LivingEntityEventListeners {
                     if (!(entity instanceof OwnableEntity) && entity instanceof LivingEntity living && !(entity instanceof Player)) {
                         //防堆命机制
                         living.setHealth(living.getMaxHealth());
-                        living.removeAllEffects();
+                        if(living instanceof BaseBossEntity) {
+                            living.removeAllEffects();//打模仿者时存在异步bug
+                        }
                         if (living instanceof Bone_Chimera_Entity boneChimeraEntity) {
                             boneChimeraEntity.setStanding(false);//重置阶段
                         }
@@ -794,9 +805,15 @@ public class LivingEntityEventListeners {
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
 
-        //处理多周目
-        if(serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0 && event.getEntity() instanceof LivingEntity living) {
-            handleNGPlus(living);
+        if(event.getEntity() instanceof LivingEntity living) {
+            //处理多周目
+            if(serverLevel.getServer().isSingleplayer() && TCRPlayer.SARDINE_COUNT > 0) {
+                handleNGPlus(living);
+            }
+            Difficulty difficulty = TCRMainLevelSaveData.get(serverLevel).getDifficulty();
+            if(!difficulty.equals(Difficulty.NORMAL)) {
+                handleDifficulty(living, difficulty);
+            }
         }
 
         //灾变人形送个重置石
@@ -870,14 +887,44 @@ public class LivingEntityEventListeners {
 
     }
 
+    //处理游戏难度的怪物加强
+    private static void handleDifficulty(LivingEntity living, Difficulty difficulty) {
+        if(difficulty.equals(Difficulty.NORMAL) || difficulty.equals(Difficulty.PEACEFUL)) {
+            return;
+        }
+        EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
+        if (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy || (entitypatch != null && entitypatch.isInitialized())) {
+            if (!living.getTags().contains("tcr-difficulty-mob")) {
+                AttributeInstance entityMaxHealth = living.getAttribute(Attributes.MAX_HEALTH);
+                float healthMul = difficulty.equals(Difficulty.EASY) ? -0.2F : 0.5F;
+                AttributeModifier boostedHealth = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a3"), "tcr.difficulty_health", healthMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                if (entityMaxHealth != null) {
+                    entityMaxHealth.removeModifier(boostedHealth);
+                    entityMaxHealth.addPermanentModifier(boostedHealth);
+                }
+
+                float atkMul = difficulty.equals(Difficulty.EASY) ? -0.4F : (living instanceof BaseBossEntity ? 0.5F : 1F);
+                AttributeInstance entityAttackDamage = living.getAttribute(Attributes.ATTACK_DAMAGE);
+                AttributeModifier boostedDamage = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a3"), "tcr.difficulty_damage", atkMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                if (entityAttackDamage != null) {
+                    entityAttackDamage.removeModifier(boostedDamage);
+                    entityAttackDamage.addPermanentModifier(boostedDamage);
+                }
+
+                living.heal(living.getMaxHealth());
+                living.addTag("tcr-difficulty-mob");
+            }
+        }
+    }
+
+    //处理多周目的boss加强
     private static void handleNGPlus(LivingEntity living) {
-        //处理多周目的boss加强
-        if (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy) {
-            EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
-            if (entitypatch != null && entitypatch.isInitialized() && !living.getTags().contains("tcr-stronger-mob")) {
+        EntityPatch<?> entitypatch = EpicFightCapabilities.getEntityPatch(living, LivingEntityPatch.class);
+        if (living.getType().is(Tags.EntityTypes.BOSSES) || living instanceof Enemy || (entitypatch != null && entitypatch.isInitialized())) {
+            if (!living.getTags().contains("tcr-ng-mob")) {
                 AttributeInstance entityMaxHealth = living.getAttribute(Attributes.MAX_HEALTH);
                 float healthMul = TCRPlayer.SARDINE_COUNT;
-                AttributeModifier boostedHealth = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_health", healthMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                AttributeModifier boostedHealth = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a1"), "tcr.sardine_health", healthMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
                 if (entityMaxHealth != null) {
                     entityMaxHealth.removeModifier(boostedHealth);
                     entityMaxHealth.addPermanentModifier(boostedHealth);
@@ -888,14 +935,14 @@ public class LivingEntityEventListeners {
                     atkMul += 1;
                 }
                 AttributeInstance entityAttackDamage = living.getAttribute(Attributes.ATTACK_DAMAGE);
-                AttributeModifier boostedDamage = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a2"), "tcr.sardine_damage", atkMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                AttributeModifier boostedDamage = new AttributeModifier(UUID.fromString("5a70f02c-7ca0-43c5-a766-2be3d68461a1"), "tcr.sardine_damage", atkMul, AttributeModifier.Operation.MULTIPLY_TOTAL);
                 if (entityAttackDamage != null) {
                     entityAttackDamage.removeModifier(boostedDamage);
                     entityAttackDamage.addPermanentModifier(boostedDamage);
                 }
 
                 living.heal(living.getMaxHealth());
-                living.addTag("tcr-stronger-mob");
+                living.addTag("tcr-ng-mob");
             }
         }
     }

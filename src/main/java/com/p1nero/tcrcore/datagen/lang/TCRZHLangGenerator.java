@@ -269,6 +269,8 @@ public class TCRZHLangGenerator extends TCRLangProvider {
         this.add(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "神谕残卷");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§c§kI'm Your...");
 
+        this.addInfo("difficulty_change_success", "成功改变游戏难度！当前难度为：%s");
+        this.addInfo("difficulty_change_failed", "错误：改变游戏难度失败！无管理员权限或参数错误！");
         this.addInfo("shake_penalty_warning", "[警告]:连续抖刀将增加耐力消耗！");
         this.addInfo("wither_parry_tip", "完美弹反以反击[%s]！");
         this.addInfo("more_beautiful_models_and_trail", "定制3D武器刀光制材质拓展，可选");

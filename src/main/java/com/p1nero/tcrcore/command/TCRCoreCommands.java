@@ -12,6 +12,7 @@ public class TCRCoreCommands {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        TCRDebugCommands.register(dispatcher);
+        TCRDebugCommand.register(dispatcher);
+        TCRDifficultyCommand.register(dispatcher);
     }
 }

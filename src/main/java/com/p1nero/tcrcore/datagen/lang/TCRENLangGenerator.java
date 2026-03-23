@@ -271,6 +271,8 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.add(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "Oracle Fragment");
         this.addItemUsageInfo(TCRItems.ANCIENT_ORACLE_FRAGMENT.get(), "§c§kI'm Your...");
 
+        this.addInfo("difficulty_change_success", "Successfully changed game difficulty! Current difficulty: %s");
+        this.addInfo("difficulty_change_failed", "Error: Failed to change game difficulty! No admin permission or invalid parameter!");
         this.addInfo("shake_penalty_warning", "[Warning]:Shake will consume more stamina!");
         this.addInfo("wither_parry_tip", "Perfect Parry to hurt [%s]!");
         this.addInfo("more_beautiful_models_and_trail", "Custom 3D weapon trail texture expansion, optional");
@@ -291,7 +293,7 @@ public class TCRENLangGenerator extends TCRLangProvider {
         this.addInfo("resonance_search_failed", "[ERROR]：Failed to Resonate! Please retry after restarting the game! Please keep the latest.log and report to the author! [%s]");
         this.addInfo("yamato_skill_lock", "[%s] are locked. Requires special enchantment book to unlock!");
         this.addInfo("congratulation", "Congratulations!");
-        this.addInfo("open_backpack_tutorial", "Press [%s] to view Backpack");
+        this.addInfo("open_backpack_tutorial", "Press [%s] to view Interspatial Storage");
         this.addInfo("unlock_new_ftb_page_title", "§6New Chapter Unlocked!");
         this.addInfo("unlock_new_ftb_page_subtitle", "§aPress [%s§a] to view");
         this.addInfo("resonance_stone_working", "[%s] Resonating... Please wait patiently...");

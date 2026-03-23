@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 调试命令，用来调试指定任务
  */
-public class TCRDebugCommands {
+public class TCRDebugCommand {
 
     private static final SuggestionProvider<CommandSourceStack> QUEST_SUGGESTIONS = (context, builder) -> {
         TCRQuestManager.getAllQuests().forEach(quest -> {
