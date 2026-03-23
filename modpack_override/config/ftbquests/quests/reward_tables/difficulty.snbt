@@ -6,7 +6,7 @@
 		{
 			command: "/tcrcore difficulty easy"
 			icon: "minecraft:feather"
-			title: "简单"
+			title: "{ftbquests.reward_table.difficulty.easy}"
 			type: "command"
 		}
 		{
@@ -18,13 +18,13 @@
 					Damage: 0
 				}
 			}
-			title: "普通"
+			title: "{ftbquests.reward_table.difficulty.normal}"
 			type: "command"
 		}
 		{
 			command: "/tcrcore difficulty hard"
 			icon: "minecraft:nether_star"
-			title: "困难"
+			title: "{ftbquests.reward_table.difficulty.hard}"
 			type: "command"
 		}
 	]
